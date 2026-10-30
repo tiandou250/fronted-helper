@@ -39,4 +39,20 @@ try {
   /* 忽略 */
 }
 
-execSync("node node_modules/next/dist/bin/next build", { stdio: "inherit", shell: true });
+// 用「--base 名字」而不是环境变量传子路径：
+// Git Bash 会把以 / 开头的环境变量值当成路径做转换，导致配置被改写。
+const bi = process.argv.indexOf("--base");
+const basePath =
+  bi > -1 && process.argv[bi + 1]
+    ? "/" + process.argv[bi + 1].replace(/^\/+/, "")
+    : "";
+if (basePath) {
+  console.log(`[build] basePath = ${basePath}`);
+  process.env.BASE_PATH = basePath;
+}
+
+execSync("node node_modules/next/dist/bin/next build", {
+  stdio: "inherit",
+  shell: true,
+  env: { ...process.env },
+});
