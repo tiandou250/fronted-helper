@@ -1,0 +1,865 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>UI 设计小助手 · 预览 v4</title>
+<style>
+  :root {
+    --bg: #E4E4E4;
+    --surf: #E8E8E8;
+    --surf-hi: #ECECEC;
+    --ink: #2B2B2B;
+    --ink-2: #555555;
+    --ink-3: #8A8A8A;
+    --sd: #BEBEBE;
+    --sl: #FFFFFF;
+    --sans: "Microsoft YaHei", "PingFang SC", -apple-system, sans-serif;
+    --song: "SimSun", "Songti SC", "STSong", serif;
+    --up-sm: 5px 5px 12px var(--sd), -5px -5px 12px var(--sl);
+    --up-md: 9px 9px 20px var(--sd), -9px -9px 20px var(--sl);
+    --up-lg: 12px 12px 28px var(--sd), -12px -12px 28px var(--sl);
+    --down-sm: inset 4px 4px 9px var(--sd), inset -4px -4px 9px var(--sl);
+    --down-md: inset 7px 7px 16px #B8B8B8, inset -7px -7px 16px #FAFAFA;
+  }
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body {
+    font-family: var(--sans);
+    background: var(--bg);
+    color: var(--ink);
+    font-size: 17px;
+    line-height: 1.7;
+    -webkit-font-smoothing: antialiased;
+  }
+  .wrap { max-width: 1460px; margin: 0 auto; padding: 0 46px; }
+  .view { display: none; }
+  .view.on { display: block; }
+
+  /* ===== 顶部：新拟态胶囊按钮 ===== */
+  .top { padding: 76px 0 0; text-align: center; }
+  .brand-btn {
+    display: inline-block;
+    font-family: var(--sans);
+    font-size: 40px; font-weight: 700; letter-spacing: .06em;
+    color: var(--ink);
+    background: var(--surf);
+    border: none; border-radius: 999px;
+    padding: 30px 76px;
+    box-shadow: var(--up-lg);
+    cursor: pointer;
+    transition: box-shadow .22s ease, color .22s ease, transform .12s ease;
+  }
+  .brand-btn:hover { box-shadow: 14px 14px 32px #B7B7B7, -14px -14px 32px #FFFFFF; }
+  .brand-btn:active { transform: translateY(1px); box-shadow: var(--down-md); }
+  .brand-btn.open { box-shadow: var(--down-md); color: var(--ink-2); }
+
+  .credit {
+    max-height: 0; overflow: hidden; opacity: 0;
+    transition: max-height .3s ease, opacity .3s ease, margin .3s ease;
+    font-family: var(--sans); font-size: 20px; letter-spacing: .22em;
+    color: var(--ink-2);
+  }
+  .credit.on { max-height: 80px; opacity: 1; margin-top: 30px; }
+
+  /* ===== 筛选：新拟态胶囊 ===== */
+  .filters {
+    display: flex; align-items: center; justify-content: center;
+    gap: 18px; flex-wrap: wrap;
+    padding: 54px 0 10px;
+  }
+  .filters .f {
+    font-family: var(--sans);
+    font-size: 19px; font-weight: 500; color: var(--ink-2);
+    background: var(--surf);
+    border-radius: 999px; padding: 13px 30px;
+    box-shadow: var(--up-sm);
+    cursor: pointer;
+    transition: box-shadow .2s ease, color .2s ease;
+  }
+  .filters .f:hover { color: var(--ink); box-shadow: 6px 6px 14px #B8B8B8, -6px -6px 14px #FFF; }
+  .filters .f.on { box-shadow: var(--down-sm); color: var(--ink); font-weight: 700; }
+
+  /* ===== 卡片墙（等高网格） ===== */
+  .wall {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 34px;
+    padding: 46px 0 90px;
+  }
+  .card {
+    display: flex; flex-direction: column;
+    background: var(--surf);
+    border-radius: 26px;
+    box-shadow: var(--up-md);
+    cursor: pointer; overflow: hidden;
+    transition: transform .22s cubic-bezier(.16,1,.3,1), box-shadow .22s ease;
+  }
+  .card:hover {
+    transform: translateY(-6px);
+    box-shadow: 12px 12px 30px #B5B5B5, -12px -12px 30px #FFFFFF;
+  }
+  .card:active { transform: translateY(-2px); box-shadow: var(--down-sm); }
+
+  .card .top2 {
+    display: flex; align-items: center; gap: 12px;
+    padding: 20px 24px 6px;
+    font-family: var(--sans); font-size: 14px; font-weight: 500;
+    letter-spacing: .1em; color: var(--ink-3);
+  }
+  .card .top2 .no { color: var(--ink); font-weight: 700; font-size: 15px; }
+  .card .top2 .fam { margin-left: auto; }
+  .card .top2 .arrow { opacity: 0; transform: translate(-4px,4px); transition: all .22s; color: var(--ink); }
+  .card:hover .top2 .arrow { opacity: 1; transform: translate(0,0); }
+
+  /* 预览窗：凹陷，像嵌进卡片里的屏幕 */
+  .pvwrap { padding: 10px 16px 0; }
+  .pv {
+    position: relative; overflow: hidden;
+    height: 226px; border-radius: 16px;
+    background: #fff;
+  }
+  .pv::after {
+    content: ''; position: absolute; inset: 0; z-index: 6;
+    border-radius: 16px; pointer-events: none;
+    box-shadow: inset 4px 4px 10px rgba(0,0,0,.16), inset -4px -4px 10px rgba(255,255,255,.45);
+  }
+
+  .card .info { padding: 16px 24px 26px; }
+  .card .info h3 {
+    font-family: var(--sans); font-size: 27px; font-weight: 700;
+    letter-spacing: .01em; line-height: 1.3;
+  }
+  .card .info .en {
+    font-family: var(--sans); font-size: 13px; font-weight: 500;
+    letter-spacing: .12em; color: var(--ink-3); text-transform: uppercase; margin-top: 3px;
+  }
+  .card .info p {
+    font-family: var(--sans); font-size: 16px; line-height: 1.65; color: var(--ink-2);
+    margin-top: 12px;
+    display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical;
+    overflow: hidden;
+  }
+
+  /* ===== 预览片段 ===== */
+  .pv .mini-nav { display: flex; align-items: center; gap: 7px; padding: 9px 12px; font-size: 8px; }
+  .pv .mini-nav i { display: block; width: 16px; height: 2px; background: currentColor; opacity: .35; }
+  .pv .mini-nav .sp { flex: 1; }
+
+  .pv-min { padding: 30px 22px; background: #FAFAFA; }
+  .pv-min .t { font-family: var(--song); font-size: 25px; letter-spacing: .06em; color: #1a1a1a; }
+  .pv-min .l { width: 68%; height: 3px; background: #D8D8D8; margin-top: 16px; }
+  .pv-min .l.s { width: 44%; margin-top: 7px; }
+  .pv-min .ln { width: 26px; height: 1px; background: #1a1a1a; margin: 24px 0 12px; }
+  .pv-min .b { display: inline-block; font-size: 8px; letter-spacing: .2em; color: #1a1a1a; border-bottom: 1px solid #1a1a1a; padding-bottom: 2px; }
+
+  .pv-swiss { background: #fff; }
+  .pv-swiss .b1 { padding: 22px 20px 0; }
+  .pv-swiss .h { font-family: var(--song); font-size: 40px; line-height: .95; letter-spacing: -.03em; color: #111; }
+  .pv-swiss .rule { height: 3px; background: #111; margin: 14px 20px 0; }
+  .pv-swiss .cols { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 10px; padding: 12px 20px 0; }
+  .pv-swiss .cols div { height: 2px; background: #DDD; }
+  .pv-swiss .cols div:first-child { background: #111; }
+  .pv-swiss .bigno { position: absolute; right: 18px; bottom: 6px; font-size: 58px; color: #F0F0F0; letter-spacing: -.04em; font-weight: 700; }
+  .pv-swiss .sq { position: absolute; right: 20px; top: 56px; width: 34px; height: 34px; background: #111; }
+
+  .pv-brut { background: #FFFDF5; }
+  .pv-brut .mini-nav { background: #fff; border-bottom: 3px solid #000; }
+  .pv-brut .h { font-size: 28px; font-weight: 800; line-height: .95; letter-spacing: -.03em; padding: 16px 13px 0; text-transform: uppercase; }
+  .pv-brut .h span { background: #FFE600; }
+  .pv-brut .bx { margin: 12px 13px 0; border: 2.5px solid #000; background: #fff; padding: 8px 9px; box-shadow: 4px 4px 0 #000; }
+  .pv-brut .bx i { display: block; height: 2px; background: #000; opacity: .18; }
+  .pv-brut .bx i + i { margin-top: 5px; width: 60%; }
+
+  .pv-glass { background: #2B1A5E; }
+  .pv-glass::before {
+    content: ''; position: absolute; inset: -40%;
+    background:
+      radial-gradient(circle at 25% 30%, #7C4DFF 0%, transparent 45%),
+      radial-gradient(circle at 75% 70%, #FF4D9D 0%, transparent 45%),
+      radial-gradient(circle at 60% 10%, #00E5FF 0%, transparent 40%);
+    filter: blur(6px);
+  }
+  .pv-glass .g {
+    position: absolute; left: 22px; right: 22px; top: 46px;
+    background: rgba(255,255,255,.14); border: 1px solid rgba(255,255,255,.3);
+    border-radius: 18px; padding: 18px; backdrop-filter: blur(12px);
+    box-shadow: inset 0 1px 0 rgba(255,255,255,.45), 0 10px 26px rgba(0,0,0,.25);
+  }
+  .pv-glass .g .t { font-size: 20px; font-weight: 500; color: #fff; }
+  .pv-glass .g i { display: block; height: 2px; background: rgba(255,255,255,.45); margin-top: 10px; }
+  .pv-glass .g i + i { width: 62%; }
+  .pv-glass .pill {
+    position: absolute; left: 22px; bottom: 26px; padding: 9px 20px;
+    border-radius: 999px; background: rgba(255,255,255,.92); color: #1B1033;
+    font-size: 10px; font-weight: 700; letter-spacing: .06em;
+  }
+
+  .pv-mem { background: #FDF6EC; }
+  .pv-mem .h { font-family: var(--song); font-size: 32px; padding: 22px; color: #141414; position: relative; z-index: 2; line-height: 1.2; }
+  .pv-mem .c1 { position: absolute; width: 64px; height: 64px; border-radius: 50%; background: #FF5D8F; right: 20px; top: 20px; }
+  .pv-mem .c2 { position: absolute; width: 42px; height: 42px; background: #3DDC97; left: 20px; bottom: 62px; transform: rotate(18deg); }
+  .pv-mem .c3 { position: absolute; width: 54px; height: 54px; border: 6px solid #FFC93C; border-radius: 50%; right: 46px; bottom: 44px; }
+  .pv-mem .wav { position: absolute; left: 0; right: 0; bottom: 20px; height: 14px;
+    background: repeating-linear-gradient(90deg, #141414 0 2px, transparent 2px 12px); }
+  .pv-mem .sq { position: absolute; right: 20px; top: 104px; width: 80px; height: 3px; background: #141414; }
+
+  .pv-aur { background: #07070B; }
+  .pv-aur::before {
+    content: ''; position: absolute; inset: -30%;
+    background:
+      radial-gradient(ellipse at 20% 20%, rgba(99,102,241,.9) 0%, transparent 50%),
+      radial-gradient(ellipse at 80% 60%, rgba(236,72,153,.6) 0%, transparent 48%),
+      radial-gradient(ellipse at 50% 100%, rgba(34,211,238,.45) 0%, transparent 50%);
+    filter: blur(20px);
+  }
+  .pv-aur .t { position: relative; padding: 60px 22px 0; font-size: 27px; font-weight: 600; color: #fff; line-height: 1.15; }
+  .pv-aur .t em { font-style: normal; background: linear-gradient(90deg,#A5B4FC,#F0ABFC); -webkit-background-clip: text; background-clip: text; color: transparent; }
+  .pv-aur .pill { position: relative; margin: 16px 22px 0; display: inline-block; padding: 8px 18px; border-radius: 8px; background: #fff; color: #07070B; font-size: 10px; font-weight: 700; }
+
+  .pv-cyb { background: #06060A; font-family: var(--sans); }
+  .pv-cyb .scan { position: absolute; inset: 0;
+    background: repeating-linear-gradient(0deg, rgba(0,255,240,.055) 0 1px, transparent 1px 5px); }
+  .pv-cyb .h { position: relative; padding: 24px 18px 0; font-size: 25px; font-weight: 700; letter-spacing: .04em; color: #00FFF0;
+    text-shadow: 0 0 12px rgba(0,255,240,.65), 2px 0 0 rgba(255,0,128,.6); line-height: 1.1; }
+  .pv-cyb .bar { position: relative; margin: 16px 18px 0; height: 1px; background: rgba(255,0,128,.55); }
+  .pv-cyb .txt { position: relative; padding: 12px 18px 0; font-size: 10px; line-height: 1.9; color: #FF2E97; letter-spacing: .06em; }
+  .pv-cyb .chip { position: relative; display: inline-block; margin: 14px 18px 0; padding: 6px 12px; border: 1px solid #00FFF0; color: #00FFF0; font-size: 9px; letter-spacing: .16em; }
+
+  .pv-guo { background: #F7EBD5; }
+  .pv-guo .band { position: absolute; inset: 0 0 auto 0; height: 46px; background: #A62B2B; }
+  .pv-guo .seal { position: absolute; right: 20px; top: 68px; width: 48px; height: 48px; border: 2px solid #A62B2B; color: #A62B2B;
+    font-family: var(--song); font-size: 13px; line-height: 1.2; display: flex; align-items: center; justify-content: center; text-align: center; }
+  .pv-guo .h { position: relative; padding: 66px 20px 0; font-family: var(--song); font-size: 30px; letter-spacing: .14em; color: #3A1F1A; line-height: 1.35; }
+  .pv-guo .sub { position: relative; padding: 8px 20px 0; font-family: var(--song); font-size: 11px; letter-spacing: .3em; color: #8A6A55; }
+  .pv-guo .cloud { position: absolute; left: 20px; bottom: 20px; width: 100px; height: 28px; border-top: 1px solid rgba(166,43,43,.5); border-radius: 50%; }
+
+  .pv-typo { background: #0E0E0E; }
+  .pv-typo .t { font-family: var(--song); font-size: 58px; line-height: .88; letter-spacing: -.03em; color: #F5F2EA; padding: 20px 18px 0; }
+  .pv-typo .t em { font-style: normal; -webkit-text-stroke: 1px #F5F2EA; color: transparent; }
+  .pv-typo .meta { position: absolute; left: 18px; bottom: 14px; right: 18px; display: flex; justify-content: space-between;
+    font-size: 9px; letter-spacing: .16em; color: #7A7A78; border-top: 1px solid #2A2A2A; padding-top: 8px; }
+
+  .pv-bento { background: #F7F7F5; padding: 13px; display: grid;
+    grid-template-columns: 1.4fr 1fr 1fr; grid-template-rows: 1fr 1fr; gap: 8px; }
+  .pv-bento div { background: #fff; border-radius: 12px; box-shadow: 0 1px 3px rgba(0,0,0,.06); }
+  .pv-bento div:nth-child(1) { grid-row: span 2; background: #111; }
+  .pv-bento div:nth-child(4) { grid-column: span 2; background: #EFEFEC; }
+
+  .pv-dood { background: #FCFAF3; }
+  .pv-dood .box { position: absolute; left: 18px; right: 18px; top: 20px; bottom: 20px;
+    border: 2px solid #2A2A2A; border-radius: 18px 22px 16px 24px; }
+  .pv-dood .h { position: relative; padding: 42px 34px 0; font-family: var(--song); font-size: 28px; color: #222; letter-spacing: .04em; }
+  .pv-dood .u1 { position: absolute; left: 34px; bottom: 50px; width: 110px; height: 6px; border-bottom: 2px dashed #2A2A2A; transform: rotate(-1.5deg); }
+  .pv-dood .u2 { position: absolute; left: 34px; bottom: 36px; width: 74px; height: 6px; border-bottom: 2px dashed #2A2A2A; transform: rotate(1deg); }
+  .pv-dood .star { position: absolute; right: 30px; top: 38px; width: 26px; height: 26px; }
+  .pv-dood .star::before, .pv-dood .star::after { content: ''; position: absolute; background: #2A2A2A; }
+  .pv-dood .star::before { left: 12px; top: 0; width: 2px; height: 26px; }
+  .pv-dood .star::after { top: 12px; left: 0; height: 2px; width: 26px; }
+
+  .pv-y2k { background: linear-gradient(170deg, #D8DEF0 0%, #B9C2DC 45%, #E9EDF7 100%); }
+  .pv-y2k .shine { position: absolute; left: -20%; top: -40%; width: 140%; height: 90%;
+    background: linear-gradient(180deg, rgba(255,255,255,.85), rgba(255,255,255,0)); transform: rotate(-12deg); }
+  .pv-y2k .h { position: relative; padding: 56px 20px 0; font-size: 30px; font-weight: 800; letter-spacing: -.03em; color: #1B2559; text-shadow: 1px 1px 0 #fff; line-height: 1.1; }
+  .pv-y2k .pill { position: relative; margin: 16px 20px 0; display: inline-block; padding: 8px 20px; border-radius: 999px; background: #2B5BFF; color: #fff;
+    font-size: 10px; font-weight: 700; box-shadow: 0 3px 0 #16307F, 0 6px 14px rgba(43,91,255,.35); }
+
+  /* ===== 详情页 ===== */
+  .back {
+    display: inline-block; margin-top: 44px;
+    font-family: var(--sans); font-size: 17px; font-weight: 500; color: var(--ink-2);
+    background: var(--surf); border-radius: 999px; padding: 13px 28px;
+    box-shadow: var(--up-sm); cursor: pointer;
+    transition: box-shadow .2s;
+  }
+  .back:hover { color: var(--ink); }
+  .back:active { box-shadow: var(--down-sm); }
+
+  .dhead { padding: 44px 0 0; }
+  .dhead .en {
+    font-family: var(--sans); font-size: 16px; font-weight: 500; letter-spacing: .18em;
+    color: var(--ink-3); text-transform: uppercase; margin-bottom: 12px;
+  }
+  .dhead h1 { font-family: var(--sans); font-size: 82px; font-weight: 700; line-height: 1.05; letter-spacing: .01em; }
+  .dhead .desc { max-width: 760px; font-size: 19px; line-height: 1.85; color: var(--ink-2); margin-top: 22px; }
+
+  .dsec { padding: 52px 0 0; }
+  .lb {
+    font-family: var(--sans); font-size: 18px; font-weight: 700;
+    letter-spacing: .06em; color: var(--ink); margin-bottom: 20px;
+    display: flex; align-items: center; gap: 14px;
+  }
+  .lb .n {
+    font-size: 14px; color: var(--ink-3); font-weight: 500;
+    background: var(--surf); border-radius: 8px; padding: 5px 12px;
+    box-shadow: var(--up-sm);
+  }
+
+  .demo-card {
+    background: var(--surf); border-radius: 26px; padding: 18px;
+    box-shadow: var(--up-md);
+  }
+  .demo-bar { display: flex; align-items: center; gap: 12px; padding: 2px 6px 16px; flex-wrap: wrap; }
+  .demo-bar .t { font-size: 15px; font-weight: 500; letter-spacing: .1em; color: var(--ink-3); }
+  .demo-bar .sw { display: flex; gap: 10px; margin-left: auto; }
+  .demo-bar .sw button {
+    font-family: var(--sans); font-size: 15px; font-weight: 500;
+    padding: 10px 20px; border-radius: 999px; cursor: pointer;
+    border: none; background: var(--surf); color: var(--ink-2);
+    box-shadow: var(--up-sm);
+    transition: box-shadow .2s;
+  }
+  .demo-bar .sw button.on { box-shadow: var(--down-sm); color: var(--ink); font-weight: 700; }
+
+  .demo-stage { background: #DCDCDC; border-radius: 18px; padding: 20px; box-shadow: var(--down-sm); }
+  .demo-frame {
+    container-type: inline-size;
+    width: 100%; max-width: 100%; margin: 0 auto;
+    border-radius: 10px; overflow: hidden;
+    transition: max-width .32s cubic-bezier(.16,1,.3,1);
+    box-shadow: 0 1px 4px rgba(0,0,0,.1);
+  }
+  .demo-frame.w-tab { max-width: 768px; }
+  .demo-frame.w-mob { max-width: 375px; }
+
+  .d-brut { background: #FFFDF5; color: #000; }
+  .d-brut .n { display: flex; align-items: center; gap: 20px; padding: 17px 26px; border-bottom: 3px solid #000; background: #fff; }
+  .d-brut .n b { font-size: 19px; font-weight: 800; letter-spacing: -.02em; }
+  .d-brut .n a { font-size: 15px; font-weight: 600; color: #000; text-decoration: none; }
+  .d-brut .n .sp { flex: 1; }
+  .b-btn { display: inline-block; border: 3px solid #000; padding: 12px 22px; font-size: 15px; font-weight: 800;
+    box-shadow: 5px 5px 0 #000; background: #000; color: #fff; text-decoration: none; }
+  .b-btn.y { background: #FFE600; color: #000; }
+  .b-btn.w { background: #fff; color: #000; }
+  .b-btn.s { padding: 7px 14px; font-size: 13px; box-shadow: 3px 3px 0 #000; }
+  .d-brut .hero2 { padding: 48px 26px 42px; }
+  .d-brut h2 { font-size: 60px; line-height: .94; font-weight: 800; letter-spacing: -.04em; text-transform: uppercase; margin-bottom: 20px; }
+  .d-brut h2 span { background: #FFE600; }
+  .d-brut .hero2 p { font-size: 17px; line-height: 1.7; max-width: 480px; font-weight: 500; margin-bottom: 28px; }
+  .d-brut .cards { display: grid; grid-template-columns: repeat(3,1fr); gap: 18px; padding: 0 26px 40px; }
+  .d-brut .c { border: 3px solid #000; background: #fff; padding: 18px; box-shadow: 6px 6px 0 #000; }
+  .d-brut .c .ic { width: 28px; height: 28px; border: 3px solid #000; background: #FF5C39; margin-bottom: 13px; }
+  .d-brut .c:nth-child(2) .ic { background: #3D5AFE; }
+  .d-brut .c:nth-child(3) .ic { background: #FFE600; }
+  .d-brut .c h4 { font-size: 16px; font-weight: 800; margin-bottom: 7px; }
+  .d-brut .c p { font-size: 14px; line-height: 1.55; color: #333; }
+
+  @container (max-width: 780px) {
+    .d-brut .n { gap: 14px; padding: 14px 18px; }
+    .d-brut .n a { display: none; }
+    .d-brut .hero2 { padding: 34px 18px 30px; }
+    .d-brut h2 { font-size: 42px; }
+    .d-brut .hero2 p { font-size: 15px; }
+    .d-brut .cards { grid-template-columns: 1fr 1fr; gap: 12px; padding: 0 18px 28px; }
+  }
+  @container (max-width: 520px) {
+    .d-brut .n { padding: 12px 14px; }
+    .d-brut .n b { font-size: 15px; }
+    .d-brut .hero2 { padding: 26px 14px 24px; }
+    .d-brut h2 { font-size: 32px; margin-bottom: 14px; }
+    .d-brut .hero2 p { font-size: 14px; margin-bottom: 20px; }
+    .d-brut .hero2 .b-btn { display: block; text-align: center; margin: 0 0 12px; }
+    .d-brut .cards { grid-template-columns: 1fr; }
+    .d-brut .c { padding: 15px; }
+  }
+
+  /* ===== Prompt：垂直列表，宋体 ===== */
+  .ptool {
+    display: flex; align-items: center; gap: 14px; flex-wrap: wrap;
+    margin-bottom: 26px;
+  }
+  .ptool .tabs { display: flex; gap: 10px; }
+  .ptool .tabs button {
+    font-family: var(--sans); font-size: 16px; font-weight: 500;
+    padding: 11px 24px; border-radius: 999px; cursor: pointer;
+    border: none; background: var(--surf); color: var(--ink-2);
+    box-shadow: var(--up-sm); transition: box-shadow .2s;
+  }
+  .ptool .tabs button.on { box-shadow: var(--down-sm); color: var(--ink); font-weight: 700; }
+  .copy-btn {
+    margin-left: auto; font-family: var(--sans); font-size: 16px; font-weight: 700;
+    color: var(--ink); background: var(--surf); border: none; cursor: pointer;
+    padding: 12px 34px; border-radius: 999px; box-shadow: var(--up-sm);
+    letter-spacing: .08em; transition: box-shadow .2s;
+  }
+  .copy-btn:active { box-shadow: var(--down-sm); }
+
+  .plist {
+    background: var(--surf); border-radius: 26px;
+    padding: 14px 44px 44px; box-shadow: var(--up-md);
+  }
+  .pitem { padding: 34px 0 6px; border-bottom: 1px solid rgba(0,0,0,.07); }
+  .pitem:last-child { border-bottom: none; }
+  .pitem .hd { display: flex; align-items: baseline; gap: 16px; margin-bottom: 16px; }
+  .pitem .num {
+    font-family: var(--sans); font-size: 15px; font-weight: 700; color: var(--ink-3);
+    letter-spacing: .1em;
+  }
+  .pitem h4 {
+    font-family: var(--sans); font-size: 25px; font-weight: 700; letter-spacing: .02em;
+  }
+  .pitem .en {
+    font-family: var(--sans); font-size: 13px; font-weight: 500; letter-spacing: .14em;
+    color: var(--ink-3); text-transform: uppercase; margin-left: auto;
+  }
+  .pitem pre, .pitem .lines {
+    font-family: var(--song);
+    font-size: 19px; line-height: 2.05; color: var(--ink-2);
+    white-space: pre-wrap; word-break: break-word; overflow-wrap: anywhere;
+  }
+  .pitem ul { list-style: none; }
+  .pitem li {
+    font-family: var(--song); font-size: 19px; line-height: 2.05; color: var(--ink-2);
+    padding-left: 26px; position: relative;
+  }
+  .pitem li::before { content: '·'; position: absolute; left: 6px; color: var(--ink-3); font-weight: 700; }
+
+  /* ===== 响应式 ===== */
+  @media (max-width: 1220px) {
+    .wall { grid-template-columns: repeat(2, 1fr); }
+    .wrap { padding: 0 30px; }
+    .dhead h1 { font-size: 60px; }
+    .plist { padding: 14px 30px 34px; }
+  }
+  @media (max-width: 780px) {
+    body { font-size: 16px; }
+    .wrap { padding: 0 20px; }
+    .top { padding-top: 48px; }
+    .brand-btn { font-size: 26px; padding: 22px 40px; }
+    .credit { font-size: 16px; }
+    .filters { gap: 12px; padding-top: 36px; }
+    .filters .f { font-size: 16px; padding: 11px 22px; }
+    .wall { grid-template-columns: 1fr; gap: 26px; padding-top: 32px; }
+    .dhead h1 { font-size: 40px; }
+    .dhead .desc { font-size: 16px; }
+    .pitem pre, .pitem .lines, .pitem li { font-size: 17px; line-height: 2; }
+    .pitem h4 { font-size: 21px; }
+    .pitem .en { display: none; }
+    .demo-stage { padding: 12px; }
+    .copy-btn { margin-left: 0; width: 100%; }
+  }
+</style>
+</head>
+<body>
+
+<!-- ================= 首页 ================= -->
+<div class="view on" id="home">
+  <div class="wrap">
+    <div class="top">
+      <button class="brand-btn" id="brandBtn" onclick="toggleCredit()">UI设计小助手</button>
+      <div class="credit" id="credit">tiandou250 制作</div>
+    </div>
+
+    <div class="filters">
+      <div class="f on">全部</div>
+      <div class="f">经典秩序</div>
+      <div class="f">反设计</div>
+      <div class="f">材质与光</div>
+      <div class="f">复古未来</div>
+      <div class="f">结构与布局</div>
+      <div class="f">手作与本土</div>
+    </div>
+
+    <div class="wall">
+
+      <div class="card" onclick="openDetail()">
+        <div class="top2"><span class="no">01</span><span>经典秩序</span><span class="arrow fam">↗</span></div>
+        <div class="pvwrap">
+          <div class="pv pv-min">
+            <div class="t">少即是多</div>
+            <div class="l"></div><div class="l s"></div>
+            <div class="ln"></div><span class="b">EXPLORE</span>
+          </div>
+        </div>
+        <div class="info">
+          <h3>极简主义</h3>
+          <div class="en">Minimalism</div>
+          <p>去掉一切不承担功能的元素。留白即结构，字号层级是唯一的装饰。</p>
+        </div>
+      </div>
+
+      <div class="card" onclick="openDetail()">
+        <div class="top2"><span class="no">02</span><span>经典秩序</span><span class="arrow fam">↗</span></div>
+        <div class="pvwrap">
+          <div class="pv pv-swiss">
+            <div class="b1"><div class="h">秩序<br>先于<br>风格</div></div>
+            <div class="rule"></div>
+            <div class="cols"><div></div><div></div><div></div></div>
+            <div class="sq"></div>
+            <div class="bigno">02</div>
+          </div>
+        </div>
+        <div class="info">
+          <h3>瑞士编辑风</h3>
+          <div class="en">Swiss Editorial</div>
+          <p>网格、非对称、小字与超大标题的极端对比。信息即形式。</p>
+        </div>
+      </div>
+
+      <div class="card" onclick="openDetail()">
+        <div class="top2"><span class="no">03</span><span>反设计</span><span class="arrow fam">↗</span></div>
+        <div class="pvwrap">
+          <div class="pv pv-brut">
+            <div class="mini-nav"><i style="width:26px;background:#000;opacity:1"></i><span class="sp"></span><i></i><i></i></div>
+            <div class="h">SHIP UGLY.<br><span>SHIP FAST.</span></div>
+            <div class="bx"><i></i><i></i></div>
+            <div class="bx"><i></i><i></i></div>
+          </div>
+        </div>
+        <div class="info">
+          <h3>新粗野主义</h3>
+          <div class="en">Neo-brutalism</div>
+          <p>粗黑边、零模糊硬阴影、高饱和色块。故意粗糙，拒绝精致。</p>
+        </div>
+      </div>
+
+      <div class="card" onclick="openDetail()">
+        <div class="top2"><span class="no">04</span><span>材质与光</span><span class="arrow fam">↗</span></div>
+        <div class="pvwrap">
+          <div class="pv pv-glass">
+            <div class="g"><div class="t">Depth you can feel</div><i></i><i></i></div>
+            <div class="pill">GET STARTED</div>
+          </div>
+        </div>
+        <div class="info">
+          <h3>玻璃拟态</h3>
+          <div class="en">Glassmorphism</div>
+          <p>半透明磨砂叠层。必须有背景色块才有意义，否则只是脏。</p>
+        </div>
+      </div>
+
+      <div class="card" onclick="openDetail()">
+        <div class="top2"><span class="no">05</span><span>反设计</span><span class="arrow fam">↗</span></div>
+        <div class="pvwrap">
+          <div class="pv pv-mem">
+            <div class="h">LET'S<br>PLAY</div>
+            <div class="c1"></div><div class="c2"></div><div class="c3"></div>
+            <div class="sq"></div><div class="wav"></div>
+          </div>
+        </div>
+        <div class="info">
+          <h3>孟菲斯</h3>
+          <div class="en">Memphis</div>
+          <p>几何图形、撞色、无意义装饰。八十年代对「好品味」的玩笑。</p>
+        </div>
+      </div>
+
+      <div class="card" onclick="openDetail()">
+        <div class="top2"><span class="no">06</span><span>材质与光</span><span class="arrow fam">↗</span></div>
+        <div class="pvwrap">
+          <div class="pv pv-aur">
+            <div class="t">Build faster<br>with <em>aurora</em></div>
+            <div class="pill">START FREE</div>
+          </div>
+        </div>
+        <div class="info">
+          <h3>弥散极光</h3>
+          <div class="en">Aurora Gradient</div>
+          <p>深底上的大面积模糊色晕。Linear、Vercel 带火的那一套。</p>
+        </div>
+      </div>
+
+      <div class="card" onclick="openDetail()">
+        <div class="top2"><span class="no">07</span><span>复古未来</span><span class="arrow fam">↗</span></div>
+        <div class="pvwrap">
+          <div class="pv pv-cyb">
+            <div class="scan"></div>
+            <div class="h">NEON<br>DISTRICT</div>
+            <div class="bar"></div>
+            <div class="txt">&gt; system online<br>&gt; access granted</div>
+            <div class="chip">JACK IN</div>
+          </div>
+        </div>
+        <div class="info">
+          <h3>赛博朋克</h3>
+          <div class="en">Cyberpunk</div>
+          <p>黑底、霓虹青与品红、扫描线、等宽字。技术恐怖的美学。</p>
+        </div>
+      </div>
+
+      <div class="card" onclick="openDetail()">
+        <div class="top2"><span class="no">08</span><span>手作与本土</span><span class="arrow fam">↗</span></div>
+        <div class="pvwrap">
+          <div class="pv pv-guo">
+            <div class="band"></div><div class="seal">国<br>潮</div>
+            <div class="h">东方的<br>新叙事</div>
+            <div class="sub">ORIENTAL</div>
+            <div class="cloud"></div>
+          </div>
+        </div>
+        <div class="info">
+          <h3>国潮新中式</h3>
+          <div class="en">Guochao</div>
+          <p>朱红、米黄、印章、云纹，配现代网格。传统符号的当代重构。</p>
+        </div>
+      </div>
+
+      <div class="card" onclick="openDetail()">
+        <div class="top2"><span class="no">09</span><span>结构与布局</span><span class="arrow fam">↗</span></div>
+        <div class="pvwrap">
+          <div class="pv pv-typo">
+            <div class="t">字<br>就<em>是</em><br>设计</div>
+            <div class="meta"><span>TYPE FIRST</span><span>09 / 12</span></div>
+          </div>
+        </div>
+        <div class="info">
+          <h3>大排版</h3>
+          <div class="en">Typography-first</div>
+          <p>没有图片，没有插画，只有字。字号、字距、行高就是全部构图。</p>
+        </div>
+      </div>
+
+      <div class="card" onclick="openDetail()">
+        <div class="top2"><span class="no">10</span><span>结构与布局</span><span class="arrow fam">↗</span></div>
+        <div class="pvwrap">
+          <div class="pv pv-bento">
+            <div></div><div></div><div></div><div></div><div></div>
+          </div>
+        </div>
+        <div class="info">
+          <h3>Bento 网格</h3>
+          <div class="en">Bento Grid</div>
+          <p>不同尺寸的圆角方块拼成整屏，像便当盒。适合功能并列的产品页。</p>
+        </div>
+      </div>
+
+      <div class="card" onclick="openDetail()">
+        <div class="top2"><span class="no">11</span><span>手作与本土</span><span class="arrow fam">↗</span></div>
+        <div class="pvwrap">
+          <div class="pv pv-dood">
+            <div class="box"></div>
+            <div class="h">手写的<br>温度</div>
+            <div class="u1"></div><div class="u2"></div>
+            <div class="star"></div>
+          </div>
+        </div>
+        <div class="info">
+          <h3>手绘涂鸦</h3>
+          <div class="en">Hand-drawn</div>
+          <p>歪斜的边框、虚线、手写体。用不精确感换亲和力。</p>
+        </div>
+      </div>
+
+      <div class="card" onclick="openDetail()">
+        <div class="top2"><span class="no">12</span><span>复古未来</span><span class="arrow fam">↗</span></div>
+        <div class="pvwrap">
+          <div class="pv pv-y2k">
+            <div class="shine"></div>
+            <div class="h">Future<br>is shiny</div>
+            <div class="pill">ENTER</div>
+          </div>
+        </div>
+        <div class="info">
+          <h3>Y2K 千禧风</h3>
+          <div class="en">Y2K</div>
+          <p>银灰金属感、高光、亮蓝。千年之交对科技的乐观想象。</p>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</div>
+
+<!-- ================= 详情页 ================= -->
+<div class="view" id="detail">
+  <div class="wrap">
+    <div class="back" onclick="backHome()">← 返回</div>
+
+    <div class="dhead">
+      <div class="en">Neo-brutalism · 反设计</div>
+      <h1>新粗野主义</h1>
+      <div class="desc">
+        粗黑边框、零模糊硬阴影、高饱和色块。故意保留「没做完」的粗糙感，是反设计运动里唯一被产品界大量采用的风格。
+      </div>
+    </div>
+
+    <div class="dsec">
+      <div class="lb"><span class="n">01</span> 活体样本</div>
+      <div class="demo-card">
+        <div class="demo-bar">
+          <span class="t">响应式预览</span>
+          <div class="sw">
+            <button class="on" onclick="setW('desk',this)">桌面 1440</button>
+            <button onclick="setW('tab',this)">平板 768</button>
+            <button onclick="setW('mob',this)">手机 375</button>
+          </div>
+        </div>
+        <div class="demo-stage">
+          <div class="demo-frame" id="dframe">
+            <div class="d-brut">
+              <div class="n">
+                <b>BRUT.DEV</b>
+                <a href="#">Docs</a><a href="#">Pricing</a><a href="#">Blog</a>
+                <span class="sp"></span>
+                <span class="b-btn y s">GET STARTED</span>
+              </div>
+              <div class="hero2">
+                <h2>SHIP UGLY.<br><span>SHIP FAST.</span></h2>
+                <p>给独立开发者的部署工具。三十秒上线，不用配 CI，不用懂 Docker。</p>
+                <a class="b-btn y" href="#">START FREE</a>
+                <a class="b-btn w" href="#" style="margin-left:12px">READ DOCS</a>
+              </div>
+              <div class="cards">
+                <div class="c"><div class="ic"></div><h4>Zero config</h4><p>推代码就部署，配置一个字不用写。</p></div>
+                <div class="c"><div class="ic"></div><h4>Edge first</h4><p>全球边缘节点，冷启动低于 40 毫秒。</p></div>
+                <div class="c"><div class="ic"></div><h4>Pay once</h4><p>按项目收费，不按座位和请求数。</p></div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="dsec">
+      <div class="lb"><span class="n">02</span> 结构化 Prompt</div>
+      <div class="ptool">
+        <div class="tabs">
+          <button class="on" onclick="setLang('zh',this)">中文</button>
+          <button onclick="setLang('en',this)">English</button>
+        </div>
+        <button class="copy-btn">复制</button>
+      </div>
+
+      <div class="plist" id="p-zh">
+        <div class="pitem">
+          <div class="hd"><span class="num">01</span><h4>视觉 Token</h4><span class="en">Tokens</span></div>
+          <pre>边框：2.5px solid currentColor，全站统一
+圆角：卡片与按钮 0，徽章 999px
+阴影：5px 5px 0 currentColor，零模糊，全站唯一
+字阶：15 / 17 / 21 / 30 / 46 / 62
+行高：正文 1.7，标题 0.95
+间距基数：8px
+动效：140ms，仅用于 hover 位移
+配色：不指定色值，全部继承项目主色与文字色</pre>
+        </div>
+        <div class="pitem">
+          <div class="hd"><span class="num">02</span><h4>布局与响应式</h4><span class="en">Layout</span></div>
+          <pre>移动优先，三档断点：
+小于 768px：单列，左右留白 16px，区块间距 48px
+768 至 1279px：最大宽 960px，特性区 2 列，留白 32px
+1280px 及以上：最大宽 1200px，特性区 3 列，留白 48px
+
+区块顺序：导航 → Hero → 特性 → 步骤 → 价格 → 页脚
+所有区块用 CSS Grid 定义列数，禁止写死容器宽度
+Hero 上下留白：移动 40px，桌面 88px</pre>
+        </div>
+        <div class="pitem">
+          <div class="hd"><span class="num">03</span><h4>组件与响应式行为</h4><span class="en">Components</span></div>
+          <pre>按钮：最小触控区 44×44px；小于 480px 时主按钮全宽、纵向堆叠
+卡片：1 列，768px 起 2 列，1280px 起 3 列
+输入框：高度至少 48px，字号至少 16px，防 iOS 聚焦缩放
+导航：768px 起横向链接，小于 768px 折叠为汉堡加全屏抽屉
+表格：小于 768px 时每一行改为一张堆叠卡片，不做横向滚动</pre>
+        </div>
+        <div class="pitem">
+          <div class="hd"><span class="num">04</span><h4>禁止事项</h4><span class="en">Forbidden</span></div>
+          <ul>
+            <li>不要使用任何模糊半径大于 0 的阴影</li>
+            <li>不要使用渐变，三种全部禁止</li>
+            <li>不要使用 4 至 8px 的暧昧圆角</li>
+            <li>不要用固定像素写死容器宽度</li>
+            <li>不要出现横向滚动条</li>
+            <li>移动端触控区不得小于 44px</li>
+          </ul>
+        </div>
+        <div class="pitem">
+          <div class="hd"><span class="num">05</span><h4>验收标准</h4><span class="en">Acceptance</span></div>
+          <ul>
+            <li>375、768、1440 三档均无横向滚动</li>
+            <li>所有可见边框粗细一致，阴影方向一致，右下偏移</li>
+            <li>移动端所有可点元素不小于 44×44px</li>
+            <li>导航在 375px 下折叠为汉堡，且可正常展开</li>
+            <li>关闭图片后页面依然成立</li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="plist" id="p-en" style="display:none">
+        <div class="pitem">
+          <div class="hd"><span class="num">01</span><h4>Visual Tokens</h4><span class="en">Tokens</span></div>
+          <pre>Border: 2.5px solid currentColor everywhere
+Radius: 0 for cards and buttons, 999px badges
+Shadow: 5px 5px 0 currentColor, zero blur, only shadow
+Type scale: 15 / 17 / 21 / 30 / 46 / 62
+Line height: 1.7 body, 0.95 heading
+Spacing base: 8px
+Motion: 140ms, hover offset only
+Color: inherit project palette, no fixed hex</pre>
+        </div>
+        <div class="pitem">
+          <div class="hd"><span class="num">02</span><h4>Layout &amp; Responsive</h4><span class="en">Layout</span></div>
+          <pre>Mobile first, three breakpoints:
+below 768: single column, 16px gutter, 48px block gap
+768 to 1279: max 960px, features in 2 columns
+1280 and up: max 1200px, features in 3 columns
+
+Order: nav, hero, features, steps, pricing, footer
+Define columns with CSS Grid, never hardcode width
+Hero padding: 40px mobile, 88px desktop</pre>
+        </div>
+        <div class="pitem">
+          <div class="hd"><span class="num">03</span><h4>Components</h4><span class="en">Components</span></div>
+          <pre>Button: min hit area 44x44px; full width below 480px
+Card: 1 column, 2 from 768, 3 from 1280
+Input: 48px height minimum, 16px font minimum
+Nav: inline links from 768; hamburger drawer below
+Table: below 768 each row becomes a stacked card</pre>
+        </div>
+        <div class="pitem">
+          <div class="hd"><span class="num">04</span><h4>Forbidden</h4><span class="en">Forbidden</span></div>
+          <ul>
+            <li>No shadow with blur greater than 0</li>
+            <li>No gradients of any kind</li>
+            <li>No ambiguous 4 to 8px radius</li>
+            <li>No fixed pixel container widths</li>
+            <li>No horizontal scrollbar at any width</li>
+            <li>No tap target smaller than 44px</li>
+          </ul>
+        </div>
+        <div class="pitem">
+          <div class="hd"><span class="num">05</span><h4>Acceptance</h4><span class="en">Acceptance</span></div>
+          <ul>
+            <li>No horizontal scroll at 375, 768, or 1440</li>
+            <li>All borders share one weight, all shadows one direction</li>
+            <li>Every tappable element is at least 44x44px on mobile</li>
+            <li>Nav collapses to a hamburger at 375 and opens</li>
+            <li>Page still works with images disabled</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+    <div style="height:80px"></div>
+  </div>
+</div>
+
+<script>
+function toggleCredit() {
+  var c = document.getElementById('credit');
+  var b = document.getElementById('brandBtn');
+  c.classList.toggle('on');
+  b.classList.toggle('open');
+}
+function openDetail() {
+  document.getElementById('home').classList.remove('on');
+  document.getElementById('detail').classList.add('on');
+  window.scrollTo(0, 0);
+}
+function backHome() {
+  document.getElementById('detail').classList.remove('on');
+  document.getElementById('home').classList.add('on');
+  window.scrollTo(0, 0);
+}
+function setW(mode, btn) {
+  document.getElementById('dframe').className = 'demo-frame' + (mode === 'desk' ? '' : ' w-' + mode);
+  btn.parentNode.querySelectorAll('button').forEach(function (b) { b.classList.remove('on'); });
+  btn.classList.add('on');
+}
+function setLang(l, btn) {
+  document.querySelectorAll('.ptool .tabs button').forEach(function (b) { b.classList.remove('on'); });
+  btn.classList.add('on');
+  document.getElementById('p-zh').style.display = (l === 'zh') ? 'block' : 'none';
+  document.getElementById('p-en').style.display = (l === 'en') ? 'block' : 'none';
+}
+if (location.hash === '#detail') { openDetail(); }
+</script>
+</body>
+</html>

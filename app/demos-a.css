@@ -1,0 +1,736 @@
+/* ============================================================
+   Demo 骨架：一套结构，16 套皮肤
+   结构固定：nav + hero + 3 cards
+   基准宽 1200px，卡片内按 0.325 缩放
+   ============================================================ */
+
+.demo {
+  width: 1200px;
+  min-height: 700px;
+  overflow: hidden;
+  font-family: var(--sans);
+  position: relative;
+}
+
+/* 通用骨架 */
+.demo .d-nav {
+  display: flex;
+  align-items: center;
+  gap: 28px;
+  height: 68px;
+  padding: 0 44px;
+}
+
+.demo .d-logo {
+  font-weight: 700;
+  font-size: 19px;
+  letter-spacing: -0.01em;
+}
+
+.demo .d-links {
+  font-size: 15px;
+  opacity: 0.7;
+}
+
+.demo .d-spacer {
+  flex: 1;
+}
+
+.demo .d-cta {
+  font-size: 15px;
+  font-weight: 600;
+}
+
+.demo .d-hero {
+  padding: 92px 44px 0;
+}
+
+.demo .d-h {
+  font-size: 68px;
+  font-weight: 700;
+  line-height: 1.02;
+  letter-spacing: -0.04em;
+}
+
+.demo .d-p {
+  font-size: 18px;
+  line-height: 1.6;
+  margin-top: 22px;
+  max-width: 460px;
+  opacity: 0.75;
+}
+
+.demo .d-btn {
+  display: inline-block;
+  margin-top: 34px;
+  font-size: 16px;
+  font-weight: 600;
+  padding: 14px 30px;
+}
+
+.demo .d-cards {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 20px;
+  padding: 74px 44px 0;
+}
+
+.demo .d-card {
+  padding: 22px;
+}
+
+.demo .d-ic {
+  width: 30px;
+  height: 30px;
+  border-radius: 8px;
+  background: currentColor;
+  opacity: 0.85;
+}
+
+.demo .d-ct {
+  display: block;
+  font-size: 16px;
+  font-weight: 700;
+  margin-top: 16px;
+}
+
+.demo .d-cp {
+  display: block;
+  font-size: 14px;
+  line-height: 1.55;
+  margin-top: 6px;
+  opacity: 0.7;
+}
+
+/* ============================================================
+   01 极简主义
+   ============================================================ */
+.d-minimal {
+  background: #ffffff;
+  color: #1a1a1a;
+}
+.d-minimal .d-nav {
+  border-bottom: 1px solid #ededed;
+}
+.d-minimal .d-logo {
+  font-weight: 500;
+  letter-spacing: 0.18em;
+  font-size: 15px;
+}
+.d-minimal .d-links {
+  font-size: 14px;
+  color: #8a8a8a;
+  opacity: 1;
+}
+.d-minimal .d-cta {
+  color: #1a1a1a;
+  border-bottom: 1px solid #1a1a1a;
+  padding-bottom: 2px;
+  font-weight: 400;
+}
+.d-minimal .d-hero {
+  padding: 128px 44px 0;
+  max-width: 760px;
+}
+.d-minimal .d-h {
+  font-size: 62px;
+  font-weight: 400;
+  letter-spacing: -0.02em;
+  line-height: 1.1;
+}
+.d-minimal .d-p {
+  color: #8a8a8a;
+  opacity: 1;
+  font-size: 17px;
+  margin-top: 26px;
+}
+.d-minimal .d-btn {
+  background: none;
+  color: #1a1a1a;
+  border-bottom: 1px solid #1a1a1a;
+  padding: 0 0 4px;
+  margin-top: 44px;
+  font-weight: 400;
+  border-radius: 0;
+}
+.d-minimal .d-cards {
+  padding: 96px 44px 0;
+  gap: 0;
+  border-top: 1px solid #ededed;
+  margin-top: 96px;
+}
+.d-minimal .d-card {
+  padding: 0 32px 0 0;
+  border-right: 1px solid #ededed;
+}
+.d-minimal .d-card:last-child {
+  border-right: none;
+}
+.d-minimal .d-ic {
+  display: none;
+}
+.d-minimal .d-ct {
+  font-weight: 500;
+  font-size: 15px;
+  margin-top: 0;
+  letter-spacing: 0.04em;
+}
+.d-minimal .d-cp {
+  color: #8a8a8a;
+  opacity: 1;
+  font-size: 14px;
+}
+
+/* ============================================================
+   02 瑞士编辑风
+   ============================================================ */
+.d-swiss {
+  background: #ffffff;
+  color: #111111;
+}
+.d-swiss .d-nav {
+  height: 76px;
+  border-bottom: 2px solid #111;
+  padding: 0 48px;
+}
+.d-swiss .d-logo {
+  font-size: 15px;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+}
+.d-swiss .d-links {
+  font-size: 13px;
+  letter-spacing: 0.08em;
+  opacity: 1;
+  color: #767676;
+}
+.d-swiss .d-cta {
+  font-size: 13px;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  border: 1px solid #111;
+  padding: 9px 18px;
+  border-radius: 0;
+}
+.d-swiss .d-hero {
+  padding: 84px 48px 0;
+  display: grid;
+  grid-template-columns: 1.6fr 1fr;
+  gap: 60px;
+  align-items: end;
+}
+.d-swiss .d-h {
+  font-size: 104px;
+  font-weight: 400;
+  line-height: 0.92;
+  letter-spacing: -0.03em;
+  grid-row: 1 / 3;
+}
+.d-swiss .d-h::after {
+  content: "";
+  display: block;
+  width: 100%;
+  height: 2px;
+  background: #111;
+  margin-top: 28px;
+}
+.d-swiss .d-p {
+  font-size: 15px;
+  line-height: 1.75;
+  color: #767676;
+  opacity: 1;
+  margin-top: 0;
+  max-width: 320px;
+}
+.d-swiss .d-btn {
+  background: #111;
+  color: #fff;
+  border-radius: 0;
+  font-size: 13px;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  padding: 14px 26px;
+  margin-top: 18px;
+  grid-column: 2;
+  justify-self: start;
+}
+.d-swiss .d-cards {
+  grid-template-columns: repeat(3, 1fr);
+  gap: 0;
+  padding: 64px 48px 0;
+  border-top: 1px solid #dcdcdc;
+  margin-top: 76px;
+}
+.d-swiss .d-card {
+  padding: 26px 28px 0 0;
+  border-right: 1px solid #dcdcdc;
+}
+.d-swiss .d-card:last-child {
+  border-right: none;
+}
+.d-swiss .d-ic {
+  display: none;
+}
+.d-swiss .d-ct {
+  font-size: 13px;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  margin-top: 0;
+}
+.d-swiss .d-ct::before {
+  content: "01 ";
+  color: #e4002b;
+}
+.d-swiss .d-card:nth-child(2) .d-ct::before {
+  content: "02 ";
+}
+.d-swiss .d-card:nth-child(3) .d-ct::before {
+  content: "03 ";
+}
+.d-swiss .d-cp {
+  color: #767676;
+  opacity: 1;
+  font-size: 13px;
+}
+
+/* ============================================================
+   03 新粗野主义
+   ============================================================ */
+.d-brutal {
+  background: #fffdf5;
+  color: #000;
+}
+.d-brutal .d-nav {
+  border-bottom: 3px solid #000;
+  background: #fff;
+  height: 70px;
+}
+.d-brutal .d-logo {
+  font-size: 20px;
+  font-weight: 800;
+  letter-spacing: -0.02em;
+  text-transform: uppercase;
+}
+.d-brutal .d-links {
+  font-size: 15px;
+  font-weight: 600;
+  opacity: 1;
+}
+.d-brutal .d-cta {
+  background: #ffe600;
+  border: 3px solid #000;
+  box-shadow: 4px 4px 0 #000;
+  padding: 9px 18px;
+  font-weight: 800;
+  font-size: 13px;
+  border-radius: 0;
+}
+.d-brutal .d-h {
+  font-size: 88px;
+  font-weight: 800;
+  line-height: 0.92;
+  letter-spacing: -0.045em;
+  text-transform: uppercase;
+}
+.d-brutal .d-h em {
+  font-style: normal;
+  background: #ffe600;
+}
+.d-brutal .d-p {
+  font-size: 17px;
+  font-weight: 500;
+  opacity: 1;
+  color: #333;
+  margin-top: 26px;
+}
+.d-brutal .d-btn {
+  background: #ffe600;
+  color: #000;
+  border: 3px solid #000;
+  box-shadow: 6px 6px 0 #000;
+  font-weight: 800;
+  border-radius: 0;
+  padding: 16px 32px;
+}
+.d-brutal .d-cards {
+  gap: 22px;
+  padding-top: 70px;
+}
+.d-brutal .d-card {
+  background: #fff;
+  border: 3px solid #000;
+  box-shadow: 6px 6px 0 #000;
+  padding: 24px;
+}
+.d-brutal .d-ic {
+  border: 3px solid #000;
+  border-radius: 0;
+  background: #ff5c39;
+  opacity: 1;
+  width: 34px;
+  height: 34px;
+}
+.d-brutal .d-card:nth-child(2) .d-ic {
+  background: #3d5afe;
+}
+.d-brutal .d-card:nth-child(3) .d-ic {
+  background: #ffe600;
+}
+.d-brutal .d-ct {
+  font-size: 17px;
+  font-weight: 800;
+}
+.d-brutal .d-cp {
+  color: #333;
+  opacity: 1;
+  font-weight: 500;
+}
+
+/* ============================================================
+   04 孟菲斯
+   ============================================================ */
+.d-memphis {
+  background: #fdf6ec;
+  color: #141414;
+  overflow: hidden;
+}
+.d-memphis .d-nav {
+  border-bottom: 3px solid #141414;
+}
+.d-memphis .d-logo {
+  font-size: 19px;
+  font-weight: 800;
+}
+.d-memphis .d-cta {
+  background: #ff5d8f;
+  color: #fff;
+  border: 3px solid #141414;
+  border-radius: 999px;
+  padding: 9px 20px;
+  font-weight: 800;
+}
+.d-memphis .d-hero {
+  position: relative;
+  padding-top: 96px;
+}
+.d-memphis .d-h {
+  font-size: 84px;
+  font-weight: 800;
+  line-height: 0.95;
+  letter-spacing: -0.03em;
+  position: relative;
+  z-index: 2;
+}
+.d-memphis .d-h em {
+  font-style: normal;
+  color: #ff5d8f;
+}
+.d-memphis .d-btn {
+  background: #141414;
+  color: #fff;
+  border-radius: 999px;
+  font-weight: 800;
+  padding: 15px 34px;
+  position: relative;
+  z-index: 2;
+}
+.d-memphis .d-cards {
+  position: relative;
+  z-index: 2;
+  gap: 22px;
+  padding-top: 66px;
+}
+.d-memphis .d-card {
+  background: #fff;
+  border: 3px solid #141414;
+  border-radius: 20px;
+  padding: 22px;
+}
+.d-memphis .d-card:nth-child(2) {
+  background: #3ddc97;
+}
+.d-memphis .d-card:nth-child(3) {
+  background: #ffc93c;
+}
+.d-memphis .d-ic {
+  border-radius: 50%;
+  background: #ff5d8f;
+  opacity: 1;
+  border: 3px solid #141414;
+}
+.d-memphis .d-cp {
+  color: #141414;
+  opacity: 0.75;
+}
+
+/* ============================================================
+   05 玻璃拟态
+   ============================================================ */
+.d-glass {
+  background: #2b1a5e;
+  color: #fff;
+}
+.d-glass::before {
+  content: "";
+  position: absolute;
+  inset: -30%;
+  background: radial-gradient(circle at 22% 26%, #7c4dff 0%, transparent 46%),
+    radial-gradient(circle at 78% 64%, #ff4d9d 0%, transparent 46%),
+    radial-gradient(circle at 58% 8%, #00e5ff 0%, transparent 40%);
+  filter: blur(30px);
+}
+.d-glass > * {
+  position: relative;
+}
+.d-glass .d-nav {
+  background: rgba(255, 255, 255, 0.1);
+  border-bottom: 1px solid rgba(255, 255, 255, 0.22);
+  height: 72px;
+}
+.d-glass .d-logo {
+  font-size: 19px;
+  font-weight: 600;
+}
+.d-glass .d-links {
+  opacity: 0.8;
+  font-size: 15px;
+}
+.d-glass .d-cta {
+  background: rgba(255, 255, 255, 0.92);
+  color: #1b1033;
+  border-radius: 999px;
+  padding: 10px 22px;
+  font-weight: 600;
+}
+.d-glass .d-hero {
+  padding-top: 92px;
+}
+.d-glass .d-h {
+  font-size: 74px;
+  font-weight: 600;
+  letter-spacing: -0.03em;
+  line-height: 1.05;
+}
+.d-glass .d-p {
+  opacity: 0.78;
+  font-size: 18px;
+}
+.d-glass .d-btn {
+  background: rgba(255, 255, 255, 0.94);
+  color: #1b1033;
+  border-radius: 999px;
+  font-weight: 600;
+  padding: 16px 34px;
+}
+.d-glass .d-cards {
+  gap: 20px;
+  padding-top: 66px;
+}
+.d-glass .d-card {
+  background: rgba(255, 255, 255, 0.14);
+  border: 1px solid rgba(255, 255, 255, 0.3);
+  border-radius: 22px;
+  backdrop-filter: blur(16px);
+  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.45),
+    0 12px 28px rgba(0, 0, 0, 0.22);
+}
+.d-glass .d-ic {
+  background: rgba(255, 255, 255, 0.9);
+  border-radius: 10px;
+  opacity: 1;
+}
+.d-glass .d-cp {
+  opacity: 0.8;
+}
+
+/* ============================================================
+   06 弥散极光
+   ============================================================ */
+.d-aurora {
+  background: #07070b;
+  color: #fff;
+}
+.d-aurora::before {
+  content: "";
+  position: absolute;
+  inset: -20%;
+  background: radial-gradient(
+      ellipse at 18% 18%,
+      rgba(99, 102, 241, 0.9) 0%,
+      transparent 52%
+    ),
+    radial-gradient(
+      ellipse at 82% 58%,
+      rgba(236, 72, 153, 0.62) 0%,
+      transparent 50%
+    ),
+    radial-gradient(
+      ellipse at 48% 96%,
+      rgba(34, 211, 238, 0.48) 0%,
+      transparent 52%
+    );
+  filter: blur(70px);
+}
+.d-aurora > * {
+  position: relative;
+}
+.d-aurora .d-nav {
+  height: 74px;
+}
+.d-aurora .d-logo {
+  font-size: 19px;
+  font-weight: 600;
+}
+.d-aurora .d-links {
+  opacity: 0.6;
+  font-size: 15px;
+}
+.d-aurora .d-cta {
+  border: 1px solid rgba(255, 255, 255, 0.24);
+  border-radius: 8px;
+  padding: 10px 20px;
+  font-size: 14px;
+}
+.d-aurora .d-hero {
+  padding-top: 104px;
+  text-align: center;
+}
+.d-aurora .d-h {
+  font-size: 78px;
+  font-weight: 600;
+  letter-spacing: -0.035em;
+  line-height: 1.04;
+}
+.d-aurora .d-h em {
+  font-style: normal;
+  background: linear-gradient(100deg, #a5b4fc, #f0abfc, #67e8f9);
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+}
+.d-aurora .d-p {
+  opacity: 0.6;
+  margin: 24px auto 0;
+  text-align: center;
+}
+.d-aurora .d-btn {
+  background: #fff;
+  color: #07070b;
+  border-radius: 8px;
+  font-weight: 600;
+  padding: 15px 30px;
+}
+.d-aurora .d-cards {
+  gap: 20px;
+  padding-top: 72px;
+}
+.d-aurora .d-card {
+  background: rgba(255, 255, 255, 0.035);
+  border: 1px solid rgba(255, 255, 255, 0.09);
+  border-radius: 16px;
+}
+.d-aurora .d-ic {
+  background: linear-gradient(140deg, #818cf8, #f0abfc);
+  border-radius: 9px;
+  opacity: 1;
+}
+.d-aurora .d-cp {
+  opacity: 0.55;
+}
+
+/* ============================================================
+   07 赛博朋克
+   ============================================================ */
+.d-cyber {
+  background: #06060a;
+  color: #e8fffe;
+  font-family: var(--mono);
+}
+.d-cyber::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: repeating-linear-gradient(
+    0deg,
+    rgba(0, 255, 240, 0.055) 0 1px,
+    transparent 1px 5px
+  );
+  pointer-events: none;
+}
+.d-cyber > * {
+  position: relative;
+}
+.d-cyber .d-nav {
+  border-bottom: 1px solid rgba(0, 255, 240, 0.35);
+  height: 66px;
+}
+.d-cyber .d-logo {
+  color: #00fff0;
+  font-size: 17px;
+  letter-spacing: 0.14em;
+  text-shadow: 0 0 12px rgba(0, 255, 240, 0.7);
+}
+.d-cyber .d-links {
+  opacity: 1;
+  color: #7a9a97;
+  font-size: 13px;
+  letter-spacing: 0.08em;
+}
+.d-cyber .d-cta {
+  border: 1px solid #00fff0;
+  color: #00fff0;
+  padding: 9px 18px;
+  font-size: 12px;
+  letter-spacing: 0.16em;
+  border-radius: 0;
+}
+.d-cyber .d-h {
+  font-size: 76px;
+  font-weight: 700;
+  letter-spacing: 0.02em;
+  line-height: 1.04;
+  text-transform: uppercase;
+  color: #00fff0;
+  text-shadow: 0 0 16px rgba(0, 255, 240, 0.6), 3px 0 0 rgba(255, 46, 151, 0.7);
+}
+.d-cyber .d-p {
+  opacity: 1;
+  color: #7a9a97;
+  font-size: 15px;
+  letter-spacing: 0.04em;
+}
+.d-cyber .d-btn {
+  border: 1px solid #ff2e97;
+  color: #ff2e97;
+  border-radius: 0;
+  letter-spacing: 0.16em;
+  font-size: 13px;
+  padding: 14px 26px;
+  box-shadow: 0 0 18px rgba(255, 46, 151, 0.3);
+}
+.d-cyber .d-cards {
+  gap: 18px;
+  padding-top: 66px;
+}
+.d-cyber .d-card {
+  background: #0c0c12;
+  border: 1px solid rgba(0, 255, 240, 0.28);
+  border-radius: 0;
+  padding: 20px;
+}
+.d-cyber .d-ic {
+  background: #00fff0;
+  border-radius: 0;
+  opacity: 1;
+  box-shadow: 0 0 14px rgba(0, 255, 240, 0.55);
+}
+.d-cyber .d-ct {
+  color: #00fff0;
+  font-size: 14px;
+  letter-spacing: 0.1em;
+}
+.d-cyber .d-cp {
+  color: #7a9a97;
+  opacity: 1;
+  font-size: 12px;
+}

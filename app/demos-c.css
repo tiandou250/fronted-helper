@@ -1,0 +1,465 @@
+/* ============================================================
+   Demo 皮肤 17–20
+   ============================================================ */
+
+/* 17 苹果风 */
+.d-apple {
+  background: #ffffff;
+  color: #1d1d1f;
+}
+.d-apple .d-nav {
+  height: 72px;
+  background: rgba(255, 255, 255, 0.86);
+  backdrop-filter: blur(20px);
+  border-bottom: 1px solid #d2d2d7;
+}
+.d-apple .d-logo {
+  font-size: 18px;
+  font-weight: 600;
+  letter-spacing: -0.01em;
+}
+.d-apple .d-links {
+  font-size: 14px;
+  color: #6e6e73;
+  opacity: 1;
+}
+.d-apple .d-cta {
+  font-size: 14px;
+  color: #0071e3;
+  font-weight: 400;
+}
+.d-apple .d-hero {
+  padding: 128px 44px 0;
+  text-align: center;
+}
+.d-apple .d-h {
+  font-size: 82px;
+  font-weight: 600;
+  letter-spacing: -0.025em;
+  line-height: 1.03;
+}
+.d-apple .d-p {
+  font-size: 23px;
+  line-height: 1.45;
+  color: #6e6e73;
+  opacity: 1;
+  margin: 22px auto 0;
+  max-width: 620px;
+  text-align: center;
+}
+.d-apple .d-btn {
+  background: #0071e3;
+  color: #fff;
+  border-radius: 980px;
+  font-size: 16px;
+  font-weight: 400;
+  padding: 14px 30px;
+  margin-top: 30px;
+}
+.d-apple .d-cards {
+  gap: 20px;
+  padding: 104px 44px 0;
+}
+.d-apple .d-card {
+  background: #f5f5f7;
+  border-radius: 18px;
+  padding: 34px 28px;
+  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.06);
+}
+.d-apple .d-ic {
+  width: 40px;
+  height: 40px;
+  border-radius: 12px;
+  background: #1d1d1f;
+  opacity: 0.9;
+  margin-bottom: 20px;
+}
+.d-apple .d-ct {
+  font-size: 21px;
+  font-weight: 600;
+  letter-spacing: -0.01em;
+  margin-top: 0;
+}
+.d-apple .d-cp {
+  font-size: 15px;
+  color: #6e6e73;
+  opacity: 1;
+  margin-top: 8px;
+  line-height: 1.5;
+}
+
+/* 18 电商促销 */
+.d-sale {
+  background: #ff4d4f;
+  color: #2b0000;
+}
+.d-sale .d-nav {
+  height: 68px;
+  background: #c1121f;
+  border-bottom: 3px solid #8c0d16;
+  color: #fff;
+}
+.d-sale .d-logo {
+  font-size: 22px;
+  font-weight: 900;
+  letter-spacing: 0.02em;
+  color: #ffd700;
+  text-shadow: 2px 2px 0 #8c0d16;
+}
+.d-sale .d-links {
+  font-size: 15px;
+  font-weight: 700;
+  opacity: 1;
+  color: #fff;
+}
+.d-sale .d-cta {
+  background: #ffd700;
+  color: #8c0d16;
+  border: 3px solid #8c0d16;
+  border-radius: 8px;
+  padding: 8px 18px;
+  font-weight: 900;
+  font-size: 14px;
+  box-shadow: 3px 3px 0 #8c0d16;
+}
+.d-sale .d-hero {
+  padding: 62px 44px 0;
+  text-align: center;
+}
+.d-sale .d-h {
+  font-size: 74px;
+  font-weight: 900;
+  line-height: 1;
+  letter-spacing: -0.02em;
+  color: #fff;
+  text-shadow: 4px 4px 0 #c1121f, 8px 8px 0 rgba(140, 13, 22, 0.35);
+}
+.d-sale .d-p {
+  font-size: 17px;
+  font-weight: 700;
+  color: #fff8e7;
+  opacity: 1;
+  margin: 24px auto 0;
+  text-align: center;
+  max-width: none;
+}
+.d-sale .d-btn {
+  background: #ffd700;
+  color: #8c0d16;
+  border: 3px solid #8c0d16;
+  border-radius: 8px;
+  font-weight: 900;
+  font-size: 18px;
+  padding: 16px 40px;
+  box-shadow: 4px 4px 0 #8c0d16;
+  margin-top: 26px;
+}
+.d-sale .d-cards {
+  grid-template-columns: repeat(4, 1fr);
+  gap: 12px;
+  padding: 54px 44px 0;
+}
+.d-sale .d-card {
+  background: #fff8e7;
+  border: 3px solid #c1121f;
+  border-radius: 4px;
+  padding: 16px;
+  position: relative;
+  box-shadow: 4px 4px 0 #8c0d16;
+}
+.d-sale .d-card::before {
+  content: "5折";
+  position: absolute;
+  top: -12px;
+  right: -10px;
+  background: #ffd700;
+  color: #8c0d16;
+  border: 2px solid #8c0d16;
+  border-radius: 999px;
+  width: 46px;
+  height: 46px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 13px;
+  font-weight: 900;
+  transform: rotate(-12deg);
+}
+.d-sale .d-ic {
+  display: none;
+}
+.d-sale .d-ct {
+  font-size: 15px;
+  font-weight: 700;
+  margin-top: 0;
+  color: #2b0000;
+}
+.d-sale .d-cp {
+  font-size: 26px;
+  font-weight: 900;
+  color: #ff4d4f;
+  opacity: 1;
+  margin-top: 8px;
+}
+.d-sale .d-cp::before {
+  content: "¥ ";
+  font-size: 16px;
+}
+
+/* 19 科技蓝企业风 */
+.d-tech {
+  background: #f0f5ff;
+  color: #1d2129;
+}
+.d-tech .d-nav {
+  height: 72px;
+  background: #fff;
+  border-bottom: 1px solid #e5e9f2;
+}
+.d-tech .d-logo {
+  font-size: 19px;
+  font-weight: 700;
+  color: #165dff;
+  letter-spacing: -0.01em;
+}
+.d-tech .d-links {
+  font-size: 15px;
+  color: #4e5969;
+  opacity: 1;
+}
+.d-tech .d-cta {
+  background: linear-gradient(100deg, #165dff, #00c2ff);
+  color: #fff;
+  border-radius: 8px;
+  padding: 9px 20px;
+  font-size: 14px;
+  font-weight: 600;
+  box-shadow: 0 4px 12px rgba(22, 93, 255, 0.28);
+}
+.d-tech .d-hero {
+  padding: 76px 44px 0;
+  display: grid;
+  grid-template-columns: 1.15fr 0.85fr;
+  gap: 50px;
+  align-items: center;
+}
+.d-tech .d-h {
+  font-size: 56px;
+  font-weight: 600;
+  line-height: 1.15;
+  letter-spacing: -0.02em;
+  color: #1d2129;
+}
+.d-tech .d-p {
+  font-size: 17px;
+  line-height: 1.75;
+  color: #4e5969;
+  opacity: 1;
+  margin-top: 20px;
+  max-width: 440px;
+}
+.d-tech .d-btn {
+  background: linear-gradient(100deg, #165dff, #00c2ff);
+  color: #fff;
+  border-radius: 8px;
+  font-size: 16px;
+  font-weight: 600;
+  padding: 14px 30px;
+  box-shadow: 0 6px 18px rgba(22, 93, 255, 0.3);
+  margin-top: 28px;
+}
+.d-tech .d-hero::after {
+  content: "";
+  grid-column: 2;
+  grid-row: 1 / span 3;
+  height: 300px;
+  border-radius: 12px;
+  background: linear-gradient(140deg, #165dff 0%, #00c2ff 60%, #7ef0ff 100%);
+  box-shadow: 0 18px 40px rgba(22, 93, 255, 0.25);
+}
+.d-tech .d-cards {
+  gap: 20px;
+  padding: 78px 44px 0;
+}
+.d-tech .d-card {
+  background: #fff;
+  border-radius: 8px;
+  padding: 26px;
+  box-shadow: 0 4px 12px rgba(22, 93, 255, 0.1);
+}
+.d-tech .d-ic {
+  width: 42px;
+  height: 42px;
+  border-radius: 50%;
+  background: #e8f0ff;
+  opacity: 1;
+  position: relative;
+}
+.d-tech .d-ic::after {
+  content: "";
+  position: absolute;
+  inset: 11px;
+  border: 2px solid #165dff;
+  border-radius: 4px;
+}
+.d-tech .d-ct {
+  font-size: 17px;
+  font-weight: 600;
+  margin-top: 18px;
+  color: #1d2129;
+}
+.d-tech .d-cp {
+  font-size: 14px;
+  line-height: 1.65;
+  color: #4e5969;
+  opacity: 1;
+  margin-top: 8px;
+}
+
+/* 20 极繁主义 */
+.d-maximal {
+  background: #fff8e7;
+  color: #141414;
+  overflow: hidden;
+}
+.d-maximal::before {
+  content: "";
+  position: absolute;
+  width: 260px;
+  height: 260px;
+  border-radius: 50%;
+  background: #7b2ff7;
+  top: 84px;
+  right: -70px;
+  opacity: 0.9;
+}
+.d-maximal::after {
+  content: "";
+  position: absolute;
+  width: 130px;
+  height: 130px;
+  background: #00d9c0;
+  border: 2px solid #141414;
+  bottom: 120px;
+  left: -34px;
+  transform: rotate(18deg);
+}
+.d-maximal > * {
+  position: relative;
+  z-index: 1;
+}
+.d-maximal .d-nav {
+  height: 70px;
+  border-bottom: 2px solid #141414;
+  background: #ffd93d;
+}
+.d-maximal .d-logo {
+  font-size: 21px;
+  font-weight: 900;
+  letter-spacing: -0.02em;
+  text-transform: uppercase;
+}
+.d-maximal .d-links {
+  font-size: 15px;
+  font-weight: 700;
+  opacity: 1;
+}
+.d-maximal .d-cta {
+  background: #ff3d7f;
+  color: #fff;
+  border: 2px solid #141414;
+  border-radius: 999px;
+  padding: 8px 18px;
+  font-weight: 900;
+  font-size: 13px;
+  transform: rotate(-2deg);
+}
+.d-maximal .d-hero {
+  padding: 64px 44px 0;
+}
+.d-maximal .d-h {
+  font-size: 86px;
+  font-weight: 900;
+  line-height: 0.92;
+  letter-spacing: -0.04em;
+  text-transform: uppercase;
+  max-width: 620px;
+}
+.d-maximal .d-h em {
+  font-style: normal;
+  color: #ff3d7f;
+  -webkit-text-stroke: 2px #141414;
+}
+.d-maximal .d-p {
+  font-size: 16px;
+  font-weight: 600;
+  line-height: 1.6;
+  color: #141414;
+  opacity: 1;
+  margin-top: 20px;
+  max-width: 380px;
+  background: #fff8e7;
+  display: inline-block;
+  padding: 2px 6px;
+}
+.d-maximal .d-btn {
+  background: #ff6b35;
+  color: #141414;
+  border: 2px solid #141414;
+  border-radius: 8px;
+  font-weight: 900;
+  font-size: 17px;
+  padding: 15px 30px;
+  box-shadow: 5px 5px 0 #141414;
+  transform: rotate(1.5deg);
+  margin-top: 26px;
+}
+.d-maximal .d-cards {
+  gap: 16px;
+  padding: 60px 44px 0;
+}
+.d-maximal .d-card {
+  border: 2px solid #141414;
+  padding: 20px;
+  background: #fff;
+}
+.d-maximal .d-card:nth-child(1) {
+  background: #ffd93d;
+  transform: rotate(-1.2deg);
+}
+.d-maximal .d-card:nth-child(2) {
+  background: #00d9c0;
+  transform: rotate(1deg);
+}
+.d-maximal .d-card:nth-child(3) {
+  background: #7b2ff7;
+  color: #fff;
+  transform: rotate(-0.6deg);
+}
+.d-maximal .d-ic {
+  width: 34px;
+  height: 34px;
+  border-radius: 0;
+  background: #141414;
+  opacity: 1;
+  transform: rotate(45deg);
+}
+.d-maximal .d-card:nth-child(3) .d-ic {
+  background: #ffd93d;
+}
+.d-maximal .d-ct {
+  font-size: 19px;
+  font-weight: 900;
+  text-transform: uppercase;
+  letter-spacing: -0.01em;
+}
+.d-maximal .d-cp {
+  font-size: 14px;
+  font-weight: 600;
+  opacity: 1;
+  margin-top: 6px;
+  line-height: 1.5;
+}
+.d-maximal .d-card:nth-child(3) .d-cp {
+  color: rgba(255, 255, 255, 0.85);
+}

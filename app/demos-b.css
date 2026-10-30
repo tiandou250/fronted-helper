@@ -1,0 +1,801 @@
+/* ============================================================
+   Demo 皮肤 09–16
+   ============================================================ */
+
+/* 09 Y2K 千禧风 */
+.d-y2k {
+  background: linear-gradient(168deg, #d8def0 0%, #b9c2dc 46%, #eef2fb 100%);
+  color: #1b2559;
+}
+.d-y2k::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(
+    180deg,
+    rgba(255, 255, 255, 0.7) 0%,
+    rgba(255, 255, 255, 0) 42%
+  );
+  pointer-events: none;
+}
+.d-y2k > * {
+  position: relative;
+}
+.d-y2k .d-nav {
+  height: 70px;
+}
+.d-y2k .d-logo {
+  font-size: 20px;
+  font-weight: 800;
+  letter-spacing: -0.03em;
+  text-shadow: 1px 1px 0 #fff;
+}
+.d-y2k .d-links {
+  opacity: 0.7;
+  font-weight: 500;
+}
+.d-y2k .d-cta {
+  background: #2b5bff;
+  color: #fff;
+  border-radius: 999px;
+  padding: 10px 22px;
+  box-shadow: 0 3px 0 #16307f, 0 6px 14px rgba(43, 91, 255, 0.35);
+  font-size: 14px;
+}
+.d-y2k .d-hero {
+  padding-top: 96px;
+}
+.d-y2k .d-h {
+  font-size: 86px;
+  font-weight: 800;
+  letter-spacing: -0.04em;
+  line-height: 0.96;
+  text-shadow: 2px 2px 0 #fff;
+}
+.d-y2k .d-p {
+  color: #3a4570;
+  opacity: 1;
+}
+.d-y2k .d-btn {
+  background: #2b5bff;
+  color: #fff;
+  border-radius: 999px;
+  font-weight: 700;
+  padding: 16px 34px;
+  box-shadow: 0 4px 0 #16307f, 0 10px 22px rgba(43, 91, 255, 0.4);
+}
+.d-y2k .d-cards {
+  gap: 20px;
+  padding-top: 70px;
+}
+.d-y2k .d-card {
+  background: rgba(255, 255, 255, 0.85);
+  border-radius: 18px;
+  box-shadow: 0 1px 0 #fff inset, 0 6px 18px rgba(27, 37, 89, 0.12);
+}
+.d-y2k .d-ic {
+  background: linear-gradient(140deg, #7ea2ff, #2b5bff);
+  border-radius: 50%;
+  opacity: 1;
+}
+.d-y2k .d-cp {
+  color: #3a4570;
+  opacity: 1;
+}
+
+/* 10 Bento 网格 */
+.d-bento {
+  background: #f7f7f5;
+  color: #111;
+}
+.d-bento .d-nav {
+  height: 66px;
+  padding: 0 36px;
+}
+.d-bento .d-logo {
+  font-size: 19px;
+  font-weight: 700;
+}
+.d-bento .d-links {
+  font-size: 14px;
+  color: #666;
+  opacity: 1;
+}
+.d-bento .d-cta {
+  background: #111;
+  color: #fff;
+  border-radius: 999px;
+  padding: 10px 20px;
+  font-size: 14px;
+}
+.d-bento .d-hero {
+  padding: 40px 36px 0;
+}
+.d-bento .d-h {
+  font-size: 58px;
+  font-weight: 700;
+  letter-spacing: -0.035em;
+  line-height: 1.02;
+  max-width: 700px;
+}
+.d-bento .d-p {
+  font-size: 17px;
+  color: #666;
+  opacity: 1;
+  margin-top: 16px;
+  max-width: 420px;
+}
+.d-bento .d-btn {
+  display: none;
+}
+.d-bento .d-cards {
+  display: grid;
+  grid-template-columns: 1.5fr 1fr 1fr;
+  grid-template-rows: 128px 128px;
+  gap: 12px;
+  padding: 34px 36px 0;
+}
+.d-bento .d-card {
+  background: #fff;
+  border-radius: 18px;
+  padding: 22px;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.06);
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-end;
+}
+.d-bento .d-card:first-child {
+  grid-row: span 2;
+  background: #111;
+  color: #fff;
+}
+.d-bento .d-card:nth-child(2) {
+  grid-column: span 2;
+  background: #ececea;
+}
+.d-bento .d-ic {
+  border-radius: 50%;
+  background: #111;
+  opacity: 1;
+  margin-bottom: auto;
+}
+.d-bento .d-card:first-child .d-ic {
+  background: #fff;
+}
+.d-bento .d-ct {
+  margin-top: 12px;
+}
+.d-bento .d-cp {
+  color: #666;
+  opacity: 1;
+  font-size: 13px;
+}
+.d-bento .d-card:first-child .d-cp {
+  color: rgba(255, 255, 255, 0.65);
+}
+
+/* 11 大排版 */
+.d-typo {
+  background: #0e0e0e;
+  color: #f5f2ea;
+}
+.d-typo .d-nav {
+  height: 74px;
+  border-bottom: 1px solid #2a2a2a;
+}
+.d-typo .d-logo {
+  font-family: var(--song);
+  font-size: 20px;
+  letter-spacing: 0.2em;
+}
+.d-typo .d-links {
+  font-size: 12px;
+  letter-spacing: 0.24em;
+  text-transform: uppercase;
+  color: #7a7a78;
+  opacity: 1;
+}
+.d-typo .d-cta {
+  font-size: 12px;
+  letter-spacing: 0.22em;
+  text-transform: uppercase;
+  border-bottom: 1px solid #f5f2ea;
+  padding-bottom: 3px;
+}
+.d-typo .d-hero {
+  padding: 74px 40px 0;
+}
+.d-typo .d-h {
+  font-family: var(--song);
+  font-size: 148px;
+  font-weight: 400;
+  line-height: 0.86;
+  letter-spacing: -0.045em;
+}
+.d-typo .d-h em {
+  font-style: normal;
+  -webkit-text-stroke: 1.5px #f5f2ea;
+  color: transparent;
+}
+.d-typo .d-p {
+  font-size: 15px;
+  line-height: 1.8;
+  color: #9a9a98;
+  opacity: 1;
+  max-width: 380px;
+  margin-top: 30px;
+}
+.d-typo .d-btn {
+  font-size: 12px;
+  letter-spacing: 0.22em;
+  text-transform: uppercase;
+  border-bottom: 1px solid #f5f2ea;
+  padding: 0 0 4px;
+  margin-top: 28px;
+  border-radius: 0;
+}
+.d-typo .d-cards {
+  gap: 0;
+  padding: 56px 40px 0;
+  border-top: 1px solid #2a2a2a;
+  margin-top: 56px;
+}
+.d-typo .d-card {
+  padding: 24px 24px 0 0;
+  border-right: 1px solid #2a2a2a;
+}
+.d-typo .d-card:last-child {
+  border-right: none;
+}
+.d-typo .d-ic {
+  display: none;
+}
+.d-typo .d-ct {
+  font-family: var(--song);
+  font-size: 22px;
+  font-weight: 400;
+  margin-top: 0;
+}
+.d-typo .d-cp {
+  color: #7a7a78;
+  opacity: 1;
+  font-size: 13px;
+}
+
+/* 12 国潮新中式 */
+.d-guochao {
+  background: #f7ebd5;
+  color: #3a1f1a;
+}
+.d-guochao .d-nav {
+  height: 80px;
+  background: #a62b2b;
+  color: #f7ebd5;
+  border-bottom: 3px solid #7d1f1f;
+}
+.d-guochao .d-logo {
+  font-family: var(--song);
+  font-size: 22px;
+  letter-spacing: 0.24em;
+  font-weight: 400;
+}
+.d-guochao .d-links {
+  font-family: var(--song);
+  font-size: 15px;
+  letter-spacing: 0.16em;
+  opacity: 0.9;
+}
+.d-guochao .d-cta {
+  border: 1px solid rgba(247, 235, 213, 0.7);
+  padding: 8px 18px;
+  font-size: 13px;
+  letter-spacing: 0.16em;
+  font-family: var(--song);
+}
+.d-guochao .d-hero {
+  padding: 86px 60px 0;
+  position: relative;
+}
+.d-guochao .d-h {
+  font-family: var(--song);
+  font-size: 84px;
+  font-weight: 400;
+  letter-spacing: 0.16em;
+  line-height: 1.28;
+}
+.d-guochao .d-h em {
+  font-style: normal;
+  color: #a62b2b;
+}
+.d-guochao .d-p {
+  font-family: var(--song);
+  font-size: 16px;
+  letter-spacing: 0.12em;
+  line-height: 2;
+  color: #8a6a55;
+  opacity: 1;
+  margin-top: 26px;
+}
+.d-guochao .d-btn {
+  background: #a62b2b;
+  color: #f7ebd5;
+  font-family: var(--song);
+  letter-spacing: 0.2em;
+  padding: 14px 34px;
+  border-radius: 2px;
+}
+.d-guochao .d-cards {
+  gap: 18px;
+  padding: 64px 60px 0;
+}
+.d-guochao .d-card {
+  background: #fbf4e4;
+  border: 1px solid rgba(166, 43, 43, 0.3);
+  border-radius: 2px;
+  padding: 22px;
+}
+.d-guochao .d-ic {
+  border-radius: 2px;
+  background: #a62b2b;
+  opacity: 1;
+  width: 26px;
+  height: 26px;
+}
+.d-guochao .d-ct {
+  font-family: var(--song);
+  font-weight: 400;
+  font-size: 18px;
+  letter-spacing: 0.12em;
+}
+.d-guochao .d-cp {
+  font-family: var(--song);
+  color: #8a6a55;
+  opacity: 1;
+  letter-spacing: 0.06em;
+}
+
+/* 13 手绘涂鸦 */
+.d-doodle {
+  background: #fcfaf3;
+  color: #222;
+}
+.d-doodle .d-nav {
+  height: 74px;
+  border-bottom: 2px dashed #2a2a2a;
+}
+.d-doodle .d-logo {
+  font-family: var(--song);
+  font-size: 21px;
+  letter-spacing: 0.1em;
+}
+.d-doodle .d-links {
+  font-family: var(--song);
+  font-size: 15px;
+  opacity: 0.75;
+}
+.d-doodle .d-cta {
+  border: 2px solid #2a2a2a;
+  border-radius: 20px 24px 18px 22px;
+  padding: 8px 18px;
+  font-family: var(--song);
+}
+.d-doodle .d-hero {
+  padding: 90px 50px 0;
+}
+.d-doodle .d-h {
+  font-family: var(--song);
+  font-size: 78px;
+  font-weight: 400;
+  letter-spacing: 0.04em;
+  line-height: 1.24;
+}
+.d-doodle .d-h em {
+  font-style: normal;
+  border-bottom: 4px dashed #2a2a2a;
+}
+.d-doodle .d-p {
+  font-family: var(--song);
+  font-size: 17px;
+  color: #555;
+  opacity: 1;
+  margin-top: 22px;
+}
+.d-doodle .d-btn {
+  border: 2px solid #2a2a2a;
+  border-radius: 22px 26px 20px 24px;
+  font-family: var(--song);
+  padding: 14px 30px;
+  background: #fff;
+}
+.d-doodle .d-cards {
+  gap: 20px;
+  padding: 62px 50px 0;
+}
+.d-doodle .d-card {
+  border: 2px solid #2a2a2a;
+  border-radius: 18px 22px 16px 24px;
+  padding: 20px;
+  background: #fff;
+}
+.d-doodle .d-card:nth-child(2) {
+  transform: rotate(-1deg);
+}
+.d-doodle .d-card:nth-child(3) {
+  transform: rotate(0.8deg);
+}
+.d-doodle .d-ic {
+  border-radius: 8px 12px 6px 10px;
+  border: 2px solid #2a2a2a;
+  background: #fff;
+  opacity: 1;
+}
+.d-doodle .d-ct {
+  font-family: var(--song);
+  font-weight: 400;
+  font-size: 18px;
+}
+.d-doodle .d-cp {
+  font-family: var(--song);
+  color: #555;
+  opacity: 1;
+}
+
+/* 14 液态玻璃 */
+.d-liquid {
+  background: #101018;
+  color: #fff;
+}
+.d-liquid::before {
+  content: "";
+  position: absolute;
+  inset: -25%;
+  background: radial-gradient(circle at 30% 22%, #4b5cff 0%, transparent 44%),
+    radial-gradient(circle at 72% 74%, #ff5fa2 0%, transparent 44%),
+    radial-gradient(circle at 52% 50%, #16d9c4 0%, transparent 38%);
+  filter: blur(46px);
+}
+.d-liquid > * {
+  position: relative;
+}
+.d-liquid .d-nav {
+  height: 76px;
+  margin: 16px 20px 0;
+  padding: 0 24px;
+  border-radius: 999px;
+  background: rgba(255, 255, 255, 0.07);
+  border: 1px solid rgba(255, 255, 255, 0.16);
+  backdrop-filter: blur(22px) saturate(160%);
+  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.5),
+    inset 0 -1px 0 rgba(255, 255, 255, 0.12), 0 12px 30px rgba(0, 0, 0, 0.28);
+}
+.d-liquid .d-logo {
+  font-size: 18px;
+  font-weight: 600;
+  letter-spacing: 0.02em;
+}
+.d-liquid .d-links {
+  font-size: 14px;
+  opacity: 0.78;
+}
+.d-liquid .d-cta {
+  background: rgba(255, 255, 255, 0.95);
+  color: #101018;
+  border-radius: 999px;
+  padding: 10px 22px;
+  font-size: 14px;
+  box-shadow: inset 0 1px 0 #fff, 0 4px 12px rgba(0, 0, 0, 0.22);
+}
+.d-liquid .d-hero {
+  padding-top: 96px;
+  text-align: center;
+}
+.d-liquid .d-h {
+  font-size: 80px;
+  font-weight: 600;
+  letter-spacing: -0.035em;
+  line-height: 1.04;
+}
+.d-liquid .d-p {
+  opacity: 0.75;
+  margin: 24px auto 0;
+}
+.d-liquid .d-btn {
+  border-radius: 999px;
+  background: rgba(255, 255, 255, 0.12);
+  border: 1px solid rgba(255, 255, 255, 0.28);
+  backdrop-filter: blur(18px) saturate(160%);
+  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.55),
+    0 10px 26px rgba(0, 0, 0, 0.26);
+  padding: 16px 36px;
+  font-weight: 600;
+}
+.d-liquid .d-cards {
+  gap: 20px;
+  padding-top: 70px;
+}
+.d-liquid .d-card {
+  border-radius: 26px;
+  background: rgba(255, 255, 255, 0.09);
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  backdrop-filter: blur(20px) saturate(160%);
+  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.55),
+    inset 0 -1px 0 rgba(255, 255, 255, 0.1), 0 14px 32px rgba(0, 0, 0, 0.24);
+}
+.d-liquid .d-ic {
+  background: rgba(255, 255, 255, 0.9);
+  border-radius: 12px;
+  opacity: 1;
+}
+.d-liquid .d-cp {
+  opacity: 0.78;
+}
+
+/* 15 Material 3 */
+.d-material {
+  background: #fef7ff;
+  color: #1d1b20;
+}
+.d-material .d-nav {
+  height: 72px;
+  background: #fef7ff;
+}
+.d-material .d-logo {
+  font-size: 20px;
+  font-weight: 500;
+  color: #6750a4;
+}
+.d-material .d-links {
+  font-size: 14px;
+  font-weight: 500;
+  color: #49454f;
+  opacity: 1;
+}
+.d-material .d-cta {
+  background: #6750a4;
+  color: #fff;
+  border-radius: 999px;
+  padding: 10px 24px;
+  font-size: 14px;
+  font-weight: 500;
+}
+.d-material .d-hero {
+  padding: 88px 44px 0;
+}
+.d-material .d-h {
+  font-size: 72px;
+  font-weight: 400;
+  letter-spacing: -0.01em;
+  line-height: 1.12;
+  color: #1d1b20;
+}
+.d-material .d-p {
+  font-size: 17px;
+  color: #49454f;
+  opacity: 1;
+  margin-top: 20px;
+}
+.d-material .d-btn {
+  background: #6750a4;
+  color: #fff;
+  border-radius: 999px;
+  font-size: 15px;
+  font-weight: 500;
+  padding: 16px 34px;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.16);
+}
+.d-material .d-cards {
+  gap: 20px;
+  padding-top: 66px;
+}
+.d-material .d-card {
+  background: #f7f2fa;
+  border-radius: 20px;
+  padding: 22px;
+}
+.d-material .d-ic {
+  background: #e8def8;
+  border-radius: 14px;
+  opacity: 1;
+  z-index: 0;
+}
+.d-material .d-ct {
+  font-size: 16px;
+  font-weight: 500;
+  color: #1d1b20;
+}
+.d-material .d-cp {
+  font-size: 14px;
+  color: #49454f;
+  opacity: 1;
+}
+
+/* 16 黏土拟态 */
+.d-clay {
+  background: #eef1f8;
+  color: #2d3142;
+}
+.d-clay .d-nav {
+  height: 76px;
+}
+.d-clay .d-logo {
+  font-size: 20px;
+  font-weight: 800;
+  color: #4a5b8c;
+}
+.d-clay .d-links {
+  font-size: 15px;
+  color: #6b7392;
+  opacity: 1;
+}
+.d-clay .d-cta {
+  background: #8ea9ff;
+  color: #fff;
+  border-radius: 999px;
+  padding: 11px 24px;
+  font-weight: 700;
+  font-size: 14px;
+  box-shadow: 0 6px 0 #6d88db, 0 10px 20px rgba(110, 136, 219, 0.35),
+    inset 0 2px 0 rgba(255, 255, 255, 0.5);
+}
+.d-clay .d-h {
+  font-size: 76px;
+  font-weight: 800;
+  letter-spacing: -0.03em;
+  line-height: 1.04;
+  color: #2d3142;
+}
+.d-clay .d-p {
+  color: #6b7392;
+  opacity: 1;
+  font-weight: 500;
+}
+.d-clay .d-btn {
+  background: #ffb4a2;
+  color: #6b2d1e;
+  border-radius: 999px;
+  font-weight: 800;
+  padding: 16px 34px;
+  box-shadow: 0 7px 0 #e8907c, 0 12px 24px rgba(232, 144, 124, 0.4),
+    inset 0 2px 0 rgba(255, 255, 255, 0.6);
+}
+.d-clay .d-cards {
+  gap: 22px;
+  padding-top: 70px;
+}
+.d-clay .d-card {
+  background: #f6f8fd;
+  border-radius: 26px;
+  padding: 24px;
+  box-shadow: 0 8px 0 #d5dbea, 0 16px 30px rgba(148, 160, 195, 0.32),
+    inset 0 2px 0 #fff;
+}
+.d-clay .d-ic {
+  border-radius: 14px;
+  background: #8ea9ff;
+  opacity: 1;
+  box-shadow: inset 0 2px 0 rgba(255, 255, 255, 0.6), 0 4px 0 #6d88db;
+}
+.d-clay .d-card:nth-child(2) .d-ic {
+  background: #7fd8be;
+  box-shadow: inset 0 2px 0 rgba(255, 255, 255, 0.6), 0 4px 0 #5cb89e;
+}
+.d-clay .d-card:nth-child(3) .d-ic {
+  background: #ffb4a2;
+  box-shadow: inset 0 2px 0 rgba(255, 255, 255, 0.6), 0 4px 0 #e8907c;
+}
+.d-clay .d-ct {
+  font-weight: 800;
+  color: #2d3142;
+}
+.d-clay .d-cp {
+  color: #6b7392;
+  opacity: 1;
+  font-weight: 500;
+}
+
+/* 17 仪表盘密集风 */
+.d-dashboard {
+  background: #0f1115;
+  color: #e6e9ef;
+  font-family: var(--mono);
+}
+.d-dashboard .d-nav {
+  height: 62px;
+  border-bottom: 1px solid #1e2229;
+  background: #12141a;
+}
+.d-dashboard .d-logo {
+  font-size: 15px;
+  letter-spacing: 0.1em;
+  color: #8b95a8;
+}
+.d-dashboard .d-links {
+  font-size: 12px;
+  color: #6b7484;
+  opacity: 1;
+  letter-spacing: 0.06em;
+}
+.d-dashboard .d-cta {
+  border: 1px solid #2c323c;
+  padding: 7px 14px;
+  font-size: 11px;
+  letter-spacing: 0.1em;
+  color: #b8c0cf;
+}
+.d-dashboard .d-hero {
+  padding: 40px 30px 0;
+}
+.d-dashboard .d-h {
+  font-size: 40px;
+  font-weight: 600;
+  letter-spacing: -0.01em;
+  line-height: 1.2;
+  color: #eef1f6;
+}
+.d-dashboard .d-p {
+  font-size: 13px;
+  color: #7b8496;
+  opacity: 1;
+  margin-top: 12px;
+  max-width: 520px;
+  line-height: 1.7;
+}
+.d-dashboard .d-btn {
+  display: none;
+}
+.d-dashboard .d-cards {
+  gap: 10px;
+  padding: 26px 30px 0;
+}
+.d-dashboard .d-card {
+  background: #15181f;
+  border: 1px solid #22272f;
+  border-radius: 6px;
+  padding: 16px;
+}
+.d-dashboard .d-card::after {
+  content: "";
+  display: block;
+  height: 46px;
+  margin-top: 14px;
+  border-radius: 3px;
+  background: linear-gradient(
+    90deg,
+    #2a3342 0%,
+    #2a3342 12%,
+    transparent 12%,
+    transparent 18%,
+    #2a3342 18%,
+    #2a3342 34%,
+    transparent 34%,
+    transparent 40%,
+    #3d7dff 40%,
+    #3d7dff 52%,
+    transparent 52%,
+    transparent 58%,
+    #2a3342 58%,
+    #2a3342 78%,
+    transparent 78%,
+    transparent 84%,
+    #2a3342 84%,
+    #2a3342 100%
+  );
+}
+.d-dashboard .d-ic {
+  display: none;
+}
+.d-dashboard .d-ct {
+  font-size: 12px;
+  font-weight: 500;
+  color: #8b95a8;
+  letter-spacing: 0.08em;
+  margin-top: 0;
+  text-transform: uppercase;
+}
+.d-dashboard .d-cp {
+  font-size: 22px;
+  font-weight: 600;
+  color: #eef1f6;
+  opacity: 1;
+  margin-top: 6px;
+}

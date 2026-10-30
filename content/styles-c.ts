@@ -1,0 +1,171 @@
+import type { Style } from "@/lib/types";
+
+export const STYLES_C: Style[] = [
+  {
+    id: "apple",
+    no: "17",
+    name: "苹果风",
+    en: "Apple HIG",
+    family: "classic",
+    theme: "light",
+    desc: "大留白、克制的灰阶、接近胶囊的按钮。产品即主角，界面退到几乎看不见。",
+    prompt: {
+      zh: {
+        tokens: [
+          "底色 #FFFFFF 与 #F5F5F7 交替分区",
+          "文字 #1D1D1F，次级 #6E6E73，分隔线 #D2D2D7",
+          "唯一强调色 #0071E3，只用于按钮和链接",
+          "圆角：卡片 18px，按钮 980px（接近胶囊）",
+          "阴影：0 4px 16px rgba(0,0,0,.08)，透明度不超过 0.1",
+          "字阶 17 / 19 / 24 / 40 / 80，标题字重 600，字距 -0.02em",
+        ],
+        layout: [
+          "单列居中，最大宽 1080px，左右留白 24px",
+          "Hero 居中：80px 标题 + 24px 副标，上下留白 120px",
+          "区块之间靠底色交替分隔（白 / #F5F5F7），不用线",
+          "移动端标题降到 40px，留白 20px",
+        ],
+        components: [
+          "按钮：胶囊，蓝色 #0071E3 填充白字，或白底蓝字带边框",
+          "卡片：白底 18px 圆角 + 极轻阴影，内容顶部对齐",
+          "输入框：12px 圆角，1px #D2D2D7 边，focus 时边变蓝",
+          "导航：高 44px，半透明磨砂，滚动后加深",
+        ],
+        forbidden: [
+          "不要使用饱和度过高的颜色",
+          "不要使用透明度超过 0.1 的阴影",
+          "不要使用装饰性图标或插画",
+          "不要超过两种字重",
+          "不要使用渐变按钮",
+          "不要在同一区块混用居中与左对齐",
+        ],
+        acceptance: [
+          "主色只出现在按钮和链接",
+          "阴影透明度不超过 0.1",
+          "标题字重统一 600",
+          "圆角集中在 12–18px 与胶囊两档",
+        ],
+      },
+      en: {
+        tokens: [
+          "Surfaces alternate #FFFFFF and #F5F5F7",
+          "Text #1D1D1F, muted #6E6E73, rule #D2D2D7",
+          "Single accent #0071E3, buttons and links only",
+          "Radius 18px cards, 980px buttons (near pill)",
+          "Shadow 0 4px 16px rgba(0,0,0,.08), never above 0.1",
+          "Type scale 17 / 19 / 24 / 40 / 80, headings weight 600, tracking -0.02em",
+        ],
+        layout: [
+          "Single centered column, max 1080px, 24px gutter",
+          "Hero centered: 80px headline with 24px subhead, 120px vertical padding",
+          "Separate blocks by alternating surface tone, never by rules",
+          "Mobile headline 40px, gutter 20px",
+        ],
+        components: [
+          "Button: pill, #0071E3 fill with white text, or white with a blue border",
+          "Card: white, 18px radius, very light shadow, content top aligned",
+          "Input: 12px radius, 1px #D2D2D7 border, blue border on focus",
+          "Nav: 44px tall, translucent blur, darkens on scroll",
+        ],
+        forbidden: [
+          "No highly saturated colors",
+          "No shadow with opacity above 0.1",
+          "No decorative icons or illustrations",
+          "No more than two font weights",
+          "No gradient buttons",
+          "Never mix centered and left-aligned text in one block",
+        ],
+        acceptance: [
+          "Accent only on buttons and links",
+          "Shadow opacity at or below 0.1",
+          "Headings consistently weight 600",
+          "Radius only at 12-18px or full pill",
+        ],
+      },
+    },
+  },
+
+  {
+    id: "maximal",
+    no: "18",
+    name: "极繁主义",
+    en: "Maximalism",
+    family: "anti",
+    theme: "light",
+    desc: "构图塞满、层叠、多色相撞。信息本身就是装饰，空白是敌人。",
+    prompt: {
+      zh: {
+        tokens: [
+          "底 #FFF8E7，允许被内容填满",
+          "色板 4–6 个高饱和：紫 #7B2FF7、橙 #FF6B35、青 #00D9C0、粉 #FF3D7F",
+          "2px 纯黑描边，用于所有文字块与形状",
+          "圆角混用：圆形、方形、胶囊同屏出现",
+          "不用阴影，靠描边与色块分区",
+          "字阶跨度大：13 / 16 / 24 / 40 / 80",
+        ],
+        layout: [
+          "6–8 列网格，允许元素跨列错位",
+          "区块之间不留空白，色块直接相接",
+          "允许 2–5deg 的小角度旋转",
+          "移动端降密度：色块从 6 块减到 3 块",
+        ],
+        components: [
+          "按钮：粗黑边 + 高饱和填充 + 硬阴影",
+          "卡片：不同底色，边框统一 2px 黑",
+          "输入框：粗边框 + 亮色底",
+          "贴纸：旋转的胶囊标签，叠在元素角落",
+        ],
+        forbidden: [
+          "不要留大块纯空白",
+          "不要让所有元素对齐到同一基线",
+          "不要使用低饱和色",
+          "不要使用超过 6 种色相",
+          "不要使用柔和阴影",
+          "不要在移动端保留全部装饰",
+        ],
+        acceptance: [
+          "首屏至少有 6 个视觉块",
+          "存在至少 3 种不同底色",
+          "所有描边统一 2px",
+          "移动端元素数量减半且不溢出",
+        ],
+      },
+      en: {
+        tokens: [
+          "Base #FFF8E7, the canvas may be filled",
+          "Palette of four to six saturated hues: purple #7B2FF7, orange #FF6B35, teal #00D9C0, pink #FF3D7F",
+          "2px pure black stroke on every text block and shape",
+          "Mixed radii: circles, squares and pills on one screen",
+          "No shadows, strokes and fills do the separating",
+          "Wide scale: 13 / 16 / 24 / 40 / 80",
+        ],
+        layout: [
+          "Six to eight column grid, elements may offset across columns",
+          "No gaps between blocks, fills touch",
+          "Small rotations of 2-5 degrees allowed",
+          "Mobile halves the density, six blocks become three",
+        ],
+        components: [
+          "Button: heavy black border, saturated fill, hard shadow",
+          "Card: varied fills, uniform 2px black border",
+          "Input: thick border on a bright fill",
+          "Sticker: rotated pill label overlapping a corner",
+        ],
+        forbidden: [
+          "No large empty areas",
+          "Never align everything to one baseline",
+          "No low-saturation colors",
+          "No more than six hues",
+          "No soft shadows",
+          "No full decoration set on mobile",
+        ],
+        acceptance: [
+          "At least six visual blocks above the fold",
+          "At least three different fills",
+          "All strokes uniformly 2px",
+          "Mobile halves the element count without overflow",
+        ],
+      },
+    },
+  },
+];

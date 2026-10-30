@@ -1,0 +1,107 @@
+/* 站名胶囊：光线环绕 */
+
+.brand-shell {
+  position: relative;
+  display: inline-block;
+  padding: 4px;
+  border-radius: 999px;
+  overflow: hidden;
+  background: #dadada;
+  box-shadow: var(--up-lg);
+  isolation: isolate;
+}
+
+.brand-beam {
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  width: 300%;
+  padding-bottom: 300%;
+  transform: translate(-50%, -50%);
+  background: conic-gradient(
+    from 0deg,
+    rgba(255, 255, 255, 0) 0deg,
+    rgba(255, 255, 255, 1) 24deg,
+    rgba(255, 255, 255, 0.62) 48deg,
+    rgba(255, 255, 255, 0) 86deg,
+    rgba(255, 255, 255, 0) 180deg,
+    rgba(255, 255, 255, 0.92) 206deg,
+    rgba(255, 255, 255, 0) 244deg
+  );
+  animation: beamSpin 7.5s linear infinite;
+  z-index: 0;
+  will-change: transform;
+}
+
+.brand-beam::after {
+  content: "";
+  position: absolute;
+  inset: 12%;
+  border-radius: 50%;
+  background: #dadada;
+}
+
+.brand-btn {
+  position: relative;
+  z-index: 1;
+  display: inline-block;
+  font-family: var(--sans);
+  font-size: 40px;
+  font-weight: 700;
+  letter-spacing: 0.06em;
+  line-height: 1.25;
+  color: var(--ink);
+  background: var(--surf);
+  border-radius: 999px;
+  padding: 28px 68px;
+  box-shadow: inset 0 0 0 1px rgba(0, 0, 0, 0.045);
+  transition: color 0.22s ease, transform 0.12s ease, background 0.22s ease;
+}
+
+.brand-btn:hover {
+  color: #111;
+  background: #eaeaea;
+}
+
+.brand-btn:active {
+  transform: translateY(1px) scale(0.997);
+  background: #e2e2e2;
+}
+
+.credit {
+  overflow: hidden;
+  max-height: 0;
+  opacity: 0;
+  font-size: 20px;
+  letter-spacing: 0.22em;
+  color: var(--ink-2);
+  transition: max-height 0.32s var(--ease), opacity 0.32s ease, margin 0.32s ease;
+}
+
+.credit.is-open {
+  max-height: 90px;
+  opacity: 1;
+  margin-top: 28px;
+}
+
+@keyframes beamSpin {
+  to {
+    transform: translate(-50%, -50%) rotate(360deg);
+  }
+}
+
+@media (max-width: 780px) {
+  .brand-btn {
+    font-size: 25px;
+    padding: 22px 38px;
+  }
+  .credit {
+    font-size: 16px;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .brand-beam {
+    animation: none;
+  }
+}

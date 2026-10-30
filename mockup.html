@@ -1,0 +1,595 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>前端风格样本册 · 视觉稿 v1</title>
+<style>
+  :root {
+    --paper: #F4EFE6;
+    --paper-hi: #FBF7EE;
+    --edge: #D6C9AE;
+    --ink: #2B2520;
+    --ink-2: #5E5347;
+    --ink-3: #8C7E68;
+    --leather: #4A3527;
+    --brass: #C9A227;
+    --brass-edge: #6E5514;
+    --serif: "Songti SC", "SimSun", "Source Han Serif SC", Georgia, serif;
+    --sans: -apple-system, "PingFang SC", "Microsoft YaHei", "Helvetica Neue", sans-serif;
+    --mono: "SF Mono", "Cascadia Mono", Consolas, "Courier New", monospace;
+    --noise: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='140' height='140'><filter id='n'><feTurbulence type='fractalNoise' baseFrequency='.85' numOctaves='4' stitchTiles='stitch'/><feColorMatrix type='saturate' values='0'/></filter><rect width='140' height='140' filter='url(%23n)' opacity='.5'/></svg>");
+  }
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+
+  body {
+    font-family: var(--sans);
+    background-color: #3A2B1F;
+    background-image: var(--noise), linear-gradient(158deg, #61492F 0%, #4A3728 42%, #32251A 100%);
+    background-size: 180px 180px, 100% 100%;
+    background-blend-mode: overlay, normal;
+    color: var(--ink);
+    min-height: 100vh;
+    padding: 44px 24px 96px;
+    -webkit-font-smoothing: antialiased;
+  }
+
+  .sheet {
+    position: relative;
+    max-width: 1080px;
+    margin: 0 auto;
+    background: var(--paper);
+    border-radius: 3px;
+    padding-left: 54px;
+    box-shadow: 0 1px 1px rgba(0,0,0,.28), 0 8px 18px rgba(0,0,0,.34), 0 34px 70px rgba(0,0,0,.46);
+  }
+  .sheet::after {
+    content: ''; position: absolute; inset: 0;
+    background-image: var(--noise); background-size: 140px 140px;
+    mix-blend-mode: overlay; opacity: .5;
+    pointer-events: none; border-radius: inherit;
+  }
+  .binding {
+    position: absolute; left: 0; top: 0; bottom: 0; width: 54px;
+    background: linear-gradient(90deg, #DFD3B9 0%, #EDE4D0 46%, #E2D6BC 100%);
+    border-right: 1px solid var(--edge);
+    box-shadow: inset -4px 0 8px rgba(74,53,39,.10), inset 2px 0 0 rgba(255,255,255,.6);
+    border-radius: 3px 0 0 3px;
+  }
+  .binding::before {
+    content: ''; position: absolute; left: 50%; top: 34px; bottom: 34px; width: 7px;
+    transform: translateX(-50%);
+    background-image: radial-gradient(circle, #9C8A6C 1.6px, transparent 1.9px);
+    background-size: 7px 27px; opacity: .75;
+  }
+  .binding::after {
+    content: ''; position: absolute; inset: 0;
+    background: linear-gradient(180deg, rgba(160,140,108,.16) 0%, transparent 18%, transparent 82%, rgba(160,140,108,.16) 100%);
+  }
+  .content { position: relative; z-index: 1; }
+
+  /* 皮革顶栏 */
+  .topbar {
+    display: flex; align-items: center; gap: 22px; height: 64px; padding: 0 34px;
+    background-color: var(--leather);
+    background-image: var(--noise), linear-gradient(180deg, #5B4330 0%, #43301F 100%);
+    background-size: 150px 150px, 100% 100%;
+    background-blend-mode: overlay, normal;
+    border-bottom: 1px solid #26190F;
+    box-shadow: inset 0 1px 0 rgba(255,255,255,.14), inset 0 -1px 0 rgba(0,0,0,.3), 0 3px 7px rgba(0,0,0,.3);
+    border-radius: 3px 3px 0 0;
+  }
+  .brand {
+    font-family: var(--serif); font-size: 17px; letter-spacing: .16em; color: #F2E8D6;
+    text-shadow: 0 1px 0 rgba(0,0,0,.65); white-space: nowrap;
+  }
+  .brand small {
+    display: block; font-family: var(--mono); font-size: 8.5px; letter-spacing: .34em;
+    color: #A08A6A; margin-top: 3px; text-shadow: 0 1px 0 rgba(0,0,0,.5);
+  }
+  .nav { display: flex; gap: 4px; margin-left: 14px; }
+  .nav a {
+    font-size: 12.5px; color: #D8C7AC; text-decoration: none;
+    padding: 7px 12px; border-radius: 3px; letter-spacing: .04em;
+  }
+  .nav a:hover { background: rgba(255,255,255,.09); color: #F5EBD9; }
+  .nav a.on {
+    background: rgba(0,0,0,.26); color: #F5EBD9;
+    box-shadow: inset 0 1px 3px rgba(0,0,0,.6), inset 0 -1px 0 rgba(255,255,255,.09);
+  }
+  .spacer { flex: 1; }
+
+  .brass {
+    font-family: var(--sans); font-size: 12.5px; font-weight: 600; letter-spacing: .05em;
+    color: #372A08; padding: 8px 18px;
+    border: 1px solid var(--brass-edge); border-radius: 3px;
+    background: linear-gradient(180deg, #E2C264 0%, var(--brass) 44%, #AD8A1E 100%);
+    box-shadow: inset 0 1px 0 #F4E6A4, inset 0 -1px 0 #7E6516, 0 2px 0 #5A4510, 0 4px 9px rgba(0,0,0,.36);
+    text-shadow: 0 1px 0 rgba(255,255,255,.4);
+    cursor: pointer; transition: filter .1s;
+  }
+  .brass:hover { filter: brightness(1.07); }
+  .brass:active {
+    transform: translateY(2px);
+    box-shadow: inset 0 1px 0 #F4E6A4, 0 1px 0 #5A4510, 0 1px 3px rgba(0,0,0,.4);
+  }
+  .brass.sm { font-size: 11px; padding: 6px 13px; }
+
+  .pageno {
+    font-family: var(--mono); font-size: 10px; letter-spacing: .16em; color: #8A7758;
+    padding: 5px 10px;
+    background: linear-gradient(180deg, #FCF8EE, #EAE0CA);
+    border: 1px solid #C9BA9C; border-radius: 2px;
+    box-shadow: 0 1px 0 #FFFDF7, 0 1px 2px rgba(74,53,39,.16), inset 0 -1px 0 rgba(74,53,39,.05);
+  }
+
+  /* 封面 */
+  .cover { padding: 58px 52px 40px 46px; }
+  .kicker {
+    font-family: var(--mono); font-size: 10px; letter-spacing: .3em;
+    color: var(--ink-3); text-transform: uppercase;
+    margin-bottom: 20px; display: flex; align-items: center; gap: 12px;
+  }
+  .kicker::after { content: ''; flex: 1; height: 1px; background: linear-gradient(90deg, #CBBB9C, transparent); }
+  h1 {
+    font-family: var(--serif); font-size: 60px; line-height: 1.1;
+    letter-spacing: .12em; font-weight: 400; color: #241F19;
+    text-shadow: 0 1px 0 #FFFCF4;
+  }
+  .subline { display: flex; align-items: baseline; gap: 16px; margin-top: 16px; }
+  .subline .en { font-family: var(--mono); font-size: 12px; letter-spacing: .42em; color: #9B8A6E; }
+  .subline .rule { flex: 1; height: 1px; background: #D9CCB2; }
+  .lede { margin-top: 24px; font-size: 15px; line-height: 1.95; color: var(--ink-2); max-width: 630px; }
+  .lede b { color: var(--ink); font-weight: 600; }
+  .stamp {
+    display: inline-flex; flex-direction: column; align-items: center; justify-content: center;
+    width: 92px; height: 92px; margin-top: 26px;
+    border: 2px solid #B33A2B; border-radius: 50%; color: #B33A2B;
+    font-family: var(--serif); font-size: 11px; letter-spacing: .18em; line-height: 1.7;
+    transform: rotate(-7deg); opacity: .78;
+    box-shadow: inset 0 0 0 3px rgba(179,58,43,.14);
+  }
+  .stamp span { font-family: var(--mono); font-size: 15px; letter-spacing: .04em; }
+
+  .section { padding: 0 52px 0 46px; }
+  .sec-head { display: flex; align-items: center; gap: 14px; margin: 10px 0 20px; }
+  .sec-head h2 { font-family: var(--serif); font-size: 14px; letter-spacing: .22em; font-weight: 400; color: var(--ink); }
+  .sec-head .line { flex: 1; height: 1px; background: #D9CCB2; }
+
+  .toc { margin-bottom: 42px; }
+  .toc-row {
+    display: flex; align-items: baseline; gap: 14px; padding: 10px 0;
+    border-bottom: 1px solid rgba(203,187,156,.34); font-size: 14px;
+  }
+  .toc-row .no { font-family: var(--mono); font-size: 10.5px; color: #A8977A; letter-spacing: .1em; width: 22px; }
+  .toc-row .name { font-family: var(--serif); font-size: 17px; letter-spacing: .1em; color: var(--ink); flex: 0 0 138px; }
+  .toc-row .desc { font-size: 12.5px; color: var(--ink-3); }
+  .toc-row .dots { flex: 1; border-bottom: 1px dotted #C6B69A; margin-bottom: 5px; }
+  .toc-row .pg { font-family: var(--mono); font-size: 11px; color: var(--ink-3); }
+
+  /* 样本窗 */
+  .detail-grid {
+    display: grid; grid-template-columns: minmax(0, 1.34fr) minmax(0, 1fr);
+    gap: 28px; margin-bottom: 46px; align-items: start;
+  }
+  .window-frame {
+    position: relative; padding: 8px;
+    background: linear-gradient(160deg, #E3D7BE, #CBBB9C 55%, #DACDB2);
+    border-radius: 5px;
+    box-shadow: 0 1px 0 #FFFCF4, 0 2px 3px rgba(74,53,39,.22), 0 10px 22px rgba(74,53,39,.18);
+  }
+  .window-frame::before {
+    content: '样本窗 · SAMPLE WINDOW'; position: absolute; top: -20px; left: 2px;
+    font-family: var(--mono); font-size: 9px; letter-spacing: .24em; color: #A8977A;
+  }
+  .window-inner {
+    border-radius: 2px; overflow: hidden;
+    box-shadow: inset 0 0 0 1px rgba(0,0,0,.5), inset 0 7px 18px rgba(0,0,0,.42);
+  }
+
+  /* L2 演示区：新粗野主义 */
+  .demo {
+    background: #FFFDF5; color: #000;
+    font-family: "Inter", system-ui, -apple-system, "Segoe UI", sans-serif;
+    padding-bottom: 26px;
+  }
+  .demo-nav {
+    display: flex; align-items: center; gap: 16px; padding: 13px 20px;
+    border-bottom: 3px solid #000; background: #fff;
+  }
+  .demo-logo { font-weight: 800; font-size: 15px; letter-spacing: -.02em; }
+  .demo-navlinks { display: flex; gap: 15px; margin-left: 6px; }
+  .demo-navlinks span { font-size: 12.5px; font-weight: 600; }
+  .demo-nav .gap { flex: 1; }
+  .dbtn {
+    display: inline-block; background: #000; color: #fff;
+    border: 3px solid #000; padding: 8px 15px;
+    font-size: 12.5px; font-weight: 800; box-shadow: 4px 4px 0 #000;
+  }
+  .dbtn.y { background: #FFE600; color: #000; }
+  .dbtn.w { background: #fff; color: #000; }
+  .dbtn.sm { padding: 5px 11px; font-size: 11px; box-shadow: 3px 3px 0 #000; }
+
+  .demo-hero { padding: 30px 20px 26px; }
+  .demo-hero h3 {
+    font-size: 37px; line-height: .98; letter-spacing: -.035em; font-weight: 800;
+    text-transform: uppercase; text-shadow: 3px 3px 0 #FFE600; margin-bottom: 14px;
+  }
+  .demo-hero p {
+    font-size: 13px; line-height: 1.65; font-weight: 500;
+    max-width: 400px; color: #1a1a1a; margin-bottom: 18px;
+  }
+  .demo-actions { display: flex; gap: 12px; align-items: center; }
+  .demo-cards { display: grid; grid-template-columns: repeat(3, 1fr); gap: 12px; padding: 0 20px; }
+  .demo-card { background: #fff; border: 3px solid #000; padding: 13px 13px 15px; box-shadow: 5px 5px 0 #000; }
+  .demo-card .ico { width: 24px; height: 24px; border: 2.5px solid #000; margin-bottom: 10px; background: #FF5C39; }
+  .demo-card:nth-child(2) .ico { background: #3D5AFE; }
+  .demo-card:nth-child(3) .ico { background: #FFE600; }
+  .demo-card h4 { font-size: 13px; font-weight: 800; margin-bottom: 5px; letter-spacing: -.01em; }
+  .demo-card p { font-size: 11.5px; line-height: 1.55; color: #333; font-weight: 500; }
+  .demo-badge {
+    display: inline-block; margin-top: 9px; background: #FFE600; border: 2px solid #000;
+    border-radius: 999px; padding: 2px 9px; font-size: 9.5px; font-weight: 800; letter-spacing: .04em;
+  }
+
+  /* 配方卡 */
+  .formula {
+    position: relative; background: linear-gradient(180deg, #FBF7EC, #F0E8D6);
+    border: 1px solid #CFC0A2; border-radius: 3px; padding: 16px 16px 15px;
+    box-shadow: 0 1px 0 #FFFDF7, 0 3px 8px rgba(74,53,39,.14), inset 0 -1px 0 rgba(74,53,39,.06);
+  }
+  .formula-top { display: flex; align-items: flex-start; gap: 10px; margin-bottom: 12px; }
+  .formula-tag {
+    font-family: var(--mono); font-size: 9px; letter-spacing: .24em; color: #8A7758;
+    background: #EDE4D0; border: 1px solid #D3C4A6; border-radius: 2px;
+    padding: 3px 7px; white-space: nowrap;
+  }
+  .formula h4 { font-family: var(--serif); font-size: 17px; letter-spacing: .1em; font-weight: 400; color: var(--ink); }
+  .formula .en-name { font-family: var(--mono); font-size: 9.5px; letter-spacing: .18em; color: #9B8A6E; margin-top: 3px; }
+  .formula-top .right { margin-left: auto; }
+
+  /* 语言切换：拟物分段开关 */
+  .lang-switch { position: relative; display: flex; padding: 3px; gap: 2px; border-radius: 3px;
+    background: linear-gradient(180deg, #E2D7BF, #EFE7D5);
+    box-shadow: inset 0 2px 4px rgba(74,53,39,.26), inset 0 -1px 0 rgba(255,255,255,.7);
+  }
+  .lang-switch input {
+    position: absolute; width: 1px; height: 1px; overflow: hidden;
+    clip: rect(0 0 0 0); white-space: nowrap;
+  }
+  .lang-switch label {
+    font-family: var(--mono); font-size: 9.5px; letter-spacing: .1em;
+    color: #8A7758; padding: 4px 9px; border-radius: 2px; cursor: pointer;
+    box-shadow: none; transition: color .12s;
+  }
+  .lang-switch input:checked + label {
+    color: #3B3226;
+    background: linear-gradient(180deg, #FDFAF1, #EDE4D0);
+    box-shadow: 0 1px 0 #FFFDF7, 0 1px 2px rgba(74,53,39,.24), inset 0 -1px 0 rgba(74,53,39,.04);
+  }
+
+  .code {
+    background: #E9DFC9; border: 1px solid #C9BA9C; border-radius: 2px;
+    padding: 12px; font-family: var(--mono); font-size: 10px; line-height: 1.75;
+    color: #3B3226; white-space: pre-wrap; height: 344px; overflow: hidden;
+    box-shadow: inset 0 2px 5px rgba(74,53,39,.20), inset 0 -1px 0 rgba(255,255,255,.65);
+  }
+  .code .h { color: #8A4B2A; font-weight: 600; }
+  .code .v { color: #4A5D2E; }
+  .lang-zh-panel { display: block; }
+  .lang-en-panel { display: none; }
+  .formula:has(#le:checked) .lang-zh-panel { display: none; }
+  .formula:has(#le:checked) .lang-en-panel { display: block; }
+
+  .formula-foot { display: flex; align-items: center; gap: 10px; margin-top: 13px; }
+  .formula-foot .hint { font-size: 10.5px; color: var(--ink-3); flex: 1; line-height: 1.5; }
+
+  /* 色板 */
+  .tokens {
+    display: grid; grid-template-columns: repeat(6, 1fr);
+    border: 1px solid #CFC0A2; border-radius: 3px; overflow: hidden;
+    margin-bottom: 40px;
+    box-shadow: 0 2px 5px rgba(74,53,39,.1), 0 1px 0 #FFFDF7;
+  }
+  .swatch { padding: 13px 11px 11px; background: var(--paper-hi); border-right: 1px solid #DED2B8; }
+  .swatch:last-child { border-right: none; }
+  .swatch .chip {
+    height: 42px; border-radius: 2px; border: 1px solid rgba(0,0,0,.22);
+    box-shadow: inset 0 1px 0 rgba(255,255,255,.55), inset 0 -3px 6px rgba(0,0,0,.16), 0 1px 2px rgba(0,0,0,.1);
+    margin-bottom: 8px;
+  }
+  .swatch .hex { font-family: var(--mono); font-size: 10px; color: #5E5347; letter-spacing: .04em; }
+  .swatch .nm { font-size: 10px; color: var(--ink-3); margin-top: 2px; }
+
+  /* Do / Don't */
+  .dd-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 22px; margin-bottom: 44px; }
+  .dd { padding: 16px 18px; border-radius: 3px; }
+  .dd.do {
+    background: linear-gradient(180deg, #F7F4E9, #EFEADC);
+    box-shadow: inset 0 1px 0 #FFFDF7, 0 1px 3px rgba(74,53,39,.12), inset 0 -1px 0 rgba(74,53,39,.05);
+    border: 1px solid #D8CEB4;
+  }
+  .dd.dont {
+    background: linear-gradient(180deg, #F1E8E3, #E7DBD4);
+    box-shadow: inset 0 1px 0 #FFFAF7, 0 1px 3px rgba(74,53,39,.12), inset 0 -1px 0 rgba(74,53,39,.05);
+    border: 1px solid #D4C3B9;
+  }
+  .dd-head { display: flex; align-items: center; gap: 9px; margin-bottom: 11px; }
+  .dd-badge {
+    display: inline-flex; align-items: center; justify-content: center;
+    width: 20px; height: 20px; border-radius: 50%;
+    font-size: 11px; font-weight: 700; color: #fff;
+    box-shadow: inset 0 1px 0 rgba(255,255,255,.45), 0 1px 2px rgba(0,0,0,.3);
+  }
+  .do .dd-badge { background: linear-gradient(180deg, #7C9455, #5C7038); }
+  .dont .dd-badge { background: linear-gradient(180deg, #BD6555, #9A4638); }
+  .dd-head h5 { font-family: var(--serif); font-size: 13px; letter-spacing: .16em; font-weight: 400; color: var(--ink); }
+  .dd ul { list-style: none; }
+  .dd li {
+    font-size: 12.5px; line-height: 1.7; color: var(--ink-2);
+    padding-left: 13px; position: relative; margin-bottom: 5px;
+  }
+  .dd li::before {
+    content: ''; position: absolute; left: 0; top: 8px;
+    width: 4px; height: 4px; border-radius: 50%; background: #B3A183;
+  }
+
+  /* 页脚 */
+  .foot {
+    display: flex; align-items: center; gap: 14px;
+    padding: 16px 52px 18px 46px;
+    border-top: 1px solid #DED2B8;
+    background: linear-gradient(180deg, #F0E9D9, #E8DFCB);
+    border-radius: 0 0 3px 3px;
+  }
+  .foot .t { font-family: var(--mono); font-size: 9.5px; letter-spacing: .2em; color: #9B8A6E; }
+
+  @media (max-width: 860px) {
+    body { padding: 18px 10px 48px; }
+    .sheet { padding-left: 0; }
+    .binding { display: none; }
+    h1 { font-size: 36px; }
+    .cover, .section, .foot { padding-left: 22px; padding-right: 22px; }
+    .detail-grid { grid-template-columns: 1fr; }
+    .tokens { grid-template-columns: repeat(3, 1fr); }
+    .dd-grid { grid-template-columns: 1fr; }
+    .nav { display: none; }
+    .demo-cards { grid-template-columns: 1fr; }
+    .demo-hero h3 { font-size: 28px; }
+  }
+</style>
+</head>
+<body>
+<div class="sheet">
+  <div class="binding"></div>
+  <div class="content">
+
+    <div class="topbar">
+      <div class="brand">前端风格样本册<small>STYLEBOOK</small></div>
+      <div class="nav">
+        <a href="#" class="on">目录</a>
+        <a href="#">风格名册</a>
+        <a href="#">配色</a>
+        <a href="#">组件</a>
+        <a href="#">使用</a>
+      </div>
+      <div class="spacer"></div>
+      <span class="pageno">P. 03 / 14</span>
+      <button class="brass sm">⌘K 检索</button>
+    </div>
+
+    <div class="cover">
+      <div class="kicker">Vol. 01 · Twelve Styles</div>
+      <h1>前端风格<br>样本册</h1>
+      <div class="subline">
+        <span class="en">THE FRONTEND STYLEBOOK</span>
+        <span class="rule"></span>
+      </div>
+      <p class="lede">
+        十二种前端视觉风格，每一种都配一份<b>可执行的 CSS Token 清单</b>、一段中英双语的
+        <b>结构化 Prompt</b>，以及一个可交互的活体样本。所有内容的目的只有一个——
+        <b>让 AI 做出不像模板的页面</b>。
+      </p>
+      <div class="stamp">
+        已实测<br><span>12</span><br>STYLES
+      </div>
+    </div>
+
+    <div class="section">
+      <div class="sec-head"><h2>目录 · 六族</h2><span class="line"></span></div>
+      <div class="toc">
+        <div class="toc-row">
+          <span class="no">01</span><span class="name">经典秩序</span>
+          <span class="desc">瑞士国际主义 · 极简</span><span class="dots"></span><span class="pg">p.04</span>
+        </div>
+        <div class="toc-row">
+          <span class="no">02</span><span class="name">反设计与高表达</span>
+          <span class="desc">新粗野 · 孟菲斯</span><span class="dots"></span><span class="pg">p.06</span>
+        </div>
+        <div class="toc-row">
+          <span class="no">03</span><span class="name">材质与光</span>
+          <span class="desc">玻璃拟态 · 弥散极光</span><span class="dots"></span><span class="pg">p.08</span>
+        </div>
+        <div class="toc-row">
+          <span class="no">04</span><span class="name">复古与未来</span>
+          <span class="desc">赛博朋克 · Y2K</span><span class="dots"></span><span class="pg">p.10</span>
+        </div>
+        <div class="toc-row">
+          <span class="no">05</span><span class="name">结构与布局</span>
+          <span class="desc">Bento 网格 · 大排版</span><span class="dots"></span><span class="pg">p.12</span>
+        </div>
+        <div class="toc-row">
+          <span class="no">06</span><span class="name">手作与本土</span>
+          <span class="desc">国潮新中式 · 手绘涂鸦</span><span class="dots"></span><span class="pg">p.13</span>
+        </div>
+      </div>
+
+      <div class="sec-head"><h2>样本 No.03 · 新粗野主义</h2><span class="line"></span></div>
+
+      <div class="detail-grid">
+        <div class="window-frame">
+          <div class="window-inner">
+            <div class="demo">
+              <div class="demo-nav">
+                <span class="demo-logo">BRUT.DEV</span>
+                <div class="demo-navlinks"><span>Docs</span><span>Pricing</span><span>Blog</span></div>
+                <span class="gap"></span>
+                <span class="dbtn y sm">GET STARTED</span>
+              </div>
+              <div class="demo-hero">
+                <h3>Ship ugly.<br>Ship fast.</h3>
+                <p>给独立开发者的部署工具。三十秒上线，不用配 CI，不用懂 Docker。</p>
+                <div class="demo-actions">
+                  <span class="dbtn y">START FREE</span>
+                  <span class="dbtn w">READ DOCS</span>
+                </div>
+              </div>
+              <div class="demo-cards">
+                <div class="demo-card">
+                  <div class="ico"></div>
+                  <h4>Zero config</h4>
+                  <p>推代码就部署，配置文件一个字不用写。</p>
+                  <span class="demo-badge">30s</span>
+                </div>
+                <div class="demo-card">
+                  <div class="ico"></div>
+                  <h4>Edge first</h4>
+                  <p>全球边缘节点，冷启动低于 40 毫秒。</p>
+                  <span class="demo-badge">EDGE</span>
+                </div>
+                <div class="demo-card">
+                  <div class="ico"></div>
+                  <h4>Pay once</h4>
+                  <p>按项目收费，不按座位，不按请求数。</p>
+                  <span class="demo-badge">$9</span>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="formula">
+          <div class="formula-top">
+            <div>
+              <h4>配方卡</h4>
+              <div class="en-name">PROMPT · NEO-BRUTALISM</div>
+            </div>
+            <div class="right">
+              <div class="lang-switch">
+                <input type="radio" name="lang" id="lz" checked>
+                <label for="lz">中文</label>
+                <input type="radio" name="lang" id="le">
+                <label for="le">EN</label>
+              </div>
+            </div>
+          </div>
+          <div class="lang-body">
+            <div class="lang-zh-panel">
+              <div class="code"><span class="h">## 1. 角色与目标</span>
+你是擅长新粗野主义的前端设计师。
+为面向开发者的工具产品做单页落地页。
+访客要在 5 秒内决定是否试用。
+
+<span class="h">## 2. 视觉 Token</span>
+- 背景 <span class="v">#FFFDF5</span>，主色 <span class="v">#FFE600</span>
+- 边框 <span class="v">3px solid #000</span>，全站统一
+- 圆角：卡片与按钮 <span class="v">0</span>，徽章 <span class="v">999px</span>
+- 阴影 <span class="v">6px 6px 0 #000</span>，零模糊，全站唯一
+- 字号阶梯 <span class="v">14 / 16 / 20 / 32 / 56</span>
+
+<span class="h">## 5. 禁止事项</span>
+- 不要任何模糊半径大于 0 的阴影
+- 不要使用渐变，三种全部禁止
+- 不要 4–8px 的暧昧圆角
+- 不要低饱和莫兰迪色</div>
+            </div>
+            <div class="lang-en-panel">
+              <div class="code"><span class="h">## 1. Role &amp; Goal</span>
+You are a frontend designer specialising
+in Neo-brutalism. Build a single-page
+landing for a developer tool. The visitor
+decides in 5 seconds whether to try it.
+
+<span class="h">## 2. Visual Tokens</span>
+- Background <span class="v">#FFFDF5</span>, accent <span class="v">#FFE600</span>
+- Border <span class="v">3px solid #000</span> on all cards
+- Radius: <span class="v">0</span> cards / <span class="v">999px</span> badges
+- Shadow <span class="v">6px 6px 0 #000</span>, zero blur
+- Type scale <span class="v">14/16/20/32/56</span>
+
+<span class="h">## 5. Forbidden</span>
+- No shadow with blur greater than 0
+- No gradients of any kind
+- No ambiguous 4-8px radius
+- No low-saturation palettes</div>
+            </div>
+          </div>
+          <div class="formula-foot">
+            <span class="hint">六段结构 · 中英对照 · 一键复制</span>
+            <button class="brass sm">复制 Prompt</button>
+          </div>
+        </div>
+      </div>
+
+      <div class="sec-head"><h2>Token 清单</h2><span class="line"></span></div>
+      <div class="tokens">
+        <div class="swatch">
+          <div class="chip" style="background:#FFFDF5"></div>
+          <div class="hex">#FFFDF5</div><div class="nm">纸底</div>
+        </div>
+        <div class="swatch">
+          <div class="chip" style="background:#FFE600"></div>
+          <div class="hex">#FFE600</div><div class="nm">高亮黄</div>
+        </div>
+        <div class="swatch">
+          <div class="chip" style="background:#FF5C39"></div>
+          <div class="hex">#FF5C39</div><div class="nm">橙红</div>
+        </div>
+        <div class="swatch">
+          <div class="chip" style="background:#3D5AFE"></div>
+          <div class="hex">#3D5AFE</div><div class="nm">电光蓝</div>
+        </div>
+        <div class="swatch">
+          <div class="chip" style="background:#000000"></div>
+          <div class="hex">#000000</div><div class="nm">墨黑</div>
+        </div>
+        <div class="swatch">
+          <div class="chip" style="background:#FFFFFF"></div>
+          <div class="hex">#FFFFFF</div><div class="nm">卡片</div>
+        </div>
+      </div>
+
+      <div class="sec-head"><h2>该做与不该做</h2><span class="line"></span></div>
+      <div class="dd-grid">
+        <div class="dd do">
+          <div class="dd-head"><span class="dd-badge">✓</span><h5>DO</h5></div>
+          <ul>
+            <li>所有边框固定 3px 纯黑，全站一致</li>
+            <li>阴影一律右下偏移，零模糊</li>
+            <li>主色只出现在按钮、徽章、强调标记</li>
+            <li>字号阶梯控制在五级以内</li>
+          </ul>
+        </div>
+        <div class="dd dont">
+          <div class="dd-head"><span class="dd-badge">✕</span><h5>DON'T</h5></div>
+          <ul>
+            <li>不要给任何元素加柔和阴影</li>
+            <li>不要用渐变做背景或按钮</li>
+            <li>不要用 4–8px 这种暧昧圆角</li>
+            <li>不要降低饱和度做「高级感」</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+
+    <div class="foot">
+      <span class="pageno">P. 05</span>
+      <span class="t">STYLEBOOK v0.1 · 视觉稿</span>
+      <span class="spacer"></span>
+      <span class="t">12 STYLES · 8 PALETTES</span>
+    </div>
+
+  </div>
+</div>
+</body>
+</html>

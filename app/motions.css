@@ -1,0 +1,584 @@
+/* 动效工具 · 基础与交互反馈 */
+
+.mo-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 40px;
+  margin-top: 34px;
+  padding-bottom: 20px;
+}
+
+.mo-card {
+  position: relative;
+  background: var(--surf);
+  border-radius: 24px;
+  padding: 22px 24px 24px;
+  box-shadow: var(--up-md);
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+  transition: transform 0.22s var(--ease), box-shadow 0.22s ease;
+}
+
+.mo-card:hover {
+  transform: translateY(-6px);
+  box-shadow: 12px 12px 30px #b5b5b5, -12px -12px 30px #fff;
+}
+
+.mo-card:active {
+  transform: translateY(-2px) scale(0.995);
+}
+
+.mo-card::after {
+  content: "";
+  position: absolute;
+  left: 24px;
+  right: 24px;
+  bottom: 0;
+  height: 3px;
+  background: var(--ink);
+  border-radius: 3px 3px 0 0;
+  transform: scaleX(0);
+  transform-origin: left center;
+  transition: transform 0.34s var(--ease);
+}
+
+.mo-card:hover::after {
+  transform: scaleX(1);
+}
+
+.mo-card h4 {
+  font-size: 21px;
+  font-weight: 700;
+}
+
+.mo-card .meta {
+  font-size: 13px;
+  font-weight: 500;
+  color: var(--ink-3);
+  letter-spacing: 0.08em;
+  margin-top: 4px;
+  transition: color 0.22s ease;
+}
+
+.mo-card:hover .meta {
+  color: var(--ink-2);
+}
+
+.mo-demo {
+  margin: 16px 0 14px;
+  height: 138px;
+  border-radius: 16px;
+  background: var(--surf);
+  box-shadow: var(--down-sm);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
+  position: relative;
+  transition: box-shadow 0.22s ease;
+}
+
+.mo-card:hover .mo-demo {
+  box-shadow: inset 6px 6px 13px #b4b4b4, inset -6px -6px 13px #fcfcfc;
+}
+
+.mo-code {
+  position: relative;
+  padding-top: 12px;
+  border-top: 1px solid rgba(0, 0, 0, 0.07);
+}
+
+.mo-code code {
+  font-family: var(--song);
+  font-size: 15px;
+  line-height: 1.9;
+  color: var(--ink-2);
+  display: block;
+  white-space: pre-wrap;
+  word-break: break-word;
+  padding-right: 56px;
+}
+
+.mo-copy {
+  position: absolute;
+  right: 0;
+  top: 10px;
+  z-index: 2;
+  font-family: var(--sans);
+  font-size: 12px;
+  font-weight: 700;
+  letter-spacing: 0.06em;
+  color: var(--ink-2);
+  background: var(--surf);
+  border: none;
+  cursor: pointer;
+  border-radius: 999px;
+  padding: 5px 13px;
+  box-shadow: var(--up-xs);
+}
+
+.mo-copy:hover {
+  color: var(--ink);
+}
+
+.mo-copy:active {
+  box-shadow: var(--down-sm);
+}
+
+/* 演示元素基型 */
+.mo-btn {
+  font-family: var(--sans);
+  font-size: 16px;
+  font-weight: 700;
+  color: var(--ink);
+  background: var(--surf);
+  border-radius: 999px;
+  padding: 13px 28px;
+  box-shadow: var(--up-sm);
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.mo-txt {
+  font-size: 22px;
+  font-weight: 700;
+  letter-spacing: 0.02em;
+}
+
+.mo-box {
+  width: 92px;
+  height: 92px;
+  border-radius: 18px;
+  background: var(--surf);
+  box-shadow: var(--up-sm);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 26px;
+  font-weight: 700;
+}
+
+/* ===== 01 悬停抬升 ===== */
+.mo-hover-lift:hover {
+  transform: translateY(-8px);
+  box-shadow: 10px 10px 22px #b3b3b3, -10px -10px 22px #fff;
+}
+.mo-hover-lift {
+  transition: transform 0.2s var(--ease), box-shadow 0.2s ease;
+}
+
+/* ===== 02 按压回弹 ===== */
+.mo-press:active {
+  transform: scale(0.93);
+  box-shadow: var(--down-sm);
+}
+.mo-press {
+  transition: transform 0.1s ease-out, box-shadow 0.1s ease-out;
+}
+
+/* ===== 03 下划线滑入 ===== */
+.mo-underline {
+  position: relative;
+  box-shadow: none;
+  background: none;
+  padding: 8px 4px;
+}
+.mo-underline::after {
+  content: "";
+  position: absolute;
+  left: 50%;
+  bottom: 0;
+  width: 0;
+  height: 3px;
+  background: var(--ink);
+  border-radius: 2px;
+  transform: translateX(-50%);
+  transition: width 0.28s var(--ease);
+}
+.mo-underline:hover::after {
+  width: 100%;
+}
+
+/* ===== 04 描边浮现 ===== */
+.mo-border {
+  position: relative;
+  overflow: hidden;
+}
+.mo-border::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  border-radius: inherit;
+  border: 2px solid var(--ink);
+  opacity: 0;
+  transform: scale(0.86);
+  transition: all 0.3s var(--ease);
+}
+.mo-border:hover::before {
+  opacity: 1;
+  transform: scale(1);
+}
+
+/* ===== 05 涟漪扩散 ===== */
+.mo-ripple {
+  position: relative;
+  overflow: hidden;
+}
+.mo-ripple .rp {
+  position: absolute;
+  border-radius: 50%;
+  background: rgba(0, 0, 0, 0.14);
+  transform: scale(0);
+  pointer-events: none;
+}
+@keyframes moRip {
+  to {
+    transform: scale(2.8);
+    opacity: 0;
+  }
+}
+
+/* ===== 06 图标形变 ===== */
+.mo-burger {
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
+  padding: 18px;
+  border-radius: 16px;
+  box-shadow: var(--up-sm);
+  background: var(--surf);
+  transition: box-shadow 0.2s ease;
+}
+.mo-burger i {
+  display: block;
+  width: 24px;
+  height: 2.5px;
+  background: var(--ink);
+  border-radius: 2px;
+  transition: all 0.3s var(--ease);
+}
+.mo-burger:hover i:nth-child(1) {
+  transform: translateY(7.5px) rotate(45deg);
+}
+.mo-burger:hover i:nth-child(2) {
+  opacity: 0;
+  transform: scaleX(0.3);
+}
+.mo-burger:hover i:nth-child(3) {
+  transform: translateY(-7.5px) rotate(-45deg);
+}
+
+/* ===== 07 磁吸跟随 ===== */
+.mo-magnetic {
+  transition: transform 0.25s var(--ease);
+  will-change: transform;
+}
+
+/* ===== 08 聚焦光晕 ===== */
+.mo-glow {
+  transition: box-shadow 0.25s ease, transform 0.25s var(--ease);
+}
+.mo-glow:hover,
+.mo-glow:focus-visible {
+  transform: translateY(-3px);
+  box-shadow: 0 0 0 4px rgba(43, 43, 43, 0.12), var(--up-sm);
+}
+
+/* ===== 09 进视口淡入 ===== */
+@keyframes moReveal {
+  0% {
+    opacity: 0;
+    transform: translateY(28px);
+  }
+  22% {
+    opacity: 1;
+    transform: translateY(0);
+  }
+  82% {
+    opacity: 1;
+    transform: translateY(0);
+  }
+  100% {
+    opacity: 0;
+    transform: translateY(28px);
+  }
+}
+.mo-reveal {
+  animation: moReveal 4s var(--ease) infinite;
+}
+
+/* ===== 10 视差 ===== */
+@keyframes moParallax {
+  0%,
+  100% {
+    transform: translateY(-12px);
+  }
+  50% {
+    transform: translateY(12px);
+  }
+}
+.mo-parallax {
+  animation: moParallax 4.5s ease-in-out infinite;
+}
+
+/* ===== 11 粘性叠层 ===== */
+.mo-sticky {
+  position: relative;
+  width: 120px;
+  height: 78px;
+}
+.mo-sticky i {
+  position: absolute;
+  inset: 0;
+  border-radius: 12px;
+  background: var(--surf);
+  box-shadow: var(--up-sm);
+  animation: moStack 3.6s var(--ease) infinite;
+}
+.mo-sticky i:nth-child(2) {
+  animation-delay: 0.28s;
+  opacity: 0.72;
+}
+.mo-sticky i:nth-child(3) {
+  animation-delay: 0.56s;
+  opacity: 0.42;
+}
+@keyframes moStack {
+  0%,
+  62%,
+  100% {
+    transform: translateY(0) scale(1);
+  }
+  30% {
+    transform: translateY(-14px) scale(0.96);
+  }
+}
+
+/* ===== 12 滚动进度条 ===== */
+.mo-progress {
+  width: 78%;
+  height: 8px;
+  border-radius: 999px;
+  background: #dcdcdc;
+  overflow: hidden;
+  box-shadow: inset 0 1px 3px rgba(0, 0, 0, 0.12);
+}
+.mo-progress i {
+  display: block;
+  height: 100%;
+  width: 100%;
+  border-radius: 999px;
+  background: var(--ink);
+  transform-origin: left center;
+  animation: moProgress 3.4s var(--ease) infinite;
+}
+@keyframes moProgress {
+  0% {
+    transform: scaleX(0);
+  }
+  70%,
+  100% {
+    transform: scaleX(1);
+  }
+}
+
+/* ===== 13 数字滚动 ===== */
+.mo-count {
+  font-size: 40px;
+  font-weight: 700;
+  letter-spacing: -0.02em;
+  font-variant-numeric: tabular-nums;
+}
+
+/* ===== 14 横向滚动 ===== */
+.mo-marquee-row {
+  display: flex;
+  gap: 14px;
+  width: 100%;
+  overflow: hidden;
+  padding: 0 12px;
+}
+.mo-marquee-row .track {
+  display: flex;
+  gap: 14px;
+  animation: moTrack 9s linear infinite;
+}
+.mo-marquee-row .cell {
+  flex: none;
+  width: 74px;
+  height: 62px;
+  border-radius: 12px;
+  background: var(--surf);
+  box-shadow: var(--up-xs);
+}
+@keyframes moTrack {
+  to {
+    transform: translateX(calc(-100% - 14px));
+  }
+}
+
+/* ===== 15 打字机 ===== */
+.mo-type {
+  font-family: var(--mono);
+  font-size: 16px;
+  color: var(--ink);
+  white-space: nowrap;
+  overflow: hidden;
+  border-right: 2px solid var(--ink);
+  width: 0;
+  animation: moType 4s steps(18, end) infinite, moCaret 0.7s step-end infinite;
+}
+@keyframes moType {
+  0% {
+    width: 0;
+  }
+  55%,
+  85% {
+    width: 18ch;
+  }
+  100% {
+    width: 0;
+  }
+}
+@keyframes moCaret {
+  50% {
+    border-color: transparent;
+  }
+}
+
+/* ===== 16 逐字浮现 ===== */
+.mo-chars span {
+  display: inline-block;
+  opacity: 0;
+  animation: moChar 2.8s var(--ease) infinite;
+}
+.mo-chars span:nth-child(1) {
+  animation-delay: 0s;
+}
+.mo-chars span:nth-child(2) {
+  animation-delay: 0.07s;
+}
+.mo-chars span:nth-child(3) {
+  animation-delay: 0.14s;
+}
+.mo-chars span:nth-child(4) {
+  animation-delay: 0.21s;
+}
+.mo-chars span:nth-child(5) {
+  animation-delay: 0.28s;
+}
+@keyframes moChar {
+  0% {
+    opacity: 0;
+    transform: translateY(8px);
+  }
+  18%,
+  76% {
+    opacity: 1;
+    transform: translateY(0);
+  }
+  100% {
+    opacity: 0;
+    transform: translateY(8px);
+  }
+}
+
+/* ===== 17 文字扫光 ===== */
+.mo-shine {
+  background: linear-gradient(
+    100deg,
+    var(--ink) 30%,
+    #a8a8a8 48%,
+    var(--ink) 66%
+  );
+  background-size: 220% 100%;
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+  animation: moShine 2.6s linear infinite;
+}
+@keyframes moShine {
+  from {
+    background-position: 160% 0;
+  }
+  to {
+    background-position: -60% 0;
+  }
+}
+
+/* ===== 18 渐变文字流动 ===== */
+.mo-flow {
+  background: linear-gradient(90deg, #6b7bff, #d76bb0, #4bb9a8, #6b7bff);
+  background-size: 300% 100%;
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+  animation: moFlow 5s linear infinite;
+}
+@keyframes moFlow {
+  to {
+    background-position: 300% 0;
+  }
+}
+
+/* ===== 19 遮罩揭示 ===== */
+.mo-mask {
+  position: relative;
+  overflow: hidden;
+  padding: 6px 10px;
+}
+.mo-mask::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: var(--surf);
+  transform-origin: right center;
+  animation: moMask 3.6s var(--ease) infinite;
+}
+@keyframes moMask {
+  0% {
+    transform: scaleX(1);
+  }
+  45%,
+  80% {
+    transform: scaleX(0);
+  }
+  100% {
+    transform: scaleX(1);
+    transform-origin: left center;
+  }
+}
+
+/* ===== 20 文字荧光笔 ===== */
+.mo-mark {
+  position: relative;
+  padding: 0 4px;
+}
+.mo-mark::before {
+  content: "";
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: 2px;
+  height: 42%;
+  background: #ffe066;
+  transform: scaleX(0);
+  transform-origin: left center;
+  z-index: -1;
+  animation: moMark 3.4s var(--ease) infinite;
+}
+@keyframes moMark {
+  0% {
+    transform: scaleX(0);
+  }
+  30%,
+  78% {
+    transform: scaleX(1);
+  }
+  100% {
+    transform: scaleX(0);
+    transform-origin: right center;
+  }
+}

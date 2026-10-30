@@ -1,0 +1,869 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>前端风格样本册 · 原型 v2（瑞士国际主义）</title>
+<style>
+  :root {
+    --ink: #111111;
+    --ink-2: #444444;
+    --ink-3: #767676;
+    --ink-4: #A0A0A0;
+    --line: #DCDCDC;
+    --line-2: #EDEDED;
+    --red: #E4002B;
+    --bg: #FFFFFF;
+    --bg-2: #F4F4F4;
+    --serif: "Songti SC", "SimSun", "STSong", Georgia, serif;
+    --sans: "Helvetica Neue", Helvetica, Arial, "PingFang SC", "Microsoft YaHei", sans-serif;
+    --mono: "SF Mono", "JetBrains Mono", Consolas, "Courier New", monospace;
+  }
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+
+  body {
+    font-family: var(--sans);
+    background: var(--bg);
+    color: var(--ink);
+    font-size: 15px;
+    line-height: 1.65;
+    -webkit-font-smoothing: antialiased;
+    text-rendering: optimizeLegibility;
+  }
+
+  /* ===== 原型控制条（非设计一部分） ===== */
+  .proto-bar {
+    position: sticky; top: 0; z-index: 999;
+    display: flex; align-items: center; gap: 14px;
+    height: 30px; padding: 0 20px;
+    background: #1A1A1A; color: #B8B8B8;
+    font-family: var(--mono); font-size: 10px; letter-spacing: .14em;
+  }
+  .proto-bar .tag { color: #6E6E6E; }
+  .proto-bar button {
+    font-family: var(--mono); font-size: 10px; letter-spacing: .1em;
+    background: none; border: 1px solid #3A3A3A; color: #B8B8B8;
+    padding: 3px 10px; cursor: pointer; text-transform: uppercase;
+  }
+  .proto-bar button:hover { border-color: #7A7A7A; color: #fff; }
+  .proto-bar button.on { background: #E4002B; border-color: #E4002B; color: #fff; }
+
+  /* ===== 公共 ===== */
+  .wrap { max-width: 1440px; margin: 0 auto; padding: 0 48px; }
+  .mono { font-family: var(--mono); }
+  .lb {
+    font-family: var(--mono); font-size: 10px; letter-spacing: .18em;
+    text-transform: uppercase; color: var(--ink-3);
+  }
+
+  /* ===== 顶栏 ===== */
+  .nav {
+    display: flex; align-items: baseline; gap: 40px;
+    height: 76px; padding: 0 48px;
+    border-bottom: 1px solid var(--ink);
+    max-width: 1440px; margin: 0 auto;
+  }
+  .nav .logo { display: flex; align-items: baseline; gap: 12px; }
+  .nav .logo b {
+    font-family: var(--serif); font-size: 19px; font-weight: 400;
+    letter-spacing: .04em;
+  }
+  .nav .logo span {
+    font-family: var(--mono); font-size: 9.5px; letter-spacing: .26em;
+    color: var(--ink-3);
+  }
+  .nav .links { display: flex; gap: 26px; margin-left: auto; }
+  .nav .links a {
+    font-size: 13px; color: var(--ink); text-decoration: none;
+    padding-bottom: 2px; border-bottom: 1px solid transparent;
+  }
+  .nav .links a:hover { border-bottom-color: var(--red); color: var(--red); }
+  .nav .links a.on { border-bottom-color: var(--ink); }
+  .nav .lang {
+    font-family: var(--mono); font-size: 10px; letter-spacing: .16em;
+    color: var(--ink-3); margin-left: 34px;
+  }
+
+  /* ===== Hero ===== */
+  .hero { padding: 64px 48px 0; max-width: 1440px; margin: 0 auto; }
+  .hero-grid { display: grid; grid-template-columns: 1fr 380px; gap: 60px; align-items: end; }
+  .hero h1 {
+    font-family: var(--serif); font-weight: 400;
+    font-size: 104px; line-height: .96; letter-spacing: -.015em;
+    margin-bottom: 10px;
+  }
+  .hero h1 em {
+    font-style: normal; color: var(--red);
+  }
+  .hero .sub {
+    display: flex; align-items: center; gap: 14px; margin-top: 26px;
+    font-family: var(--mono); font-size: 10.5px; letter-spacing: .2em;
+    color: var(--ink-3); text-transform: uppercase;
+  }
+  .hero .sub .bar { width: 40px; height: 1px; background: var(--ink); }
+  .hero .blurb { padding-bottom: 12px; }
+  .hero .blurb p {
+    font-size: 14px; line-height: 1.85; color: var(--ink-2);
+  }
+  .hero .blurb p + p { margin-top: 14px; }
+  .hero .blurb strong { color: var(--ink); font-weight: 500; }
+  .stats {
+    display: grid; grid-template-columns: repeat(3, 1fr);
+    margin-top: 30px; border-top: 1px solid var(--ink);
+  }
+  .stats div {
+    padding: 12px 0 0;
+    border-right: 1px solid var(--line);
+  }
+  .stats div:last-child { border-right: none; }
+  .stats .n { font-family: var(--mono); font-size: 26px; letter-spacing: -.02em; }
+  .stats .l { font-family: var(--mono); font-size: 9px; letter-spacing: .18em; color: var(--ink-3); text-transform: uppercase; margin-top: 2px; }
+
+  /* ===== 筛选 ===== */
+  .filters {
+    display: flex; align-items: center; gap: 24px;
+    margin-top: 54px; padding: 14px 0;
+    border-top: 1px solid var(--ink); border-bottom: 1px solid var(--ink);
+    max-width: 1440px; margin-left: auto; margin-right: auto;
+    padding-left: 48px; padding-right: 48px;
+    flex-wrap: wrap;
+  }
+  .filters .f {
+    font-size: 13px; color: var(--ink-2); cursor: pointer;
+    padding-bottom: 3px; border-bottom: 2px solid transparent;
+    letter-spacing: .02em;
+  }
+  .filters .f:hover { color: var(--ink); }
+  .filters .f.on { color: var(--ink); border-bottom-color: var(--red); font-weight: 500; }
+  .filters .f .c {
+    font-family: var(--mono); font-size: 9px; color: var(--ink-4);
+    vertical-align: super; margin-left: 3px;
+  }
+  .filters .right {
+    margin-left: auto; font-family: var(--mono); font-size: 10px;
+    letter-spacing: .16em; color: var(--ink-3);
+  }
+
+  /* ===== 瀑布卡片墙 ===== */
+  .wall {
+    max-width: 1440px; margin: 0 auto;
+    padding: 40px 48px 90px;
+    column-count: 3; column-gap: 26px;
+  }
+  .card {
+    display: block; break-inside: avoid; margin-bottom: 26px;
+    background: #fff; border: 1px solid var(--ink);
+    text-decoration: none; color: inherit;
+    position: relative; cursor: pointer;
+    transition: transform .18s cubic-bezier(.16,1,.3,1), box-shadow .18s ease, border-color .18s ease;
+  }
+  .card:hover {
+    transform: translateY(-7px);
+    box-shadow: 0 16px 32px rgba(0,0,0,.14);
+    border-color: var(--red);
+    z-index: 5;
+  }
+  .card .top {
+    display: flex; align-items: center; justify-content: space-between;
+    padding: 9px 12px; border-bottom: 1px solid var(--ink);
+    font-family: var(--mono); font-size: 9px; letter-spacing: .16em;
+    text-transform: uppercase; color: var(--ink-3);
+  }
+  .card .top .no { color: var(--ink); }
+  .card .top .arrow { opacity: 0; transition: opacity .18s; }
+  .card:hover .top .arrow { opacity: 1; color: var(--red); }
+
+  .pv {
+    position: relative; overflow: hidden; background: #fff;
+    border-bottom: 1px solid var(--line);
+  }
+  .card .info { padding: 14px 14px 16px; }
+  .card .info h3 {
+    font-family: var(--serif); font-size: 23px; font-weight: 400;
+    letter-spacing: .02em; line-height: 1.25;
+  }
+  .card .info .en {
+    font-family: var(--mono); font-size: 9.5px; letter-spacing: .16em;
+    color: var(--ink-3); text-transform: uppercase; margin-top: 3px;
+  }
+  .card .info p {
+    font-size: 12px; line-height: 1.7; color: var(--ink-2);
+    margin-top: 10px; padding-top: 10px; border-top: 1px solid var(--line-2);
+  }
+
+  /* ===== 预览片段（各风格缩略） ===== */
+  .pv .mini-nav {
+    display: flex; align-items: center; gap: 6px;
+    padding: 7px 10px; font-size: 7px;
+  }
+  .pv .mini-nav i { display: block; width: 14px; height: 2px; background: currentColor; opacity: .35; }
+  .pv .mini-nav .sp { flex: 1; }
+
+  /* 01 极简 */
+  .pv-min { padding: 24px 18px; background: #FAFAFA; height: 168px; }
+  .pv-min .t { font-family: var(--serif); font-size: 19px; letter-spacing: .06em; color: #1a1a1a; }
+  .pv-min .l { width: 68%; height: 3px; background: #D8D8D8; margin-top: 14px; }
+  .pv-min .l.s { width: 44%; margin-top: 6px; }
+  .pv-min .ln { width: 24px; height: 1px; background: #1a1a1a; margin: 20px 0 10px; }
+  .pv-min .b { display: inline-block; font-size: 7px; letter-spacing: .2em; color: #1a1a1a; border-bottom: 1px solid #1a1a1a; padding-bottom: 2px; }
+
+  /* 02 瑞士编辑 */
+  .pv-swiss { height: 206px; background: #fff; }
+  .pv-swiss .b1 { padding: 16px 16px 0; }
+  .pv-swiss .h { font-family: var(--serif); font-size: 30px; line-height: .95; letter-spacing: -.03em; color: #111; }
+  .pv-swiss .rule { height: 3px; background: #111; margin: 12px 16px 0; }
+  .pv-swiss .cols { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 8px; padding: 10px 16px 0; }
+  .pv-swiss .cols div { height: 2px; background: #DDD; }
+  .pv-swiss .cols div:first-child { background: #E4002B; }
+  .pv-swiss .redsq { position: absolute; right: 14px; top: 46px; width: 26px; height: 26px; background: #E4002B; }
+  .pv-swiss .bigno { position: absolute; right: 14px; bottom: 8px; font-family: var(--mono); font-size: 44px; color: #EFEFEF; letter-spacing: -.04em; }
+
+  /* 03 新粗野 */
+  .pv-brut { height: 186px; background: #FFFDF5; }
+  .pv-brut .mini-nav { background: #fff; border-bottom: 2px solid #000; }
+  .pv-brut .h { font-size: 21px; font-weight: 800; line-height: .95; letter-spacing: -.03em; padding: 12px 10px 0; text-transform: uppercase; }
+  .pv-brut .h span { background: #FFE600; }
+  .pv-brut .bx { margin: 10px 10px 0; border: 2px solid #000; background: #fff; padding: 6px 7px; box-shadow: 3px 3px 0 #000; }
+  .pv-brut .bx i { display: block; height: 2px; background: #000; opacity: .18; }
+  .pv-brut .bx i + i { margin-top: 4px; width: 60%; }
+
+  /* 04 孟菲斯 */
+  .pv-mem { height: 246px; background: #FDF6EC; overflow: hidden; }
+  .pv-mem .h { font-family: var(--serif); font-size: 24px; padding: 16px; letter-spacing: .02em; color: #141414; position: relative; z-index: 2; }
+  .pv-mem .c1 { position: absolute; width: 54px; height: 54px; border-radius: 50%; background: #FF5D8F; right: 18px; top: 16px; }
+  .pv-mem .c2 { position: absolute; width: 34px; height: 34px; background: #3DDC97; left: 16px; bottom: 66px; transform: rotate(18deg); }
+  .pv-mem .c3 { position: absolute; width: 46px; height: 46px; border: 5px solid #FFC93C; border-radius: 50%; right: 40px; bottom: 44px; }
+  .pv-mem .wav { position: absolute; left: 0; right: 0; bottom: 18px; height: 14px;
+    background: repeating-linear-gradient(90deg, #141414 0 2px, transparent 2px 10px); }
+  .pv-mem .sq { position: absolute; right: 16px; top: 92px; width: 70px; height: 3px; background: #141414; }
+
+  /* 05 玻璃拟态 */
+  .pv-glass { height: 212px; background: #2B1A5E; overflow: hidden; }
+  .pv-glass::before {
+    content: ''; position: absolute; inset: -40%;
+    background:
+      radial-gradient(circle at 25% 30%, #7C4DFF 0%, transparent 45%),
+      radial-gradient(circle at 75% 70%, #FF4D9D 0%, transparent 45%),
+      radial-gradient(circle at 60% 10%, #00E5FF 0%, transparent 40%);
+    filter: blur(4px);
+  }
+  .pv-glass .g {
+    position: absolute; left: 18px; right: 18px; top: 46px;
+    background: rgba(255,255,255,.14); border: 1px solid rgba(255,255,255,.3);
+    border-radius: 14px; padding: 14px; backdrop-filter: blur(10px);
+    box-shadow: inset 0 1px 0 rgba(255,255,255,.45), 0 10px 24px rgba(0,0,0,.25);
+  }
+  .pv-glass .g .t { font-size: 15px; font-weight: 500; color: #fff; letter-spacing: -.01em; }
+  .pv-glass .g i { display: block; height: 2px; background: rgba(255,255,255,.45); margin-top: 8px; }
+  .pv-glass .g i + i { width: 62%; }
+  .pv-glass .pill {
+    position: absolute; left: 18px; bottom: 26px; padding: 6px 14px;
+    border-radius: 999px; background: rgba(255,255,255,.92); color: #1B1033;
+    font-size: 8px; font-weight: 600; letter-spacing: .06em;
+  }
+
+  /* 06 弥散极光 */
+  .pv-aur { height: 190px; background: #07070B; overflow: hidden; }
+  .pv-aur::before {
+    content: ''; position: absolute; inset: -30%;
+    background:
+      radial-gradient(ellipse at 20% 20%, rgba(99,102,241,.85) 0%, transparent 50%),
+      radial-gradient(ellipse at 80% 60%, rgba(236,72,153,.55) 0%, transparent 48%),
+      radial-gradient(ellipse at 50% 100%, rgba(34,211,238,.4) 0%, transparent 50%);
+    filter: blur(18px);
+  }
+  .pv-aur .t {
+    position: relative; padding: 54px 18px 0;
+    font-size: 20px; font-weight: 600; letter-spacing: -.02em; color: #fff; line-height: 1.15;
+  }
+  .pv-aur .t em { font-style: normal; background: linear-gradient(90deg,#A5B4FC,#F0ABFC); -webkit-background-clip: text; background-clip: text; color: transparent; }
+  .pv-aur .pill {
+    position: relative; margin: 14px 18px 0; display: inline-block;
+    padding: 5px 12px; border-radius: 6px; background: #fff; color: #07070B;
+    font-size: 8px; font-weight: 700; letter-spacing: .04em;
+  }
+
+  /* 07 赛博朋克 */
+  .pv-cyb { height: 186px; background: #06060A; font-family: var(--mono); overflow: hidden; }
+  .pv-cyb .scan { position: absolute; inset: 0;
+    background: repeating-linear-gradient(0deg, rgba(0,255,240,.055) 0 1px, transparent 1px 4px); }
+  .pv-cyb .h {
+    position: relative; padding: 20px 14px 0;
+    font-size: 19px; font-weight: 700; letter-spacing: .04em; color: #00FFF0;
+    text-shadow: 0 0 10px rgba(0,255,240,.65), 2px 0 0 rgba(255,0,128,.6);
+    line-height: 1.1;
+  }
+  .pv-cyb .bar { position: relative; margin: 14px 14px 0; height: 1px; background: rgba(255,0,128,.55); }
+  .pv-cyb .txt { position: relative; padding: 10px 14px 0; font-size: 7.5px; line-height: 1.8; color: #FF2E97; letter-spacing: .08em; }
+  .pv-cyb .chip {
+    position: relative; display: inline-block; margin: 12px 14px 0;
+    padding: 4px 9px; border: 1px solid #00FFF0; color: #00FFF0;
+    font-size: 7px; letter-spacing: .16em;
+  }
+
+  /* 08 国潮 */
+  .pv-guo { height: 206px; background: #F7EBD5; overflow: hidden; }
+  .pv-guo .band { position: absolute; inset: 0 0 auto 0; height: 42px; background: #A62B2B; }
+  .pv-guo .seal {
+    position: absolute; right: 16px; top: 58px; width: 40px; height: 40px;
+    border: 2px solid #A62B2B; color: #A62B2B;
+    font-family: var(--serif); font-size: 11px; line-height: 1.2;
+    display: flex; align-items: center; justify-content: center; text-align: center;
+    letter-spacing: .05em;
+  }
+  .pv-guo .h {
+    position: relative; padding: 58px 16px 0;
+    font-family: var(--serif); font-size: 25px; letter-spacing: .14em; color: #3A1F1A; line-height: 1.3;
+  }
+  .pv-guo .sub { position: relative; padding: 8px 16px 0; font-family: var(--serif); font-size: 9px; letter-spacing: .3em; color: #8A6A55; }
+  .pv-guo .cloud {
+    position: absolute; left: 16px; bottom: 20px; width: 84px; height: 26px;
+    border-top: 1px solid rgba(166,43,43,.5); border-radius: 50%; border-left: 1px solid transparent; border-right: 1px solid transparent;
+  }
+  .pv-guo .cloud2 { position: absolute; left: 40px; bottom: 12px; width: 60px; height: 18px; border-top: 1px solid rgba(166,43,43,.35); border-radius: 50%; }
+
+  /* 09 大排版 */
+  .pv-typo { height: 244px; background: #0E0E0E; overflow: hidden; }
+  .pv-typo .t {
+    font-family: var(--serif); font-size: 46px; line-height: .88; letter-spacing: -.03em;
+    color: #F5F2EA; padding: 18px 14px 0;
+  }
+  .pv-typo .t em { font-style: normal; color: #E4002B; }
+  .pv-typo .meta {
+    position: absolute; left: 14px; bottom: 14px; right: 14px;
+    display: flex; justify-content: space-between;
+    font-family: var(--mono); font-size: 7px; letter-spacing: .18em; color: #7A7A78;
+    border-top: 1px solid #2A2A2A; padding-top: 7px;
+  }
+
+  /* ===== 详情页 ===== */
+  .view { display: none; }
+  .view.on { display: block; }
+
+  .crumb {
+    display: flex; align-items: center; gap: 12px;
+    padding: 22px 48px; max-width: 1440px; margin: 0 auto;
+    font-family: var(--mono); font-size: 10px; letter-spacing: .16em;
+    text-transform: uppercase; color: var(--ink-3);
+    border-bottom: 1px solid var(--line);
+  }
+  .crumb a { color: var(--ink); text-decoration: none; }
+  .crumb a:hover { color: var(--red); }
+  .crumb .sep { color: var(--ink-4); }
+
+  .dhead { padding: 40px 48px 0; max-width: 1440px; margin: 0 auto; }
+  .dhead .row { display: flex; align-items: flex-end; justify-content: space-between; gap: 30px; flex-wrap: wrap; }
+  .dhead h1 {
+    font-family: var(--serif); font-size: 76px; font-weight: 400;
+    line-height: 1; letter-spacing: -.01em;
+  }
+  .dhead .en { font-family: var(--mono); font-size: 12px; letter-spacing: .3em; color: var(--ink-3); text-transform: uppercase; margin-bottom: 12px; }
+  .dhead .desc { max-width: 380px; font-size: 13.5px; line-height: 1.8; color: var(--ink-2); }
+  .dhead .rule { height: 2px; background: var(--ink); margin-top: 26px; }
+
+  .dbody {
+    display: grid; grid-template-columns: minmax(0, 1.45fr) minmax(0, 1fr);
+    gap: 34px; padding: 28px 48px 90px; max-width: 1440px; margin: 0 auto;
+    align-items: start;
+  }
+
+  .demo-box { border: 1px solid var(--ink); }
+  .demo-box .cap {
+    display: flex; justify-content: space-between; align-items: center;
+    padding: 9px 12px; border-bottom: 1px solid var(--ink);
+    font-family: var(--mono); font-size: 9px; letter-spacing: .16em;
+    text-transform: uppercase; color: var(--ink-3);
+  }
+  .demo-box .cap .dots { display: flex; gap: 3px; }
+  .demo-box .cap .dots i { width: 3px; height: 3px; background: var(--ink-4); display: block; }
+
+  /* 详情页里的新粗野 Demo */
+  .d-brut { background: #FFFDF5; color: #000; font-family: "Helvetica Neue", Arial, sans-serif; }
+  .d-brut .n {
+    display: flex; align-items: center; gap: 16px;
+    padding: 14px 22px; border-bottom: 3px solid #000; background: #fff;
+  }
+  .d-brut .n b { font-size: 15px; font-weight: 800; letter-spacing: -.02em; }
+  .d-brut .n span { font-size: 12px; font-weight: 600; }
+  .d-brut .n .sp { flex: 1; }
+  .b-btn {
+    display: inline-block; border: 3px solid #000; padding: 8px 15px;
+    font-size: 12px; font-weight: 800; box-shadow: 4px 4px 0 #000;
+    background: #000; color: #fff;
+  }
+  .b-btn.y { background: #FFE600; color: #000; }
+  .b-btn.w { background: #fff; color: #000; }
+  .b-btn.s { padding: 5px 10px; font-size: 10.5px; box-shadow: 3px 3px 0 #000; }
+  .d-brut .hero2 { padding: 34px 22px 30px; }
+  .d-brut h2 {
+    font-size: 44px; line-height: .95; font-weight: 800;
+    letter-spacing: -.04em; text-transform: uppercase; margin-bottom: 14px;
+  }
+  .d-brut h2 span { background: #FFE600; }
+  .d-brut .hero2 p { font-size: 13px; line-height: 1.65; max-width: 400px; font-weight: 500; margin-bottom: 20px; }
+  .d-brut .cards { display: grid; grid-template-columns: repeat(3,1fr); gap: 12px; padding: 0 22px 28px; }
+  .d-brut .c { border: 3px solid #000; background: #fff; padding: 13px; box-shadow: 5px 5px 0 #000; }
+  .d-brut .c .ic { width: 22px; height: 22px; border: 2.5px solid #000; background: #FF5C39; margin-bottom: 9px; }
+  .d-brut .c:nth-child(2) .ic { background: #3D5AFE; }
+  .d-brut .c:nth-child(3) .ic { background: #FFE600; }
+  .d-brut .c h4 { font-size: 12.5px; font-weight: 800; margin-bottom: 4px; }
+  .d-brut .c p { font-size: 11px; line-height: 1.5; color: #333; }
+
+  /* Prompt 卡 */
+  .prompt { border: 1px solid var(--ink); }
+  .prompt .ph {
+    display: flex; align-items: center; justify-content: space-between;
+    padding: 0 0 0 12px; border-bottom: 1px solid var(--ink); height: 34px;
+  }
+  .prompt .ph .t { font-family: var(--mono); font-size: 9px; letter-spacing: .18em; text-transform: uppercase; color: var(--ink-3); }
+  .prompt .lang-tabs { display: flex; height: 100%; }
+  .prompt .lang-tabs button {
+    font-family: var(--mono); font-size: 9.5px; letter-spacing: .14em;
+    border: none; border-left: 1px solid var(--line); background: none;
+    padding: 0 14px; height: 100%; cursor: pointer; color: var(--ink-3);
+    text-transform: uppercase;
+  }
+  .prompt .lang-tabs button.on { background: var(--ink); color: #fff; }
+  .prompt .body { padding: 0; }
+  .pblock { border-bottom: 1px solid var(--line-2); padding: 13px 15px; }
+  .pblock:last-of-type { border-bottom: none; }
+  .pblock .k {
+    font-family: var(--mono); font-size: 9px; letter-spacing: .16em;
+    text-transform: uppercase; color: var(--red); margin-bottom: 7px;
+    display: flex; align-items: center; gap: 7px;
+  }
+  .pblock .k .num { color: var(--ink-4); }
+  .pblock pre {
+    font-family: var(--mono); font-size: 10.5px; line-height: 1.75;
+    color: var(--ink-2); white-space: pre-wrap;
+  }
+  .pblock ul { list-style: none; }
+  .pblock li {
+    font-family: var(--mono); font-size: 10.5px; line-height: 1.7;
+    color: var(--ink-2); padding-left: 12px; position: relative;
+  }
+  .pblock li::before { content: '—'; position: absolute; left: 0; color: var(--ink-4); }
+  .prompt .pf {
+    display: flex; align-items: center; gap: 10px;
+    padding: 12px 15px; border-top: 1px solid var(--ink);
+  }
+  .prompt .pf .note { font-family: var(--mono); font-size: 9px; letter-spacing: .1em; color: var(--ink-3); flex: 1; }
+  .copy-btn {
+    background: var(--ink); color: #fff; border: none;
+    font-family: var(--mono); font-size: 10px; letter-spacing: .16em;
+    padding: 8px 16px; cursor: pointer; text-transform: uppercase;
+  }
+  .copy-btn:hover { background: var(--red); }
+
+  @media (max-width: 1100px) {
+    .wall { column-count: 2; padding-left: 28px; padding-right: 28px; }
+    .hero { padding-left: 28px; padding-right: 28px; }
+    .hero-grid { grid-template-columns: 1fr; gap: 34px; }
+    .hero h1 { font-size: 68px; }
+    .nav { padding: 0 28px; }
+    .filters { padding-left: 28px; padding-right: 28px; }
+    .dbody { grid-template-columns: 1fr; padding-left: 28px; padding-right: 28px; }
+    .dhead { padding-left: 28px; padding-right: 28px; }
+    .dhead h1 { font-size: 48px; }
+    .crumb { padding-left: 28px; padding-right: 28px; }
+  }
+  @media (max-width: 640px) {
+    .wall { column-count: 1; }
+    .hero h1 { font-size: 44px; }
+    .nav .links { display: none; }
+    .d-brut h2 { font-size: 30px; }
+    .d-brut .cards { grid-template-columns: 1fr; }
+  }
+</style>
+</head>
+<body>
+
+<div class="proto-bar">
+  <span class="tag">PROTOTYPE v2</span>
+  <span>视图</span>
+  <button id="btn-home" class="on" onclick="showView('home')">首页 · 瀑布卡片</button>
+  <button id="btn-detail" onclick="showView('detail')">风格详情</button>
+  <span style="margin-left:auto">瑞士国际主义 · 宋体</span>
+</div>
+
+<!-- ================= 首页 ================= -->
+<div class="view on" id="home">
+
+  <div class="nav">
+    <div class="logo">
+      <b>前端风格样本册</b>
+      <span>STYLEBOOK</span>
+    </div>
+    <div class="links">
+      <a href="#" class="on">名册</a>
+      <a href="#">配色</a>
+      <a href="#">组件</a>
+      <a href="#">使用</a>
+    </div>
+    <div class="lang">ZH / EN</div>
+  </div>
+
+  <div class="hero">
+    <div class="hero-grid">
+      <div>
+        <h1>前端风格<br>样本<em>册</em></h1>
+        <div class="sub"><span class="bar"></span>Twelve Styles · Bilingual Prompts</div>
+      </div>
+      <div class="blurb">
+        <p>十二种前端视觉风格，每一种给一份<strong>可执行的 CSS Token</strong> 与一段<strong>中英双语的结构化 Prompt</strong>。</p>
+        <p>AI 生成界面的瓶颈从来不是缺描述，是缺<strong>约束</strong>。所以这里的每条 Prompt 都带禁止项。</p>
+        <div class="stats">
+          <div><div class="n">12</div><div class="l">Styles</div></div>
+          <div><div class="n">06</div><div class="l">Families</div></div>
+          <div><div class="n">02</div><div class="l">Langs</div></div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="filters">
+    <div class="f on">全部<span class="c">12</span></div>
+    <div class="f">经典秩序<span class="c">2</span></div>
+    <div class="f">反设计<span class="c">2</span></div>
+    <div class="f">材质与光<span class="c">2</span></div>
+    <div class="f">复古未来<span class="c">2</span></div>
+    <div class="f">结构与布局<span class="c">2</span></div>
+    <div class="f">手作与本土<span class="c">2</span></div>
+    <div class="right">12 STYLES / 6 FAMILIES</div>
+  </div>
+
+  <div class="wall">
+
+    <a class="card" onclick="showView('detail')">
+      <div class="top"><span class="no">01</span><span>经典秩序</span><span class="arrow">↗</span></div>
+      <div class="pv pv-min">
+        <div class="t">少即是多</div>
+        <div class="l"></div>
+        <div class="l s"></div>
+        <div class="ln"></div>
+        <span class="b">EXPLORE</span>
+      </div>
+      <div class="info">
+        <h3>极简主义</h3>
+        <div class="en">Minimalism</div>
+        <p>去掉一切不承担功能的元素。留白即结构，字号层级是唯一的装饰。</p>
+      </div>
+    </a>
+
+    <a class="card" onclick="showView('detail')">
+      <div class="top"><span class="no">02</span><span>经典秩序</span><span class="arrow">↗</span></div>
+      <div class="pv pv-swiss">
+        <div class="b1"><div class="h">秩序<br>先于<br>风格</div></div>
+        <div class="rule"></div>
+        <div class="cols"><div></div><div></div><div></div></div>
+        <div class="redsq"></div>
+        <div class="bigno">02</div>
+      </div>
+      <div class="info">
+        <h3>瑞士编辑风</h3>
+        <div class="en">Swiss Editorial</div>
+        <p>网格、非对称、无衬线小字与超大标题的极端对比。信息即形式。</p>
+      </div>
+    </a>
+
+    <a class="card" onclick="showView('detail')">
+      <div class="top"><span class="no">03</span><span>反设计</span><span class="arrow">↗</span></div>
+      <div class="pv pv-brut">
+        <div class="mini-nav"><i style="width:22px;background:#000;opacity:1"></i><span class="sp"></span><i></i><i></i></div>
+        <div class="h">SHIP UGLY.<br><span>SHIP FAST.</span></div>
+        <div class="bx"><i></i><i></i></div>
+        <div class="bx"><i></i><i></i></div>
+      </div>
+      <div class="info">
+        <h3>新粗野主义</h3>
+        <div class="en">Neo-brutalism</div>
+        <p>3px 纯黑边、零模糊硬阴影、高饱和色块。故意粗糙，拒绝精致。</p>
+      </div>
+    </a>
+
+    <a class="card" onclick="showView('detail')">
+      <div class="top"><span class="no">04</span><span>材质与光</span><span class="arrow">↗</span></div>
+      <div class="pv pv-glass">
+        <div class="g">
+          <div class="t">Depth you can feel</div>
+          <i></i><i></i>
+        </div>
+        <div class="pill">GET STARTED</div>
+      </div>
+      <div class="info">
+        <h3>玻璃拟态</h3>
+        <div class="en">Glassmorphism</div>
+        <p>半透明磨砂叠层。必须有背景彩色才有意义，否则只是脏。</p>
+      </div>
+    </a>
+
+    <a class="card" onclick="showView('detail')">
+      <div class="top"><span class="no">05</span><span>反设计</span><span class="arrow">↗</span></div>
+      <div class="pv pv-mem">
+        <div class="h">LET'S<br>PLAY</div>
+        <div class="c1"></div>
+        <div class="c2"></div>
+        <div class="c3"></div>
+        <div class="sq"></div>
+        <div class="wav"></div>
+      </div>
+      <div class="info">
+        <h3>孟菲斯</h3>
+        <div class="en">Memphis</div>
+        <p>几何图形、撞色、无意义装饰。1980 年代对"好品味"的玩笑。</p>
+      </div>
+    </a>
+
+    <a class="card" onclick="showView('detail')">
+      <div class="top"><span class="no">06</span><span>材质与光</span><span class="arrow">↗</span></div>
+      <div class="pv pv-aur">
+        <div class="t">Build faster<br>with <em>aurora</em></div>
+        <div class="pill">START FREE</div>
+      </div>
+      <div class="info">
+        <h3>弥散极光</h3>
+        <div class="en">Aurora Gradient</div>
+        <p>深底上的大面积模糊色晕。Linear / Vercel 带火的那一套。</p>
+      </div>
+    </a>
+
+    <a class="card" onclick="showView('detail')">
+      <div class="top"><span class="no">07</span><span>复古未来</span><span class="arrow">↗</span></div>
+      <div class="pv pv-cyb">
+        <div class="scan"></div>
+        <div class="h">NEON<br>DISTRICT</div>
+        <div class="bar"></div>
+        <div class="txt">&gt; system online<br>&gt; access granted</div>
+        <div class="chip">JACK IN</div>
+      </div>
+      <div class="info">
+        <h3>赛博朋克</h3>
+        <div class="en">Cyberpunk</div>
+        <p>黑底、霓虹青与品红、扫描线、等宽字。技术恐怖的美学。</p>
+      </div>
+    </a>
+
+    <a class="card" onclick="showView('detail')">
+      <div class="top"><span class="no">08</span><span>手作与本土</span><span class="arrow">↗</span></div>
+      <div class="pv pv-guo">
+        <div class="band"></div>
+        <div class="seal">国<br>潮</div>
+        <div class="h">东方的<br>新叙事</div>
+        <div class="sub">ORIENTAL</div>
+        <div class="cloud"></div>
+        <div class="cloud2"></div>
+      </div>
+      <div class="info">
+        <h3>国潮新中式</h3>
+        <div class="en">Guochao</div>
+        <p>朱红、米黄、印章、云纹，配现代网格。传统符号的当代重构。</p>
+      </div>
+    </a>
+
+    <a class="card" onclick="showView('detail')">
+      <div class="top"><span class="no">09</span><span>结构与布局</span><span class="arrow">↗</span></div>
+      <div class="pv pv-typo">
+        <div class="t">字<br>就<em>是</em><br>设计</div>
+        <div class="meta"><span>TYPE FIRST</span><span>09 / 12</span></div>
+      </div>
+      <div class="info">
+        <h3>大排版</h3>
+        <div class="en">Typography-first</div>
+        <p>没有图片，没有插画，只有字。字号、字距、行高就是全部构图。</p>
+      </div>
+    </a>
+
+  </div>
+</div>
+
+<!-- ================= 详情页 ================= -->
+<div class="view" id="detail">
+
+  <div class="nav">
+    <div class="logo">
+      <b>前端风格样本册</b>
+      <span>STYLEBOOK</span>
+    </div>
+    <div class="links">
+      <a href="#" class="on">名册</a>
+      <a href="#">配色</a>
+      <a href="#">组件</a>
+      <a href="#">使用</a>
+    </div>
+    <div class="lang">ZH / EN</div>
+  </div>
+
+  <div class="crumb">
+    <a onclick="showView('home')">← 名册</a>
+    <span class="sep">/</span>
+    <span>02 反设计与高表达</span>
+    <span class="sep">/</span>
+    <span style="color:#111">03</span>
+  </div>
+
+  <div class="dhead">
+    <div class="row">
+      <div>
+        <div class="en">Neo-brutalism</div>
+        <h1>新粗野主义</h1>
+      </div>
+      <div class="desc">
+        3px 纯黑边框、零模糊硬阴影、高饱和色块。故意保留"没做完"的粗糙感，是反设计运动里唯一真正被产品界大量采用的风格。
+      </div>
+    </div>
+    <div class="rule"></div>
+  </div>
+
+  <div class="dbody">
+
+    <div class="demo-box">
+      <div class="cap">
+        <span>活体样本 · Live Sample</span>
+        <span class="dots"><i></i><i></i><i></i></span>
+      </div>
+      <div class="d-brut">
+        <div class="n">
+          <b>BRUT.DEV</b>
+          <span>Docs</span><span>Pricing</span><span>Blog</span>
+          <span class="sp"></span>
+          <span class="b-btn y s">GET STARTED</span>
+        </div>
+        <div class="hero2">
+          <h2>SHIP UGLY.<br><span>SHIP FAST.</span></h2>
+          <p>给独立开发者的部署工具。三十秒上线，不用配 CI，不用懂 Docker。</p>
+          <span class="b-btn y">START FREE</span>
+          <span class="b-btn w" style="margin-left:10px">READ DOCS</span>
+        </div>
+        <div class="cards">
+          <div class="c"><div class="ic"></div><h4>Zero config</h4><p>推代码就部署，配置一个字不用写。</p></div>
+          <div class="c"><div class="ic"></div><h4>Edge first</h4><p>全球边缘节点，冷启动低于 40 毫秒。</p></div>
+          <div class="c"><div class="ic"></div><h4>Pay once</h4><p>按项目收费，不按座位和请求数。</p></div>
+        </div>
+      </div>
+    </div>
+
+    <div class="prompt">
+      <div class="ph">
+        <span class="t">Prompt</span>
+        <div class="lang-tabs">
+          <button class="on" onclick="setLang('zh',this)">中文</button>
+          <button onclick="setLang('en',this)">EN</button>
+        </div>
+      </div>
+
+      <div class="body" id="p-zh">
+        <div class="pblock">
+          <div class="k"><span class="num">01</span>Visual Tokens · 视觉 Token</div>
+          <pre>背景 #FFFDF5，主色 #FFE600
+辅助 #FF5C39 / #3D5AFE
+边框 3px solid #000，全站统一
+圆角：卡片与按钮 0，徽章 999px
+阴影 6px 6px 0 #000，零模糊，全站唯一
+字体 Inter，字号 14/16/20/32/56</pre>
+        </div>
+        <div class="pblock">
+          <div class="k"><span class="num">02</span>Layout · 布局骨架</div>
+          <pre>单列，最大宽 1120px，左右留白 24px
+顺序：导航 → Hero → 特性三宫格 →
+步骤 → 价格 → 页脚
+区块间距 80px，Hero 上下 96px</pre>
+        </div>
+        <div class="pblock">
+          <div class="k"><span class="num">03</span>Components · 组件规范</div>
+          <pre>按钮：黑底白字 3px 黑边，hover 位移 (2,2)
+卡片：白底 3px 黑边，实心黑影，hover 上移 4px
+输入框：白底 3px 黑边，focus 加 2px 蓝描边
+导航：底部 3px 黑线分隔</pre>
+        </div>
+        <div class="pblock">
+          <div class="k"><span class="num">04</span>Forbidden · 禁止事项</div>
+          <ul>
+            <li>不要任何模糊半径大于 0 的阴影</li>
+            <li>不要使用渐变，三种全部禁止</li>
+            <li>不要 4–8px 的暧昧圆角</li>
+            <li>不要低饱和莫兰迪色</li>
+          </ul>
+        </div>
+        <div class="pblock">
+          <div class="k"><span class="num">05</span>Acceptance · 验收标准</div>
+          <ul>
+            <li>所有可见边框均为 3px 纯黑</li>
+            <li>相邻元素阴影方向一致</li>
+            <li>主色只出现在按钮、徽章、强调标记</li>
+            <li>375px 宽下无横向滚动</li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="body" id="p-en" style="display:none">
+        <div class="pblock">
+          <div class="k"><span class="num">01</span>Visual Tokens</div>
+          <pre>Background #FFFDF5, accent #FFE600
+Secondary #FF5C39 / #3D5AFE
+Border 3px solid #000 on all cards
+Radius: 0 for cards/buttons, 999px badges
+Shadow 6px 6px 0 #000, zero blur, only shadow
+Type Inter, scale 14/16/20/32/56</pre>
+        </div>
+        <div class="pblock">
+          <div class="k"><span class="num">02</span>Layout Skeleton</div>
+          <pre>Single column, max-width 1120px, 24px gutter
+Order: nav, hero, 3-up features,
+steps, pricing, footer
+Block gap 80px, hero padding 96px</pre>
+        </div>
+        <div class="pblock">
+          <div class="k"><span class="num">03</span>Components</div>
+          <pre>Button: black fill, white text, 3px black border,
+hover offset (2,2)
+Card: white, 3px border, hard shadow, hover up 4px
+Input: 3px black border, blue 2px outline on focus
+Nav: 3px black rule at bottom</pre>
+        </div>
+        <div class="pblock">
+          <div class="k"><span class="num">04</span>Forbidden</div>
+          <ul>
+            <li>No shadow with blur greater than 0</li>
+            <li>No gradients of any kind</li>
+            <li>No ambiguous 4-8px radius</li>
+            <li>No low-saturation palettes</li>
+          </ul>
+        </div>
+        <div class="pblock">
+          <div class="k"><span class="num">05</span>Acceptance</div>
+          <ul>
+            <li>Every visible border is 3px solid black</li>
+            <li>All shadows share the same offset direction</li>
+            <li>Accent appears only on buttons, badges, marks</li>
+            <li>No horizontal scroll at 375px</li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="pf">
+        <span class="note">5 段 · 复制当前语言版本</span>
+        <button class="copy-btn">Copy</button>
+      </div>
+    </div>
+
+  </div>
+</div>
+
+<script>
+function showView(id) {
+  document.querySelectorAll('.view').forEach(function (v) { v.classList.remove('on'); });
+  document.getElementById(id).classList.add('on');
+  document.getElementById('btn-home').classList.toggle('on', id === 'home');
+  document.getElementById('btn-detail').classList.toggle('on', id === 'detail');
+  window.scrollTo(0, 0);
+}
+if (location.hash === '#detail') { showView('detail'); }
+function setLang(l, btn) {
+  document.querySelectorAll('.lang-tabs button').forEach(function (b) { b.classList.remove('on'); });
+  btn.classList.add('on');
+  document.getElementById('p-zh').style.display = (l === 'zh') ? 'block' : 'none';
+  document.getElementById('p-en').style.display = (l === 'en') ? 'block' : 'none';
+}
+</script>
+</body>
+</html>
