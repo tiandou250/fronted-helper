@@ -53,7 +53,11 @@ export type MotionCategory =
   | "text"
   | "loading"
   | "transition"
-  | "ambient";
+  | "ambient"
+  | "native"
+  | "3d"
+  | "svg"
+  | "data";
 
 export interface MotionItem {
   id: string;
@@ -63,6 +67,8 @@ export interface MotionItem {
   timing: string;
   note: string;
   code: string;
+  /** 需要全屏舞台才看得清的动效（小窗里看不出效果） */
+  big?: boolean;
 }
 
 export const MOTION_CATS: { id: MotionCategory; name: string; en: string }[] = [
@@ -74,6 +80,10 @@ export const MOTION_CATS: { id: MotionCategory; name: string; en: string }[] = [
   { id: "loading", name: "加载与状态", en: "Loading" },
   { id: "transition", name: "转场与揭示", en: "Transition" },
   { id: "ambient", name: "氛围与装饰", en: "Ambient" },
+  { id: "native", name: "原生 CSS", en: "Native CSS" },
+  { id: "3d", name: "三维空间", en: "3D" },
+  { id: "svg", name: "SVG 矢量", en: "SVG" },
+  { id: "data", name: "数据可视化", en: "Data" },
 ];
 
 export const LEVELS = [50, 100, 200, 300, 400, 500, 600, 700, 800, 900, 950];

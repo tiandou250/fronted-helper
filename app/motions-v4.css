@@ -1,0 +1,1046 @@
+/* ============================================================
+   v4 / v5 / v6 新增动效的演示样式
+   分四组：原生 CSS、三维空间、SVG 矢量、数据可视化、补充项
+   ============================================================ */
+
+/* ============ 通用舞台 ============ */
+.mo-stage-fill {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  min-height: 120px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
+}
+
+.mo-stage-fill .mo-box {
+  min-width: 56px;
+}
+
+/* ============================================================
+   一、原生 CSS 组
+   ============================================================ */
+
+/* 原生滚动驱动 · 入场 */
+.nc-view {
+  position: relative;
+  width: 100%;
+  height: 120px;
+  overflow: hidden;
+  border-radius: 10px;
+}
+.nc-view .inner {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 13px;
+  font-weight: 700;
+  color: var(--ink-3);
+}
+@supports (animation-timeline: view()) {
+  .nc-view .inner {
+    animation: ncFadeUp linear both;
+    animation-timeline: view();
+    animation-range: entry 0% entry 45%;
+  }
+}
+@keyframes ncFadeUp {
+  from {
+    opacity: 0;
+    transform: translateY(34px);
+  }
+}
+
+/* 命名滚动时间轴 */
+.nc-named {
+  position: relative;
+  width: 100%;
+  height: 120px;
+  overflow: hidden;
+  border-radius: 10px;
+  scroll-snap-type: y mandatory;
+}
+.nc-named .scroller {
+  height: 100%;
+  overflow-y: scroll;
+  scroll-timeline-name: --ncdemo;
+  scrollbar-width: none;
+}
+.nc-named .scroller::-webkit-scrollbar {
+  display: none;
+}
+.nc-named .panel {
+  height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 13px;
+  font-weight: 700;
+  color: var(--ink-3);
+  border-bottom: 1px solid rgba(0, 0, 0, 0.06);
+}
+.nc-named .track {
+  position: absolute;
+  left: 16px;
+  right: 16px;
+  bottom: 12px;
+  height: 5px;
+  border-radius: 3px;
+  background: #d2d2d2;
+  overflow: hidden;
+}
+.nc-named .track i {
+  display: block;
+  height: 100%;
+  width: 100%;
+  border-radius: 3px;
+  background: var(--ink);
+  transform-origin: 0 50%;
+  transform: scaleX(0);
+}
+@supports (animation-timeline: scroll()) {
+  .nc-named .track i {
+    animation: ncGrow linear;
+    animation-timeline: --ncdemo;
+  }
+}
+@keyframes ncGrow {
+  to {
+    transform: scaleX(1);
+  }
+}
+
+/* 视图过渡 */
+.nc-vt {
+  position: relative;
+  width: 100%;
+  height: 120px;
+  border-radius: 10px;
+  overflow: hidden;
+}
+.nc-vt .thumb {
+  position: absolute;
+  width: 54px;
+  height: 54px;
+  border-radius: 12px;
+  background: linear-gradient(135deg, #6b7bff, #16d9c4);
+  animation: vtMorph 3.4s var(--ease) infinite;
+}
+@keyframes vtMorph {
+  0%,
+  12% {
+    transform: translate(12px, 32px) scale(1);
+  }
+  50%,
+  62% {
+    transform: translate(112px, 12px) scale(1.5);
+  }
+  100% {
+    transform: translate(12px, 32px) scale(1);
+  }
+}
+
+/* @property 可插值 */
+.nc-prop {
+  width: 84px;
+  height: 84px;
+  border-radius: 50%;
+  background: conic-gradient(from 0deg, #6b7bff, #16d9c4, #ff7ac6, #6b7bff);
+  position: relative;
+}
+@property --spin {
+  syntax: "<angle>";
+  initial-value: 0deg;
+  inherits: false;
+}
+.nc-prop {
+  --spin: 0deg;
+  transition: --spin 1.2s linear;
+  animation: ncSpin 3.4s linear infinite;
+}
+@keyframes ncSpin {
+  to {
+    --spin: 360deg;
+  }
+}
+.nc-prop::after {
+  content: "";
+  position: absolute;
+  inset: 22px;
+  border-radius: 50%;
+  background: var(--surf);
+  box-shadow: var(--up-xs);
+}
+
+/* 容器查询 */
+.nc-cq {
+  position: relative;
+  width: 100%;
+  height: 120px;
+  border-radius: 10px;
+  overflow: hidden;
+  container-type: inline-size;
+  background: #dcdcdc;
+}
+.nc-cq .box {
+  height: 100%;
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 8px;
+  padding: 12px;
+  transition: grid-template-columns 0.4s var(--ease);
+}
+.nc-cq .cell {
+  background: var(--surf);
+  border-radius: 8px;
+  box-shadow: var(--up-xs);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 12px;
+  font-weight: 700;
+  color: var(--ink-3);
+}
+@container (min-width: 260px) {
+  .nc-cq .box {
+    grid-template-columns: 1fr 1fr;
+  }
+}
+
+/* 可逆过渡 */
+.nc-disc {
+  position: relative;
+  width: 100%;
+  height: 120px;
+  border-radius: 10px;
+  overflow: hidden;
+}
+.nc-disc .panel {
+  position: absolute;
+  inset: 14px;
+  border-radius: 12px;
+  background: var(--surf);
+  box-shadow: var(--up-sm);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 13px;
+  font-weight: 700;
+  color: var(--ink-2);
+  transition: opacity 0.35s var(--ease), transform 0.35s var(--ease),
+    display 0.35s allow-discrete;
+}
+.nc-disc .panel.hide {
+  opacity: 0;
+  transform: scale(0.88);
+  display: none;
+}
+
+/* 锚点定位 */
+.nc-anchor {
+  position: relative;
+  width: 100%;
+  height: 120px;
+  border-radius: 10px;
+}
+.nc-anchor .trigger {
+  position: absolute;
+  left: 50%;
+  top: 56px;
+  transform: translateX(-50%);
+  padding: 8px 20px;
+  border-radius: 999px;
+  background: var(--surf);
+  box-shadow: var(--up-sm);
+  font-size: 13px;
+  font-weight: 700;
+  color: var(--ink-2);
+  anchor-name: --ncbtn;
+}
+.nc-anchor .tip {
+  position: absolute;
+  position-anchor: --ncbtn;
+  position-area: top center;
+  padding: 6px 14px;
+  border-radius: 8px;
+  background: var(--ink);
+  color: #fff;
+  font-size: 12px;
+  font-weight: 700;
+  white-space: nowrap;
+}
+
+/* 色彩混合 */
+.nc-mix {
+  width: 96px;
+  height: 96px;
+  border-radius: 20px;
+  background: color-mix(in oklab, #6b7bff 100%, transparent);
+  transition: background 0.4s var(--ease);
+  cursor: pointer;
+}
+.nc-mix:hover {
+  background: color-mix(in oklab, #6b7bff 55%, #fff);
+}
+
+/* ============================================================
+   二、三维空间组
+   ============================================================ */
+
+/* 3D 卡片 */
+.td-card-stage {
+  perspective: 900px;
+  width: 100%;
+  height: 120px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.td-card {
+  width: 108px;
+  height: 78px;
+  border-radius: 14px;
+  background: linear-gradient(135deg, #6b7bff, #16d9c4);
+  transform-style: preserve-3d;
+  transition: transform 0.4s ease-out;
+  cursor: pointer;
+  box-shadow: var(--up-sm);
+}
+.td-card .face {
+  position: absolute;
+  inset: 0;
+  border-radius: 14px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 14px;
+  font-weight: 700;
+  color: #fff;
+  backface-visibility: hidden;
+}
+.td-card .face.back {
+  transform: rotateY(180deg);
+  background: linear-gradient(135deg, #ff7ac6, #ffb86b);
+}
+.td-card.flipped {
+  transform: rotateY(180deg);
+}
+
+/* 立方体 */
+.td-cube-stage {
+  width: 100%;
+  height: 120px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  perspective: 600px;
+}
+.td-cube {
+  width: 64px;
+  height: 64px;
+  position: relative;
+  transform-style: preserve-3d;
+  animation: tdSpin 11s linear infinite;
+}
+.td-cube span {
+  position: absolute;
+  inset: 0;
+  border: 2px solid rgba(107, 123, 255, 0.7);
+  background: rgba(107, 123, 255, 0.12);
+  border-radius: 6px;
+}
+.td-cube span:nth-child(1) {
+  transform: translateZ(32px);
+}
+.td-cube span:nth-child(2) {
+  transform: rotateY(90deg) translateZ(32px);
+}
+.td-cube span:nth-child(3) {
+  transform: rotateY(180deg) translateZ(32px);
+}
+.td-cube span:nth-child(4) {
+  transform: rotateY(-90deg) translateZ(32px);
+}
+.td-cube span:nth-child(5) {
+  transform: rotateX(90deg) translateZ(32px);
+}
+.td-cube span:nth-child(6) {
+  transform: rotateX(-90deg) translateZ(32px);
+}
+@keyframes tdSpin {
+  from {
+    transform: rotateX(-18deg) rotateY(0);
+  }
+  to {
+    transform: rotateX(-18deg) rotateY(360deg);
+  }
+}
+
+/* 等距立方 */
+.td-iso {
+  width: 100%;
+  height: 120px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  perspective: 700px;
+}
+.td-iso .grid {
+  display: grid;
+  grid-template-columns: repeat(4, 26px);
+  gap: 5px;
+  transform: rotateX(58deg) rotateZ(45deg);
+  transform-style: preserve-3d;
+}
+.td-iso .grid i {
+  display: block;
+  width: 26px;
+  height: 26px;
+  background: rgba(107, 123, 255, 0.24);
+  border: 1px solid rgba(107, 123, 255, 0.55);
+  animation: tdRise 0.7s var(--ease) backwards;
+}
+.td-iso .grid i:nth-child(1) {
+  animation-delay: 0s;
+}
+.td-iso .grid i:nth-child(2) {
+  animation-delay: 0.05s;
+}
+.td-iso .grid i:nth-child(3) {
+  animation-delay: 0.1s;
+}
+.td-iso .grid i:nth-child(4) {
+  animation-delay: 0.15s;
+}
+@keyframes tdRise {
+  from {
+    transform: translateZ(0);
+  }
+  to {
+    transform: translateZ(22px);
+  }
+}
+
+/* 玻璃折射 */
+.td-glass-stage {
+  position: relative;
+  width: 100%;
+  height: 120px;
+  border-radius: 10px;
+  overflow: hidden;
+  background: linear-gradient(120deg, #ffd9a0, #ff9ec4, #a5b4fc);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.td-glass {
+  width: 104px;
+  height: 62px;
+  border-radius: 14px;
+  backdrop-filter: blur(10px) saturate(160%);
+  background: rgba(255, 255, 255, 0.16);
+  border: 1px solid rgba(255, 255, 255, 0.4);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 13px;
+  font-weight: 700;
+  color: #fff;
+  position: relative;
+  overflow: hidden;
+}
+.td-glass::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  border-radius: inherit;
+  background: linear-gradient(
+    120deg,
+    rgba(255, 255, 255, 0.75),
+    transparent 42%
+  );
+  opacity: 0.6;
+  animation: tdShine 3.4s ease-in-out infinite;
+}
+@keyframes tdShine {
+  0%,
+  100% {
+    transform: translateX(-60%);
+  }
+  50% {
+    transform: translateX(60%);
+  }
+}
+
+/* 透视位移 */
+.td-fly-stage {
+  width: 100%;
+  height: 120px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  perspective: 700px;
+  overflow: hidden;
+}
+.td-fly {
+  width: 82px;
+  height: 52px;
+  border-radius: 12px;
+  background: linear-gradient(135deg, #6b7bff, #ff7ac6);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 13px;
+  font-weight: 700;
+  color: #fff;
+  animation: tdFly 2.8s ease-in-out infinite;
+}
+@keyframes tdFly {
+  0% {
+    transform: translateZ(-700px);
+    opacity: 0;
+  }
+  38% {
+    transform: translateZ(0);
+    opacity: 1;
+  }
+  100% {
+    transform: translateZ(220px);
+    opacity: 0;
+  }
+}
+
+/* 景深层次 */
+.td-depth-stage {
+  position: relative;
+  width: 100%;
+  height: 120px;
+  perspective: 800px;
+  overflow: hidden;
+  border-radius: 10px;
+}
+.td-depth-stage .layer {
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  transform-style: preserve-3d;
+}
+.td-depth-stage .layer i {
+  display: block;
+  width: 78px;
+  height: 48px;
+  margin: -24px 0 0 -39px;
+  border-radius: 10px;
+  background: rgba(107, 123, 255, 0.22);
+  border: 1.5px solid rgba(107, 123, 255, 0.55);
+  animation: tdDepth 3.4s ease-in-out infinite;
+}
+.td-depth-stage .layer:nth-child(2) i {
+  animation-delay: 0.18s;
+  background: rgba(22, 217, 196, 0.2);
+  border-color: rgba(22, 217, 196, 0.55);
+}
+.td-depth-stage .layer:nth-child(3) i {
+  animation-delay: 0.36s;
+  background: rgba(255, 122, 198, 0.2);
+  border-color: rgba(255, 122, 198, 0.55);
+}
+@keyframes tdDepth {
+  0%,
+  100% {
+    transform: translateZ(-60px);
+  }
+  50% {
+    transform: translateZ(60px);
+  }
+}
+
+/* 3D 倾斜 */
+.td-tilt-stage {
+  width: 100%;
+  height: 120px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  perspective: 800px;
+}
+.td-tilt {
+  width: 108px;
+  height: 72px;
+  border-radius: 14px;
+  background: var(--surf);
+  box-shadow: var(--up-md);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 13px;
+  font-weight: 700;
+  color: var(--ink-2);
+  transform-style: preserve-3d;
+  transition: transform 0.2s ease-out;
+  cursor: pointer;
+}
+.td-tilt .bar {
+  width: 62px;
+  height: 5px;
+  border-radius: 3px;
+  background: var(--ink-3);
+  transform: translateZ(18px);
+}
+
+/* ============================================================
+   三、SVG 矢量组
+   ============================================================ */
+
+.sv-stage {
+  width: 100%;
+  height: 120px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.sv-stage svg {
+  overflow: visible;
+}
+
+/* 路径描边生长 */
+.sv-draw path {
+  fill: none;
+  stroke: var(--ink);
+  stroke-width: 2.5;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+  pathLength: 1;
+  stroke-dasharray: 1;
+  stroke-dashoffset: 1;
+  animation: svDraw 2.4s var(--ease) infinite;
+}
+@keyframes svDraw {
+  0% {
+    stroke-dashoffset: 1;
+  }
+  55% {
+    stroke-dashoffset: 0;
+  }
+  100% {
+    stroke-dashoffset: -1;
+  }
+}
+
+/* 手写签名 */
+.sv-sig path {
+  fill: none;
+  stroke: #2b2b2b;
+  stroke-width: 2.4;
+  stroke-linecap: round;
+  pathLength: 1;
+  stroke-dasharray: 1;
+  stroke-dashoffset: 1;
+  animation: svDraw 3.4s var(--ease) infinite;
+}
+.sv-sig path:nth-child(2) {
+  animation-delay: 0.18s;
+}
+.sv-sig path:nth-child(3) {
+  animation-delay: 0.36s;
+}
+
+/* 路径形变 */
+.sv-morph path {
+  fill: rgba(107, 123, 255, 0.18);
+  stroke: #6b7bff;
+  stroke-width: 2.5;
+  d: path("M0 0 L100 0 L100 100 L0 100 Z");
+  transition: d 0.6s ease-in-out;
+  cursor: pointer;
+}
+.sv-morph:hover path {
+  d: path("M50 0 L100 50 L50 100 L0 50 Z");
+}
+
+/* SVG 逐字浮现 */
+.sv-glyphs text {
+  font-size: 26px;
+  font-weight: 700;
+  fill: var(--ink);
+  opacity: 0;
+  animation: svRise 0.5s var(--ease) forwards;
+}
+.sv-glyphs text:nth-child(1) {
+  animation-delay: 0s;
+}
+.sv-glyphs text:nth-child(2) {
+  animation-delay: 0.08s;
+}
+.sv-glyphs text:nth-child(3) {
+  animation-delay: 0.16s;
+}
+.sv-glyphs text:nth-child(4) {
+  animation-delay: 0.24s;
+}
+@keyframes svRise {
+  from {
+    opacity: 0;
+    transform: translateY(18px);
+  }
+}
+
+/* 裁切揭示 */
+.sv-clip-stage {
+  width: 100%;
+  height: 120px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.sv-clip {
+  width: 140px;
+  height: 76px;
+  border-radius: 12px;
+  background: linear-gradient(120deg, #6b7bff, #16d9c4);
+  clip-path: inset(0 100% 0 0);
+  animation: svClipReveal 2.6s var(--ease) infinite;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: #fff;
+  font-size: 14px;
+  font-weight: 700;
+}
+@keyframes svClipReveal {
+  0% {
+    clip-path: inset(0 100% 0 0);
+  }
+  50% {
+    clip-path: inset(0 0 0 0);
+  }
+  100% {
+    clip-path: inset(0 0 0 100%);
+  }
+}
+
+/* 渐变描边流动 */
+.sv-grad path {
+  fill: none;
+  stroke-width: 3;
+  stroke-linecap: round;
+}
+.sv-grad stop {
+  animation: svGradShift 2.6s linear infinite;
+}
+@keyframes svGradShift {
+  0%,
+  100% {
+    stop-color: #6b7bff;
+  }
+  50% {
+    stop-color: #16d9c4;
+  }
+}
+
+/* 加载中的图标绘制 */
+.sv-loader path {
+  fill: none;
+  stroke: var(--ink);
+  stroke-width: 2.5;
+  stroke-linecap: round;
+  pathLength: 1;
+  stroke-dasharray: 1;
+  stroke-dashoffset: 1;
+  animation: svDraw 1.8s ease-in-out infinite;
+}
+
+/* 液态变形 */
+.sv-blob path {
+  fill: rgba(22, 217, 196, 0.22);
+  stroke: #0d9488;
+  stroke-width: 2;
+}
+.sv-blob {
+  animation: svBlobMove 6s ease-in-out infinite;
+}
+@keyframes svBlobMove {
+  0%,
+  100% {
+    transform: translateX(-16px) scale(1);
+  }
+  50% {
+    transform: translateX(16px) scale(1.12);
+  }
+}
+
+/* ============================================================
+   四、数据可视化组
+   ============================================================ */
+
+.dv-stage {
+  width: 100%;
+  height: 120px;
+  display: flex;
+  align-items: flex-end;
+  justify-content: center;
+  gap: 10px;
+  padding: 14px 10px 8px;
+}
+
+/* 图表生长 */
+.dv-bar {
+  width: 22px;
+  border-radius: 5px 5px 2px 2px;
+  background: linear-gradient(180deg, #6b7bff, #16d9c4);
+  transform-origin: bottom;
+  animation: dvGrow 0.9s var(--ease) backwards;
+}
+.dv-bar:nth-child(1) {
+  height: 40px;
+}
+.dv-bar:nth-child(2) {
+  height: 66px;
+  animation-delay: 0.07s;
+}
+.dv-bar:nth-child(3) {
+  height: 52px;
+  animation-delay: 0.14s;
+}
+.dv-bar:nth-child(4) {
+  height: 84px;
+  animation-delay: 0.21s;
+}
+.dv-bar:nth-child(5) {
+  height: 70px;
+  animation-delay: 0.28s;
+}
+@keyframes dvGrow {
+  from {
+    transform: scaleY(0);
+  }
+}
+
+/* 折线绘制 */
+.dv-line-stage {
+  width: 100%;
+  height: 120px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.dv-line path {
+  fill: none;
+  stroke: #6b7bff;
+  stroke-width: 2.5;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+  pathLength: 1;
+  stroke-dasharray: 1;
+  stroke-dashoffset: 1;
+  animation: svDraw 2.8s var(--ease) infinite;
+}
+.dv-line circle {
+  fill: #16d9c4;
+  animation: dvPop 0.4s var(--ease) infinite;
+}
+@keyframes dvPop {
+  0%,
+  60% {
+    transform: scale(0);
+  }
+  78% {
+    transform: scale(1.3);
+  }
+  100% {
+    transform: scale(1);
+  }
+}
+
+/* 数字缓动 */
+.dv-num {
+  font-size: 30px;
+  font-weight: 700;
+  font-variant-numeric: tabular-nums;
+  color: var(--ink);
+  letter-spacing: -0.02em;
+}
+
+/* 环形进度填充 */
+.dv-ring-stage {
+  width: 100%;
+  height: 120px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.dv-ring {
+  width: 74px;
+  height: 74px;
+  transform: rotate(-90deg);
+}
+.dv-ring circle {
+  fill: none;
+  stroke-width: 9;
+  stroke-linecap: round;
+  stroke-dasharray: 201;
+  stroke-dashoffset: 201;
+  animation: dvRingFill 3s var(--ease) infinite;
+}
+.dv-ring .bg {
+  stroke: #d4d4d4;
+  animation: none;
+  stroke-dashoffset: 0;
+}
+.dv-ring .fg {
+  stroke: #6b7bff;
+}
+@keyframes dvRingFill {
+  0% {
+    stroke-dashoffset: 201;
+  }
+  60%,
+  100% {
+    stroke-dashoffset: 62;
+  }
+}
+
+/* 里程表 */
+.dv-odo {
+  display: flex;
+  gap: 3px;
+}
+.dv-odo .d {
+  width: 22px;
+  height: 34px;
+  overflow: hidden;
+  border-radius: 5px;
+  background: var(--surf);
+  box-shadow: var(--up-xs);
+}
+.dv-odo .d span {
+  display: block;
+  font-size: 24px;
+  font-weight: 700;
+  text-align: center;
+  line-height: 34px;
+  font-variant-numeric: tabular-nums;
+  color: var(--ink);
+  animation: dvRoll 3s steps(10) infinite;
+}
+.dv-odo .d:nth-child(2) span {
+  animation-delay: 0.2s;
+}
+.dv-odo .d:nth-child(3) span {
+  animation-delay: 0.4s;
+}
+.dv-odo .d:nth-child(4) span {
+  animation-delay: 0.6s;
+}
+@keyframes dvRoll {
+  0% {
+    transform: translateY(0);
+  }
+  50% {
+    transform: translateY(-170px);
+  }
+  100% {
+    transform: translateY(0);
+  }
+}
+
+/* 数据条竞速 */
+.dv-race {
+  width: 100%;
+  padding: 12px 14px;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+.dv-race .r {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 11px;
+  font-weight: 700;
+  color: var(--ink-3);
+}
+.dv-race .bar {
+  flex: 1;
+  height: 12px;
+  border-radius: 6px;
+  background: #dcdcdc;
+  overflow: hidden;
+}
+.dv-race .bar i {
+  display: block;
+  height: 100%;
+  border-radius: 6px;
+  background: linear-gradient(90deg, #6b7bff, #16d9c4);
+  width: 0;
+  animation: dvRace 3.4s var(--ease) infinite;
+}
+.dv-race .r:nth-child(2) .bar i {
+  animation-delay: 0.15s;
+  background: linear-gradient(90deg, #ff7ac6, #ffb86b);
+}
+.dv-race .r:nth-child(3) .bar i {
+  animation-delay: 0.3s;
+  background: linear-gradient(90deg, #0d9488, #6b7bff);
+}
+@keyframes dvRace {
+  0% {
+    width: 0;
+  }
+  55%,
+  100% {
+    width: 82%;
+  }
+}
+
+/* 迷你趋势线 */
+.dv-spark-stage {
+  width: 100%;
+  height: 120px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.dv-spark path {
+  fill: none;
+  stroke: #0d9488;
+  stroke-width: 2;
+  stroke-linecap: round;
+  pathLength: 1;
+  stroke-dasharray: 1;
+  animation: svDraw 2.6s var(--ease) infinite;
+}
+.dv-spark circle {
+  fill: #0d9488;
+  animation: dvPop 0.4s var(--ease) infinite;
+}
+
+/* 热力格 */
+.dv-heat {
+  display: grid;
+  grid-template-columns: repeat(8, 15px);
+  gap: 4px;
+}
+.dv-heat i {
+  display: block;
+  width: 15px;
+  height: 15px;
+  border-radius: 3px;
+  opacity: 0;
+  animation: dvHeat 2.8s var(--ease) infinite;
+}
+@keyframes dvHeat {
+  0% {
+    opacity: 0;
+    transform: scale(0.6);
+  }
+  40%,
+  100% {
+    opacity: 1;
+    transform: scale(1);
+  }
+}

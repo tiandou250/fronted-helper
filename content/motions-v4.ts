@@ -1,0 +1,158 @@
+import type { MotionItem } from "@/lib/types";
+
+/**
+ * L4 原生 CSS 能力 + 三维空间
+ *
+ * 这一批的共同点：不靠 JS 算帧数，也不靠动画库。
+ * 原生 CSS 那组是 2026 年浏览器真正落地的一批新能力（scroll-driven animation、
+ * View Transition、@property、容器查询动画），用得少但知道的人更少。
+ */
+export const MOTIONS_V4: MotionItem[] = [
+  // ================= 原生 CSS =================
+  {
+    id: "scroll-driven-view",
+    name: "原生滚动驱动 · 入场",
+    en: "Scroll Driven View",
+    cat: "native",
+    timing: "跟随滚动 · 零 JS",
+    note: "2026 年最该掌握的 CSS 新能力。用 animation-timeline: view() 把动画绑到元素进入视口的进度上，完全不写一行 JavaScript，浏览器在合成线程跑，不占主线程。关键前提：必须用 @supports 包起来，否则 Safari 17 和旧版 Firefox 上内容会永远不可见。",
+    code: ".card {\n  opacity: 1;              /* 先保证默认可见 */\n}\n@supports (animation-timeline: view()) {\n  .card {\n    animation: fade-up linear both;\n    animation-timeline: view();\n    animation-range: entry 0% entry 40%;\n  }\n}\n@keyframes fade-up {\n  from { opacity: 0; transform: translateY(40px); }\n}",
+  },
+  {
+    id: "scroll-timeline-named",
+    name: "命名滚动时间轴",
+    en: "Named Scroll Timeline",
+    cat: "native",
+    timing: "跟随滚动 · 可共享",
+    note: "scroll-timeline-name 给一个滚动容器命名，别的元素用 scroll-timeline: --名字 就能挂上去。一条时间轴可以驱动多个元素，做出「一滚俱动」的联动效果，不需要 JS 事件。这是 scroll() 和 view() 之外的第三种用法，专治多元素同步。",
+    code: ".scroller {\n  scroll-timeline-name: --page;\n  overflow-y: scroll;\n}\n.progress {\n  animation: grow linear;\n  animation-timeline: --page;\n}\n.bar {\n  animation: slide linear;\n  animation-timeline: --page;\n}\n@keyframes grow { to { transform: scaleY(1); } }\n@keyframes slide { to { translate: 0 -100px; } }",
+  },
+  {
+    id: "view-transition",
+    name: "视图过渡",
+    en: "View Transition API",
+    cat: "native",
+    timing: "由浏览器接管 · 自动分配",
+    note: "同源页面导航时，浏览器自动为新旧页面生成过渡动画，DOM 相同位置会自动配对做形变。比手写共享元素过渡简单得多——给元素加 view-transition-name 即可。Chrome/Edge 支持完整，Safari 部分支持。",
+    code: "@view-transition {\n  navigation: auto;\n}\n.card {\n  view-transition-name: card-1;  /* 相同名字自动配对 */\n}\n::view-transition-old(card-1) { animation: fade-out .2s; }\n::view-transition-new(card-1) { animation: fade-in .3s; }",
+  },
+  {
+    id: "property-register",
+    name: "可插值自定义属性",
+    en: "@property Registration",
+    cat: "native",
+    timing: "由 CSS 变量驱动",
+    note: "CSS 变量以前不能做动画，因为浏览器不知道它是数字还是颜色。用 @property 注册后，它就变成了真正的可动画类型。注册 --angle 为 <angle> 就能做旋转，比 transform 多一层控制。这是 2023 年就落地但仍然少人用的能力。",
+    code: "@property --angle {\n  syntax: '<angle>';\n  initial-value: 0deg;\n  inherits: false;\n}\n.ring {\n  --angle: 0deg;\n  transition: --angle .4s;\n}\n.ring:hover { --angle: 360deg; }",
+  },
+  {
+    id: "container-query-anim",
+    name: "容器查询驱动",
+    en: "Container Query Animation",
+    cat: "native",
+    timing: "跟随容器宽度 · 非视口",
+    note: "动画的触发条件不是视口宽度，而是组件自己所在容器的宽度。这解决了「同一组件在侧栏和主区要表现不同」的长期难题。用 @container 配合 transition，组件真正做到自适应。",
+    code: ".wrap { container-type: inline-size; }\n.card {\n  transition: grid-template-columns .3s;\n}\n@container (min-width: 480px) {\n  .card { grid-template-columns: 1fr 1fr; }\n}",
+  },
+  {
+    id: "transition-behavior",
+    name: "可逆过渡",
+    en: "Transition Behavior",
+    cat: "native",
+    timing: "允许反向回放",
+    note: "默认的过渡在被打断时会直接跳到终点，视觉上像卡了一下。allow-discrete 配合 transition-behavior: allow-discrete，可以让 display 和 overlay 这类离散属性也能过渡，还能在移除元素时播完离场动画再真正移除。",
+    code: ".panel {\n  transition: opacity .3s, transform .3s,\n              display .3s allow-discrete;\n}\n.panel[hidden] {\n  opacity: 0; transform: scale(.9);\n  display: none;\n}",
+  },
+  {
+    id: "anchor-position",
+    name: "锚点定位",
+    en: "CSS Anchor Positioning",
+    cat: "native",
+    timing: "跟随触发元素",
+    note: "以前 tooltip 要用 JS 算坐标，现在一行 CSS 就能自动跟随锚���。position-anchor 声明锚点，position-area 指定相对锚点的哪个方位。这是 2024 年底才广泛落地的能力，目前用的人还很少。",
+    code: ".trigger { anchor-name: --btn; }\n.tooltip {\n  position-anchor: --btn;\n  position-area: top center;\n  position-try-fallbacks: flip-block;\n}",
+  },
+  {
+    id: "color-mix-anim",
+    name: "色彩混合过渡",
+    en: "Color Mixing",
+    cat: "native",
+    timing: "浏览器实时计算",
+    note: "color-mix() 让两个颜色按比例混合，百分比可以参与过渡动画。做「主题色随状态渐变」这类效果时，不需要准备中间色值，浏览器自己算。配合相对颜色语法还能直接基于当前色做明暗调整。",
+    code: ".btn {\n  background: color-mix(in oklab, var(--brand) 100%, transparent);\n  transition: background .3s;\n}\n.btn:hover {\n  background: color-mix(in oklab, var(--brand) 70%, white);\n}",
+  },
+
+  // ================= 三维空间 =================
+  {
+    id: "css-3d-card",
+    name: "CSS 三维卡片",
+    en: "CSS 3D Card",
+    cat: "3d",
+    timing: "跟随鼠标 · 需 perspective",
+    note: "给父容器加 perspective，内部的 transform 才有纵深。卡片随鼠标位置做 rotateX / rotateY，倾斜角度必须克制——超过 12 度就会晕。文字层要单独加 translateZ，否则文字不会跟着浮起来，看起来像贴图。",
+    code: ".scene { perspective: 900px; }\n.card {\n  transform: rotateX(var(--ry)) rotateY(var(--rx));\n  transform-style: preserve-3d;\n  transition: transform .3s ease-out;\n}\n.card__title { transform: translateZ(40px); }",
+  },
+  {
+    id: "cube-rotate",
+    name: "立方体旋转",
+    en: "3D Cube",
+    cat: "3d",
+    timing: "自动旋转 · 360°",
+    note: "六个面拼成立方体，靠 transform-style: preserve-3d 保持 3D 上下文。注意顺序：先 rotateX 再 rotateY，外层先转。每个面位移用 translateZ(50px)，因为立方体边长是 100px，半边就是 50px。",
+    code: ".cube {\n  transform-style: preserve-3d;\n  animation: spin 12s linear infinite;\n}\n.cube span {\n  position: absolute;\n  transform: translateZ(50px);\n}\n@keyframes spin {\n  from { transform: rotateX(0) rotateY(0); }\n  to   { transform: rotateX(360deg) rotateY(360deg); }\n}",
+  },
+  {
+    id: "flip-card",
+    name: "翻转卡片",
+    en: "3D Flip Card",
+    cat: "3d",
+    timing: "600ms · 绕 Y 轴",
+    note: "正面背面用 backface-visibility: hidden 各自隔开，背面要额外 rotateY(180deg) 才能正对读者。经典坑：不给 backface-visibility 时，两面会同时显示变成重影。",
+    code: ".card { transform-style: preserve-3d; transition: transform .6s; }\n.card.is-flipped { transform: rotateY(180deg); }\n.face { backface-visibility: hidden; }\n.face--back { transform: rotateY(180deg); }",
+  },
+  {
+    id: "depth-stack",
+    name: "景深层次",
+    en: "Depth Stack",
+    cat: "3d",
+    timing: "跟随滚动 · 分层位移",
+    note: "给每一层不同的 translateZ，滚动时按深度差移动速度不同，就有了空间感。关键：perspective 要设在滚动容器的父级上，且 perspective-origin 可以调成鼠标位置，让「视点」跟着用户走。",
+    code: ".stage { perspective: 1200px; perspective-origin: var(--px) var(--py); }\n.layer { transform: translateZ(calc(var(--i) * 60px)); }\n// 滚动时 .layer 的 translateY 按 --i 分倍率",
+  },
+  {
+    id: "3d-tilt-card",
+    name: "3D 倾斜卡片",
+    en: "3D Tilt",
+    cat: "3d",
+    timing: "跟随鼠标 · 阻尼跟随",
+    note: "比完全跟随多一层阻尼：目标角度和实际角度之间用 lerp 插值。直接跟手会显得机械，加 0.08 的系数后有惯性质感。移动端没有鼠标，就退回触摸事件或直接不启用。",
+    code: "const target = { x: 0, y: 0 };\nconst current = { x: 0, y: 0 };\nfunction loop() {\n  current.x += (target.x - current.x) * 0.08;\n  current.y += (target.y - current.y) * 0.08;\n  card.style.transform = `rotateY(${current.x}deg) rotateX(${current.y}deg)`;\n  requestAnimationFrame(loop);\n}",
+  },
+  {
+    id: "isometric-grid",
+    name: "等距立方",
+    en: "Isometric",
+    cat: "3d",
+    timing: "静态 · 伪 3D",
+    note: "不用真 3D，只用 transform: rotateX(60deg) rotateZ(45deg) 做一个等距网格，再给每个方块加 rotateZ(-45deg) 转正。纯 CSS 的伪 3D，比真 WebGL 便宜得多，适合做抽象背景。",
+    code: ".iso {\n  transform: rotateX(60deg) rotateZ(45deg);\n  transform-style: preserve-3d;\n}\n.cell {\n  transform: translateZ(20px);\n  animation: rise .6s backwards;\n}\n@keyframes rise { from { transform: translateZ(0); } }",
+  },
+  {
+    id: "glass-refraction",
+    name: "玻璃折射",
+    en: "Glass Refraction",
+    cat: "3d",
+    timing: "跟随光�� · 边缘高光",
+    note: "玻璃拟态的高级版：在元素边缘放一圈高光，位置随鼠标偏移。靠两个伪元素做边缘亮带和暗带，比单纯 blur 真实得多。代价是性能——模糊层太多会掉帧，移动端要减层。",
+    code: ".glass {\n  backdrop-filter: blur(20px) saturate(180%);\n  position: relative;\n}\n.glass::before {\n  content: '';\n  position: absolute; inset: 1px;\n  border-radius: inherit;\n  background: linear-gradient(var(--angle),\n    rgba(255,255,255,.6), transparent 40%);\n  mask: linear-gradient(#000 0 0) content-box, linear-gradient(#000 0 0);\n  mask-composite: exclude;\n  padding: 1px;\n}",
+  },
+  {
+    id: "perspective-shift",
+    name: "透视位移",
+    en: "Perspective Shift",
+    cat: "3d",
+    timing: "元素穿过视平��",
+    note: "让元素从远处飞向观众再飞走，是「空间感」最省力的一种。用 translateZ 从 -800px 到 0 再到 200px，配合 opacity 制造穿过的感觉。translateZ 的值直接决定透视强度，比用 scale 更有空间感。",
+    code: ".flyer {\n  animation: fly 2.4s ease-in-out infinite;\n}\n@keyframes fly {\n  0%   { transform: translateZ(-800px); opacity: 0; }\n  40%  { transform: translateZ(0); opacity: 1; }\n  100% { transform: translateZ(200px); opacity: 0; }\n}",
+  },
+];

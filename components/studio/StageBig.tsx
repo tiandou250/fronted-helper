@@ -16,6 +16,8 @@ export function StageBig({ id }: { id: string }) {
   const skewRef = useRef<HTMLDivElement>(null);
   const seqRef = useRef<HTMLDivElement>(null);
   const splitRef = useRef<HTMLDivElement>(null);
+  const ctDotsRef = useRef<(HTMLSpanElement | null)[]>([]);
+  const mmRef = useRef<HTMLDivElement>(null);
 
   switch (id) {
     case "route-transition":
@@ -439,6 +441,91 @@ export function StageBig({ id }: { id: string }) {
             </div>
           </div>
           <div style={{ height: "180%" }} />
+        </div>
+      );
+
+    case "cursor-trail":
+      return (
+        <div
+          className="ct-stage"
+          ref={mmRef}
+          onMouseMove={(e) => {
+            const r = e.currentTarget.getBoundingClientRect();
+            const x = e.clientX - r.left;
+            const y = e.clientY - r.top;
+            ctDotsRef.current.forEach((d, i) => {
+              if (!d) return;
+              const k = 1 - i * 0.12;
+              d.style.transform = `translate(${x * k}px, ${y * k}px) translate(-50%, -50%)`;
+            });
+          }}
+        >
+          {Array.from({ length: 12 }, (_, i) => (
+            <span
+              key={i}
+              className="dot"
+              ref={(el) => {
+                ctDotsRef.current[i] = el;
+              }}
+              style={{
+                width: `${14 - i * 0.7}px`,
+                height: `${14 - i * 0.7}px`,
+                opacity: 1 - i * 0.07,
+              }}
+            />
+          ))}
+          <span className="hint">移动鼠标看拖尾</span>
+        </div>
+      );
+
+    case "glitch-transition":
+      return (
+        <div className="gl-stage">
+          <span className="scan" />
+          <div className="word" data-t="GLITCH">
+            GLITCH
+          </div>
+        </div>
+      );
+
+    case "morph-menu":
+      return (
+        <div className="mm-stage" ref={mmRef}>
+          <div className="panel">
+            <div className="menu-list">
+              <span>视觉风格库</span>
+              <span>配色工具</span>
+              <span>动效工具</span>
+            </div>
+          </div>
+          <button
+            className="trigger"
+            onClick={(e) => {
+              const stage = e.currentTarget.parentElement;
+              if (stage) stage.classList.toggle("open");
+            }}
+          >
+            <i />
+            <i />
+          </button>
+        </div>
+      );
+
+    case "marquee-columns":
+      return (
+        <div className="mc-stage">
+          {["a", "b", "c"].map((k) => (
+            <div className="col" key={k}>
+              <div className="track">
+                {Array.from({ length: 8 }, (_, i) => (
+                  <i key={i} />
+                ))}
+                {Array.from({ length: 8 }, (_, i) => (
+                  <i key={`b${i}`} />
+                ))}
+              </div>
+            </div>
+          ))}
         </div>
       );
 

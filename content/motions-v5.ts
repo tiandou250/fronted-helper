@@ -1,0 +1,158 @@
+import type { MotionItem } from "@/lib/types";
+
+/**
+ * L4 SVG 矢量绘制 + 数据可视化
+ *
+ * SVG 那组的价值在于「线条自己会长出来」——pathLength 归一化是核心技巧，
+ * 让描边动画不需要知道路径实际长度。
+ * 数据可视化那组解决的是「图表应该是活的」这个问题。
+ */
+export const MOTIONS_V5: MotionItem[] = [
+  // ================= SVG 矢量 =================
+  {
+    id: "path-draw",
+    name: "路径描边生长",
+    en: "Path Drawing",
+    cat: "svg",
+    timing: "stroke-dashoffset · 1.2s",
+    note: "SVG 最经典的动画。stroke-dasharray 设成路径长度，dashoffset 从长度移到 0，线条就「画」出来了。关键技巧：pathLength=\"1\" 可以把归一化，dasharray 写成 1，不用测真实路径长度，字形图标也能通用。",
+    code: ".icon path {\n  pathLength: 1;\n  stroke-dasharray: 1;\n  stroke-dashoffset: 1;\n  animation: draw 1.2s ease forwards;\n}\n@keyframes draw { to { stroke-dashoffset: 0; } }",
+  },
+  {
+    id: "signature-draw",
+    name: "手写签名",
+    en: "Signature Draw",
+    cat: "svg",
+    timing: "逐段描出 · 2s",
+    note: "手写体签名是最能体现「画出来」这四个字的应用。做法是把签名拆成多条 path，按顺序延迟启动，每条线用 dashoffset 画出。要给每条 path 加 animation-delay，间隔大约 180ms，手写才有节奏。",
+    code: ".sig path {\n  stroke-dasharray: 1;\n  stroke-dashoffset: 1;\n  animation: draw .8s ease forwards;\n}\n.sig path:nth-child(2) { animation-delay: .18s; }\n.sig path:nth-child(3) { animation-delay: .36s; }",
+  },
+  {
+    id: "morph-path",
+    name: "路径形变",
+    en: "Path Morph",
+    cat: "svg",
+    timing: "d 属性插值 · 600ms",
+    note: "两个 path 之间做形变，前提是两者命令数量和类型完全一致——M 对 M、L 对 L。多一个点就形变失败。点数不同时要先在设计工具里补齐控制点。Easing 用 ease-in-out 双向最自然。",
+    code: ".shape path {\n  d: path('M0 0 L100 0 L100 100 L0 100 Z');\n  transition: d .6s ease-in-out;\n}\n.shape:hover path {\n  d: path('M50 0 L100 50 L50 100 L0 50 Z');\n}",
+  },
+  {
+    id: "svg-text-split",
+    name: "SVG 逐字浮现",
+    en: "SVG Text Split",
+    cat: "svg",
+    timing: "逐字 · 60ms 间隔",
+    note: "比 HTML 逐字效果好在两点：可以做任意路径排版（沿弧线、沿波浪），并且每个字是独立矢量可以单独变形。实现方式是把文字转成 path，再给每个 path 加延迟动画。",
+    code: ".glyph {\n  opacity: 0;\n  animation: rise .5s ease forwards;\n}\n.glyph:nth-child(1) { animation-delay: 0s; }\n.glyph:nth-child(2) { animation-delay: .06s; }\n@keyframes rise {\n  from { opacity: 0; transform: translateY(20px); }\n}",
+  },
+  {
+    id: "clip-reveal",
+    name: "裁切揭示",
+    en: "Clip Reveal",
+    cat: "svg",
+    timing: "clip-path · 700ms",
+    note: "用 clip-path 的 inset 值做揭示，比 width/height 动画性能好得多——它不触发布局。对比：用 width 动画会每帧重新布局，用 clip-path 只在合成层跑。数值上写成百分比最稳。",
+    code: ".reveal {\n  clip-path: inset(0 100% 0 0);\n  transition: clip-path .7s cubic-bezier(.16,1,.3,1);\n}\n.reveal.in { clip-path: inset(0 0 0 0); }",
+  },
+  {
+    id: "gradient-stroke",
+    name: "渐变描边流动",
+    en: "Gradient Stroke",
+    cat: "svg",
+    timing: "1.8s 循环",
+    note: "给 stroke 挂一个 linearGradient，然后动 gradientTransform 或者用 animate 改 stop 的 offset。渐变本身不动、只有描边在动会显得假——要么让渐变跟着线条走，要么两者都动。",
+    code: ".stroke {\n  stroke: url(#flow);\n  stroke-width: 3;\n}\n#flow stop {\n  animation: shift 1.8s linear infinite;\n}\n@keyframes shift {\n  0% { stop-color: #6b7bff; }\n  50% { stop-color: #16d9c4; }\n  100% { stop-color: #6b7bff; }\n}",
+  },
+  {
+    id: "icon-draw-load",
+    name: "加载中的图标绘制",
+    en: "Drawing Loader",
+    cat: "svg",
+    timing: "循环 · 描边生长",
+    note: "加载态最有说服力的做法不是转圈，而是一个图标在反复「画自己」——用户知道内容正在成形。实现是 dashoffset 循环，配合 pathLength 归一化，任何图标都能用。",
+    code: ".loader path {\n  pathLength: 1;\n  stroke-dasharray: 1;\n  stroke-dashoffset: 1;\n  animation: draw 1.5s ease-in-out infinite;\n}\n@keyframes draw {\n  0% { stroke-dashoffset: 1; }\n  50% { stroke-dashoffset: 0; }\n  100% { stroke-dashoffset: -1; }\n}",
+  },
+  {
+    id: "svg-blob-morph",
+    name: "SVG 液态变形",
+    en: "SVG Blob Morph",
+    cat: "svg",
+    timing: "多边形变形 · 8s 循环",
+    note: "用 SMIL 的 animate 元素做多边形变形，浏览器原生支持，不用 JS。关键是对应点数量一致，且围绕中心分布。SVG 路径的平滑是自动的，节点少一点反而更流畅。",
+    code: "<path>\n  <animate attributeName=\"d\"\n    dur=\"8s\" repeatCount=\"indefinite\"\n    values=\"M0,0 L10,0 L10,10 L0,10 Z;\n            M5,0 L15,5 L5,15 L-5,5 Z\" />\n</path>",
+  },
+
+  // ================= 数据可视化 =================
+  {
+    id: "chart-grow",
+    name: "图表生长",
+    en: "Chart Growth",
+    cat: "data",
+    timing: "柱状依次升起 · 800ms",
+    note: "图表入场最忌讳所有柱子同时长出来，观众来不及看清每根柱子的高度。用 animation-delay 按索引递增错开，间隔 60-80ms，十几根柱子也就一秒出头。注意 transform-origin 必须在底部。",
+    code: ".bar {\n  transform-origin: bottom;\n  animation: grow .8s cubic-bezier(.16,1,.3,1) backwards;\n}\n.bar:nth-child(2) { animation-delay: .07s; }\n.bar:nth-child(3) { animation-delay: .14s; }\n@keyframes grow { from { transform: scaleY(0); } }",
+  },
+  {
+    id: "line-draw-chart",
+    name: "折线绘制",
+    en: "Line Chart Draw",
+    cat: "data",
+    timing: "1.6s · 逐点展开",
+    note: "折线图最有仪式感的入场：一笔画出来。用 stroke-dashoffset 配合 pathLength=\"1\"，再在末端放一个圆点跟着线头移动。线画完后圆点弹一下，数据点就自然出现了。",
+    code: ".line {\n  pathLength: 1;\n  stroke-dasharray: 1;\n  stroke-dashoffset: 1;\n  animation: draw 1.6s ease-out forwards;\n}\n@keyframes draw { to { stroke-dashoffset: 0; } }",
+  },
+  {
+    id: "number-tween",
+    name: "数字缓动",
+    en: "Number Tween",
+    cat: "data",
+    timing: "1.2s · easeOutExpo",
+    note: "数字滚动别用线性插值——线性到一半速度不变，感觉像在跳表。要用 easeOutExpo 这类指数缓动，开头快、末尾慢，才有「停下来」的重量感。同时记得用 toLocaleString 加千分位。",
+    code: "const ease = t => t === 1 ? 1 : 1 - Math.pow(2, -10 * t);\nlet v = 0;\nconst step = () => {\n  v = Math.round(target * ease(v / target));\n  el.textContent = v.toLocaleString();\n  if (v < target) requestAnimationFrame(step);\n};",
+  },
+  {
+    id: "donut-fill",
+    name: "环形进度填充",
+    en: "Donut Fill",
+    cat: "data",
+    timing: "跟随滚动 · stroke-dashoffset",
+    note: "环形进度用 stroke-dasharray 的「剩余段」控制，dashoffset=0 是满圈。把 dasharray 写成 circumference，offset 从 circumference 减到 0 就画满了。做成跟随滚动的版本体验更好——用户滚到哪，进度走到哪。",
+    code: ".ring {\n  stroke-dasharray: 301.6;\n  stroke-dashoffset: 301.6;\n  transition: stroke-dashoffset 1.2s ease-out;\n}\n.ring.in { stroke-dashoffset: 75; } /* 25% */",
+  },
+  {
+    id: "counter-odometer",
+    name: "里程表滚动",
+    en: "Odometer Roll",
+    cat: "data",
+    timing: "每位数字独立滚动",
+    note: "财务、仪表盘这类场景常用。每个数位是一列竖排的数字，转成 translateY(-N × 位高) 落到目标值。比整体数字 tween 更像真实仪表，而且每一位可以不同速度、错开启动。",
+    code: ".digit {\n  display: inline-block;\n  overflow: hidden;\n  height: 1em;\n}\n.digit span {\n  display: block;\n  transition: transform .9s cubic-bezier(.16,1,.3,1);\n}",
+  },
+  {
+    id: "bar-race",
+    name: "数据条竞速",
+    en: "Bar Race",
+    cat: "data",
+    timing: "宽度过渡 · 依次增长",
+    note: "横向条形图的动态版本，宽度过渡用 transition 而不是 keyframes，这样数据更新时会平滑过渡而不是重新播放动画。做排行榜实时刷新时这一点很关键——否则每次刷新整张图都在闪。",
+    code: ".row {\n  transition: width 1s cubic-bezier(.16,1,.3,1);\n}\n/* 数据更新时只改 width，不重播 keyframes */",
+  },
+  {
+    id: "sparkline",
+    name: "迷你趋势线",
+    en: "Sparkline",
+    cat: "data",
+    timing: "入场绘制 · 900ms",
+    note: "表格里的迷你趋势图，宽度只有 80px 左右，不能加复杂动效。路径绘制 + 末尾圆点就够。数据点超过 20 个时直接用 polyline 而不是平滑曲线，否则会失真。",
+    code: ".spark {\n  pathLength: 1;\n  stroke-dasharray: 1;\n  animation: draw .9s ease-out;\n}\n.spark circle { animation: pop .3s ease .9s backwards; }",
+  },
+  {
+    id: "heat-cell",
+    name: "热力格点亮",
+    en: "Heatmap Cell",
+    cat: "data",
+    timing: "按数值排序错开",
+    note: "热力图要按数值从大到小依次点亮，而不是按坐标顺序——先亮最热的格子，观众第一眼就知道峰值在哪。实现方式是给格子排序后设置 delay，而不是靠 CSS 的 nth-child。",
+    code: "cells.sort((a, b) => b.value - a.value)\n  .forEach((c, i) => c.style.animationDelay = i * 25 + 'ms');",
+  },
+];

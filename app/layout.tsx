@@ -10,12 +10,14 @@ import "./colors.css";
 import "./motions.css";
 import "./motions2.css";
 import "./motions-big.css";
+import "./motions-v4.css";
+import "./motions-v6.css";
 import "./detail.css";
 
 export const metadata: Metadata = {
   title: "前端设计小助手 · 视觉风格库 / 配色工具 / 动效工具",
   description:
-    "16 种前端视觉风格，每种一套可执行的 CSS Token 与中英双语 Prompt。22 个色系 242 个色值，40 个主流交互动效，能直接看、能直接抄。",
+    "18 种前端视觉风格，每种一套可执行的 CSS Token 与中英双语 Prompt。22 个色系 242 个色值，110 个主流动效覆盖页面级、原生 CSS、三维空间、SVG 与数据可视化，能直接看、能直接抄。",
   keywords: [
     "前端设计",
     "UI 风格",
