@@ -663,12 +663,17 @@
 }
 
 /* SVG 逐字浮现 */
+/* 注意：SVG 元素上的 animation fill-mode: forwards 在 Chrome 里不生效，
+   动画结束后 opacity 会回到初始值 0。所以这里不用 forwards，
+   改成「动画结束后由 .on 类显式落位」，或直接把终态写进 keyframes 的 100%。
+   这里采用后者：keyframes 自身覆盖 100% 的 opacity:1，动画结束后元素保留该关键帧值。 */
 .sv-glyphs text {
   font-size: 26px;
   font-weight: 700;
   fill: var(--ink);
-  opacity: 0;
-  animation: svRise 0.5s var(--ease) forwards;
+  animation: svRise 0.5s var(--ease) both;
+  transform-box: fill-box;
+  transform-origin: center;
 }
 .sv-glyphs text:nth-child(1) {
   animation-delay: 0s;
@@ -683,9 +688,13 @@
   animation-delay: 0.24s;
 }
 @keyframes svRise {
-  from {
+  0% {
     opacity: 0;
     transform: translateY(18px);
+  }
+  100% {
+    opacity: 1;
+    transform: translateY(0);
   }
 }
 
@@ -910,7 +919,7 @@
   gap: 3px;
 }
 .dv-odo .d {
-  width: 22px;
+  width: 26px;
   height: 34px;
   overflow: hidden;
   border-radius: 5px;
@@ -921,11 +930,17 @@
   display: block;
   font-size: 24px;
   font-weight: 700;
-  text-align: center;
-  line-height: 34px;
   font-variant-numeric: tabular-nums;
   color: var(--ink);
-  animation: dvRoll 3s steps(10) infinite;
+  animation: dvRoll 3s steps(5) infinite;
+}
+/* 每个数字一个块，高度严格等于行高，滚动时不会错半个字 */
+.dv-odo .d span i {
+  display: block;
+  height: 34px;
+  line-height: 34px;
+  text-align: center;
+  font-style: normal;
 }
 .dv-odo .d:nth-child(2) span {
   animation-delay: 0.2s;
@@ -936,6 +951,8 @@
 .dv-odo .d:nth-child(4) span {
   animation-delay: 0.6s;
 }
+/* 每个数字占 34px（= line-height），所以位移必须是 34 的整数倍，
+   否则 steps 会停在两个数字的中间，看起来是半个字。 */
 @keyframes dvRoll {
   0% {
     transform: translateY(0);
@@ -947,6 +964,8 @@
     transform: translateY(0);
   }
 }
+/* 每位数字独立竖排的容器：span 里是 0-9 十个数，
+   高度 = 10 × 34px，滚动 -170px 正好是 5 个数字高。 */
 
 /* 数据条竞速 */
 .dv-race {

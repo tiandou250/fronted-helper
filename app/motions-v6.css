@@ -436,15 +436,18 @@
   line-height: 1.9;
 }
 .tx-words span {
-  opacity: 0;
   display: inline-block;
   margin-right: 6px;
-  animation: txWordRise 0.5s var(--ease) forwards;
+  animation: txWordRise 0.5s var(--ease) both;
 }
 @keyframes txWordRise {
-  from {
+  0% {
     opacity: 0;
     transform: translateY(12px);
+  }
+  100% {
+    opacity: 1;
+    transform: translateY(0);
   }
 }
 

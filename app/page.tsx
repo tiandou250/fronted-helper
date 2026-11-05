@@ -33,9 +33,9 @@ export default function HomePage() {
           <Link className="nav-card" href="/motion/">
             <span className="nav-kicker">Motion Tool</span>
             <h3>动效工具</h3>
-            <p>主流页面的交互动效，能当场看，也能直接抄 CSS。</p>
+            <p>12 类主流动效，从按钮反馈到整页转场，能当场看也能直接抄。</p>
             <span className="nav-foot">
-              40 个动效 <span className="ar">→</span>
+              116 个动效 <span className="ar">→</span>
             </span>
           </Link>
         </nav>

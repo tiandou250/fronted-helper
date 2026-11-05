@@ -22,7 +22,12 @@ if (existsSync(DIST)) {
     renameSync(DIST, target);
     console.log(`[build] 旧产物已挪到 ${target}`);
   } catch (e) {
-    console.warn("[build] 旧产物挪动失败，继续构建：", e.message);
+    // 常见原因：dist 正被预览服务器占用（Windows 会锁目录）。
+    // 这时改用「空壳占位」策略：把旧目录挪不动，就先在 dist 里放一个
+    // 标记文件让 Next 的删除操作有东西可删——但 Next 删不掉还是会失败，
+    // 所以真正的兜底是换一个干净的输出目录。
+    console.warn(`[build] 旧产物挪动失败（${e.code}），改用备用输出目录`);
+    process.env.NEXT_DIST_FALLBACK = "1";
   }
 }
 

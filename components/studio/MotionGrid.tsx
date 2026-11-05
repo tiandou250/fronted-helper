@@ -451,7 +451,7 @@ function Stage({ id }: { id: string }) {
     case "path-draw":
       return (
         <div className="sv-stage">
-          <svg width="96" height="96" viewBox="0 0 96 96">
+          <svg width="96" height="96" viewBox="0 0 96 96" className="sv-draw">
             <path d="M14 74 L34 30 L48 56 L64 22 L84 74" />
           </svg>
         </div>
@@ -459,7 +459,7 @@ function Stage({ id }: { id: string }) {
     case "signature-draw":
       return (
         <div className="sv-stage">
-          <svg width="130" height="64" viewBox="0 0 130 64">
+          <svg width="130" height="64" viewBox="0 0 130 64" className="sv-sig">
             <path d="M8 46 C 22 14, 34 14, 30 42 C 28 56, 44 54, 52 36" />
             <path d="M58 40 C 68 20, 80 20, 76 40 C 74 50, 88 48, 96 32" />
             <path d="M14 54 C 40 60, 90 58, 118 50" />
@@ -572,26 +572,15 @@ function Stage({ id }: { id: string }) {
     case "counter-odometer":
       return (
         <div className="dv-odo">
-          <div className="d">
-            <span>
-              0123456789
-            </span>
-          </div>
-          <div className="d">
-            <span>
-              0123456789
-            </span>
-          </div>
-          <div className="d">
-            <span>
-              0123456789
-            </span>
-          </div>
-          <div className="d">
-            <span>
-              0123456789
-            </span>
-          </div>
+          {["0", "1", "2", "3"].map((k, i) => (
+            <div className="d" key={k}>
+              <span>
+                {"0123456789".split("").map((n, j) => (
+                  <i key={j}>{n}</i>
+                ))}
+              </span>
+            </div>
+          ))}
         </div>
       );
     case "bar-race":
