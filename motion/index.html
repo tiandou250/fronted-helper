@@ -1,0 +1,527 @@
+<!DOCTYPE html><html lang="zh-CN"><head><meta charSet="utf-8"/><meta name="viewport" content="width=device-width, initial-scale=1"/><link rel="stylesheet" href="/fronted-helper/_next/static/css/0477389160d690ce.css" data-precedence="next"/><link rel="stylesheet" href="/fronted-helper/_next/static/css/5fe509b99d023ab6.css" data-precedence="next"/><link rel="preload" as="script" fetchPriority="low" href="/fronted-helper/_next/static/chunks/webpack-de33868166cd9f08.js"/><script src="/fronted-helper/_next/static/chunks/aec749e8-c8d0ac210578a731.js" async=""></script><script src="/fronted-helper/_next/static/chunks/59-7165637d09708850.js" async=""></script><script src="/fronted-helper/_next/static/chunks/main-app-a47fd62b0f6540f1.js" async=""></script><script src="/fronted-helper/_next/static/chunks/1-be206cdc888b8c38.js" async=""></script><script src="/fronted-helper/_next/static/chunks/app/motion/page-9d15f4352704c6c9.js" async=""></script><title>动效工具 · 前端设计小助手</title><meta name="description" content="116 个主流动效，分 12 类：页面级、组件级、原生 CSS、三维空间、SVG 矢量、数据可视化等。每个都能当场看、当场抄 CSS。"/><meta name="keywords" content="前端设计,UI 风格,设计风格,CSS Token,AI Prompt,配色,动效"/><script src="/fronted-helper/_next/static/chunks/polyfills-42372ed130431b0a.js" noModule=""></script></head><body><main><div class="wrap"><div class="subhead"><a class="back-pill" href="/fronted-helper/">← 返回</a><h1>动效工具</h1><p class="lead">116<!-- --> 个主流动效，分 12 类。鼠标移到演示区就能看到真实效果，下面的代码可以直接抄。 一条硬规矩：响应型动效不超过 300 毫秒——超过用户就开始觉得卡。<br/>2026 年该补的三块也补上了：<b>原生 CSS</b>（scroll-driven 动画、View Transitions、@property）、<b>三维空间</b>（CSS 3D、透视、景深）、<b>数据可视化</b>（图表生长、数字缓动）—— 这三块是目前最常用、也最少人写进 prompt 的。</p></div><div class="tool-row" style="margin-top:30px"><button class="pill pill-sm is-on">全部<span style="font-size:0.72em;opacity:0.5">116</span></button><button class="pill pill-sm ">页面级<span style="font-size:0.72em;opacity:0.5">24</span></button><button class="pill pill-sm ">组件级<span style="font-size:0.72em;opacity:0.5">10</span></button><button class="pill pill-sm ">交互反馈<span style="font-size:0.72em;opacity:0.5">8</span></button><button class="pill pill-sm ">滚动驱动<span style="font-size:0.72em;opacity:0.5">10</span></button><button class="pill pill-sm ">文字动效<span style="font-size:0.72em;opacity:0.5">10</span></button><button class="pill pill-sm ">加载与状态<span style="font-size:0.72em;opacity:0.5">9</span></button><button class="pill pill-sm ">转场与揭示<span style="font-size:0.72em;opacity:0.5">6</span></button><button class="pill pill-sm ">氛围与装饰<span style="font-size:0.72em;opacity:0.5">7</span></button><button class="pill pill-sm ">原生 CSS<span style="font-size:0.72em;opacity:0.5">8</span></button><button class="pill pill-sm ">三维空间<span style="font-size:0.72em;opacity:0.5">8</span></button><button class="pill pill-sm ">SVG 矢量<span style="font-size:0.72em;opacity:0.5">8</span></button><button class="pill pill-sm ">数据可视化<span style="font-size:0.72em;opacity:0.5">8</span></button></div><div class="mo-grid"><div class="mo-card"><button class="mo-zoom" aria-label="全屏演示 路由转场">全屏</button><h4>路由转场</h4><div class="meta">420ms · 旧页淡出 新页上移</div><div class="mo-demo"><div class="mo-big-preview"><span>Route Transition</span><button class="mo-preview-play">▶ 播放</button></div></div><p style="font-size:13px;line-height:1.7;color:var(--ink-2);margin-bottom:12px">换页时旧内容先淡出 120ms，新内容再从下方 24px 处淡入。关键是两者不重叠——重叠会出现「两个页面同时存在」的错乱感。</p><div class="mo-code"><button class="mo-copy">复制</button><code>// exit: opacity 1→0, 120ms
+// enter: opacity 0→1, translateY 24→0
+await exit(); await enter();</code></div></div><div class="mo-card"><button class="mo-zoom" aria-label="全屏演示 共享元素过渡">全屏</button><h4>共享元素过渡</h4><div class="meta">460ms · 位置与尺寸同时插值</div><div class="mo-demo"><div class="mo-big-preview"><span>Shared Element</span><button class="mo-preview-play">▶ 播放</button></div></div><p style="font-size:13px;line-height:1.7;color:var(--ink-2);margin-bottom:12px">缩略图放大成详情页头图。用 FLIP：先量旧位置，再量新位置，用 transform 从旧位置过渡到新位置。做对了会有「东西飞过去」的感觉。</p><div class="mo-code"><button class="mo-copy">复制</button><code>const first = el.getBoundingClientRect();
+// 布局变化后
+const last = el.getBoundingClientRect();
+// transform: first → last，再播放</code></div></div><div class="mo-card"><button class="mo-zoom" aria-label="全屏演示 滚动叙事">全屏</button><h4>滚动叙事</h4><div class="meta">跟随滚动 · 章节被钉住</div><div class="mo-demo"><div class="mo-big-preview"><span>Scroll Story</span><button class="mo-preview-play">▶ 播放</button></div></div><p style="font-size:13px;line-height:1.7;color:var(--ink-2);margin-bottom:12px">苹果产品页的做法：一段区域 position: sticky 钉住，滚动只推进内部阶段。用户以为在往下翻，其实画面在原地演进。</p><div class="mo-code"><button class="mo-copy">复制</button><code>.stage { position: sticky; top: 0; height: 100vh; }
+// 父容器高度 = 阶段数 × 100vh
+// 用 scrollY 百分比切换阶段</code></div></div><div class="mo-card"><button class="mo-zoom" aria-label="全屏演示 章节吸附">全屏</button><h4>章节吸附</h4><div class="meta">滚动结束时吸附 400ms</div><div class="mo-demo"><div class="mo-big-preview"><span>Section Snap</span><button class="mo-preview-play">▶ 播放</button></div></div><p style="font-size:13px;line-height:1.7;color:var(--ink-2);margin-bottom:12px">滚到哪一章就自动对齐到那一屏。用 scroll-snap-type，不要手写 scrollTo——手写会在触控板双指滚动时打架。</p><div class="mo-code"><button class="mo-copy">复制</button><code>.page {
+  scroll-snap-type: y mandatory;
+  overflow-y: scroll;
+}
+.section { scroll-snap-align: start; }</code></div></div><div class="mo-card"><button class="mo-zoom" aria-label="全屏演示 滚动缩放">全屏</button><h4>滚动缩放</h4><div class="meta">跟随滚动 · scale 1 → 1.8</div><div class="mo-demo"><div class="mo-big-preview"><span>Scroll Zoom</span><button class="mo-preview-play">▶ 播放</button></div></div><p style="font-size:13px;line-height:1.7;color:var(--ink-2);margin-bottom:12px">向下滚，首屏主视觉缓慢放大直到铺满屏幕，作为进入正文的过渡。缩放幅度超过 2 倍就开始糊了。</p><div class="mo-code"><button class="mo-copy">复制</button><code>const p = clamp(scrollY / heroHeight, 0, 1);
+hero.style.transform = `scale(${1 + p * 0.8})`;</code></div></div><div class="mo-card"><button class="mo-zoom" aria-label="全屏演示 横向整页">全屏</button><h4>横向整页</h4><div class="meta">跟随纵向滚动</div><div class="mo-demo"><div class="mo-big-preview"><span>Horizontal Scroll</span><button class="mo-preview-play">▶ 播放</button></div></div><p style="font-size:13px;line-height:1.7;color:var(--ink-2);margin-bottom:12px">纵向滚动驱动横向位移，页面横着走。必须保证不抢系统横向手势，移动端要谨慎——容易和浏览器返回手势冲突。</p><div class="mo-code"><button class="mo-copy">复制</button><code>.track {
+  transform: translateX(calc(var(--y) * -1px));
+}
+// 竖向滚动的 scrollY 映射成横向偏移</code></div></div><div class="mo-card"><button class="mo-zoom" aria-label="全屏演示 全屏菜单">全屏</button><h4>全屏菜单</h4><div class="meta">520ms · 圆形从按钮扩散</div><div class="mo-demo"><div class="mo-big-preview"><span>Fullscreen Menu</span><button class="mo-preview-play">▶ 播放</button></div></div><p style="font-size:13px;line-height:1.7;color:var(--ink-2);margin-bottom:12px">点汉堡，一个圆从按钮位置扩散铺满全屏。用 clip-path: circle() 从 0 到 150%，比整块淡入有方向感。</p><div class="mo-code"><button class="mo-copy">复制</button><code>.menu {
+  clip-path: circle(0% at 92% 8%);
+  transition: clip-path .52s;
+}
+.menu.open { clip-path: circle(150% at 92% 8%); }</code></div></div><div class="mo-card"><button class="mo-zoom" aria-label="全屏演示 加载到内容">全屏</button><h4>加载到内容</h4><div class="meta">900ms · 进度条走完后让位</div><div class="mo-demo"><div class="mo-big-preview"><span>Loader to Content</span><button class="mo-preview-play">▶ 播放</button></div></div><p style="font-size:13px;line-height:1.7;color:var(--ink-2);margin-bottom:12px">加载条走到 100% 后向上滑走，内容同时从下方升起。两件事必须同时发生，否则中间会闪一帧空白。</p><div class="mo-code"><button class="mo-copy">复制</button><code>loader.style.transform = &#x27;translateY(-100%)&#x27;;
+content.style.transform = &#x27;translateY(0)&#x27;;
+// 同一个 requestAnimationFrame 里触发</code></div></div><div class="mo-card"><button class="mo-zoom" aria-label="全屏演示 卡片叠压">全屏</button><h4>卡片叠压</h4><div class="meta">跟随滚动</div><div class="mo-demo"><div class="mo-big-preview"><span>Sticky Stack</span><button class="mo-preview-play">▶ 播放</button></div></div><p style="font-size:13px;line-height:1.7;color:var(--ink-2);margin-bottom:12px">多张卡片依次粘在顶部，后一张压住前一张并让它缩小 4%。做产品特性介绍最有效——用户会一直滚着看下一张。</p><div class="mo-code"><button class="mo-copy">复制</button><code>.panel { position: sticky; top: 64px; }
+.panel:nth-child(2) { top: 88px; }
+// 每张顶部偏移递增 24px</code></div></div><div class="mo-card"><button class="mo-zoom" aria-label="全屏演示 滚动同步文字">全屏</button><h4>滚动同步文字</h4><div class="meta">跟随滚动</div><div class="mo-demo"><div class="mo-big-preview"><span>Text Scrub</span><button class="mo-preview-play">▶ 播放</button></div></div><p style="font-size:13px;line-height:1.7;color:var(--ink-2);margin-bottom:12px">一段长文案，每滚一点就亮一行，像被读出来。用 background-clip: text 配合渐变位置，一行代码就能实现。</p><div class="mo-code"><button class="mo-copy">复制</button><code>.para {
+  background: linear-gradient(90deg,
+    #2b2b2b var(--p), #c8c8c8 var(--p));
+  background-clip: text; color: transparent;
+}</code></div></div><div class="mo-card"><button class="mo-zoom" aria-label="全屏演示 幕布转场">全屏</button><h4>幕布转场</h4><div class="meta">620ms</div><div class="mo-demo"><div class="mo-big-preview"><span>Curtain Wipe</span><button class="mo-preview-play">▶ 播放</button></div></div><p style="font-size:13px;line-height:1.7;color:var(--ink-2);margin-bottom:12px">一块实色从下往上盖住，再从上方移走露出新页面。传统编辑器感的转场，比淡入有仪式感。</p><div class="mo-code"><button class="mo-copy">复制</button><code>.curtain {
+  transform: translateY(100%);
+}
+// 盖上：0 → 0%
+// 揭开：0% → -100%</code></div></div><div class="mo-card"><button class="mo-zoom" aria-label="全屏演示 跟随光标扩展">全屏</button><h4>跟随光标扩展</h4><div class="meta">跟随鼠标 · 半径 0 → 140px</div><div class="mo-demo"><div class="mo-big-preview"><span>Cursor Reveal</span><button class="mo-preview-play">▶ 播放</button></div></div><p style="font-size:13px;line-height:1.7;color:var(--ink-2);margin-bottom:12px">鼠标位置开一个圆形窗口，透过它看到另一张图。作品集网站爱用，成本低但有惊喜感。</p><div class="mo-code"><button class="mo-copy">复制</button><code>.overlay {
+  clip-path: circle(140px at var(--x) var(--y));
+}</code></div></div><div class="mo-card"><button class="mo-zoom" aria-label="全屏演示 分屏揭示">全屏</button><h4>分屏揭示</h4><div class="meta">700ms · 两片对开</div><div class="mo-demo"><div class="mo-big-preview"><span>Split Reveal</span><button class="mo-preview-play">▶ 播放</button></div></div><p style="font-size:13px;line-height:1.7;color:var(--ink-2);margin-bottom:12px">一块遮罩从中间向两侧分开，露出底下的内容。比淡入更有「揭幕」的仪式感，适合品牌首页开场。</p><div class="mo-code"><button class="mo-copy">复制</button><code>.left  { transform: translateX(0); }
+.right { transform: translateX(0); }
+.open .left  { transform: translateX(-100%); }
+.open .right { transform: translateX(100%); }</code></div></div><div class="mo-card"><button class="mo-zoom" aria-label="全屏演示 图片序列">全屏</button><h4>图片序列</h4><div class="meta">跟随滚动 · 帧索引映射</div><div class="mo-demo"><div class="mo-big-preview"><span>Image Sequence</span><button class="mo-preview-play">▶ 播放</button></div></div><p style="font-size:13px;line-height:1.7;color:var(--ink-2);margin-bottom:12px">把滚动位置映射成帧序号，滚动就像在拖时间轴。产品拆解、旋转展示都用这套，本质是「滚动当播放器」。</p><div class="mo-code"><button class="mo-copy">复制</button><code>const frame = Math.floor(
+  (scrollY / total) * frames.length);
+canvas.drawImage(frames[frame], 0, 0);</code></div></div><div class="mo-card"><button class="mo-zoom" aria-label="全屏演示 侧边跟随导航">全屏</button><h4>侧边跟随导航</h4><div class="meta">跟随滚动 · 高亮切换 200ms</div><div class="mo-demo"><div class="mo-big-preview"><span>Scroll Spy</span><button class="mo-preview-play">▶ 播放</button></div></div><p style="font-size:13px;line-height:1.7;color:var(--ink-2);margin-bottom:12px">长文页右侧一列小点，滚到哪一节哪个点就亮。用 IntersectionObserver 监听每个章节，不要算 scrollY 区间。</p><div class="mo-code"><button class="mo-copy">复制</button><code>new IntersectionObserver(entries =&gt; {
+  entries.forEach(e =&gt; {
+    if (e.isIntersecting) setActive(e.target.id);
+  });
+}, { rootMargin: &#x27;-45% 0px&#x27; }).observe(sec);</code></div></div><div class="mo-card"><button class="mo-zoom" aria-label="全屏演示 首屏收缩">全屏</button><h4>首屏收缩</h4><div class="meta">420ms · 高度 96 → 56px</div><div class="mo-demo"><div class="mo-big-preview"><span>Shrink Header</span><button class="mo-preview-play">▶ 播放</button></div></div><p style="font-size:13px;line-height:1.7;color:var(--ink-2);margin-bottom:12px">滚过首屏后，大标题导航缩成一条细条。关键是缩的同时把 logo 从居中移到左侧，用户不会觉得「换了个页面」。</p><div class="mo-code"><button class="mo-copy">复制</button><code>header.classList.toggle(&#x27;small&#x27;, scrollY &gt; 80);
+.small { height: 56px; }
+.small .logo { transform: scale(.7) translateX(0); }</code></div></div><div class="mo-card"><button class="mo-zoom" aria-label="全屏演示 缩放穿越">全屏</button><h4>缩放穿越</h4><div class="meta">780ms · scale 1 → 6 并淡出</div><div class="mo-demo"><div class="mo-big-preview"><span>Zoom Through</span><button class="mo-preview-play">▶ 播放</button></div></div><p style="font-size:13px;line-height:1.7;color:var(--ink-2);margin-bottom:12px">点一张卡片，整页朝那张卡片放大并穿过去，落地就是详情页。迪士尼式转场，做对了很惊艳，做重了很晕。</p><div class="mo-code"><button class="mo-copy">复制</button><code>wrap.style.transformOrigin = `${x}px ${y}px`;
+wrap.style.transform = &#x27;scale(6)&#x27;;
+wrap.style.opacity = &#x27;0&#x27;;</code></div></div><div class="mo-card"><button class="mo-zoom" aria-label="全屏演示 网格展开">全屏</button><h4>网格展开</h4><div class="meta">520ms · 两端插值</div><div class="mo-demo"><div class="mo-big-preview"><span>Grid Expand</span><button class="mo-preview-play">▶ 播放</button></div></div><p style="font-size:13px;line-height:1.7;color:var(--ink-2);margin-bottom:12px">缩略图从网格里的位置，长成全屏详情。和共享元素类似，但对象是「容器」——宽高同时从格子尺寸过渡到视口尺寸。</p><div class="mo-code"><button class="mo-copy">复制</button><code>// First: 格子的 rect
+// Last:  全屏的 rect
+// 用 transform 从 First 播到 Last</code></div></div><div class="mo-card"><button class="mo-zoom" aria-label="全屏演示 倾斜滚动">全屏</button><h4>倾斜滚动</h4><div class="meta">跟随滚动 · 最大 ±5deg</div><div class="mo-demo"><div class="mo-big-preview"><span>Skew on Scroll</span><button class="mo-preview-play">▶ 播放</button></div></div><p style="font-size:13px;line-height:1.7;color:var(--ink-2);margin-bottom:12px">滚动时内容轻微倾斜，像被速度甩了一下。角度必须跟着滚动速度而不是位置，松手后回正，否则会一直歪着。</p><div class="mo-code"><button class="mo-copy">复制</button><code>const skew = clamp(velocity * 0.05, -5, 5);
+list.style.transform = `skewY(${skew}deg)`;</code></div></div><div class="mo-card"><button class="mo-zoom" aria-label="全屏演示 多层视差">全屏</button><h4>多层视差</h4><div class="meta">跟随滚动 · 三层不同速度</div><div class="mo-demo"><div class="mo-big-preview"><span>Layered Parallax</span><button class="mo-preview-play">▶ 播放</button></div></div><p style="font-size:13px;line-height:1.7;color:var(--ink-2);margin-bottom:12px">背景 0.2 倍速、中景 0.5 倍速、前景 1 倍速。层数超过三层就开始卡，也没人看得出区别。</p><div class="mo-code"><button class="mo-copy">复制</button><code>.layer-1 { transform: translateY(calc(var(--y) * 0.2)); }
+.layer-2 { transform: translateY(calc(var(--y) * 0.5)); }
+.layer-3 { transform: translateY(calc(var(--y) * 1)); }</code></div></div><div class="mo-card"><button class="mo-zoom" aria-label="全屏演示 光标拖尾">全屏</button><h4>光标拖尾</h4><div class="meta">跟随 · 带延迟队列</div><div class="mo-demo"><div class="mo-big-preview"><span>Cursor Trail</span><button class="mo-preview-play">▶ 播放</button></div></div><p style="font-size:13px;line-height:1.7;color:var(--ink-2);margin-bottom:12px">一串跟随光标的元素，每个都比前一个慢一点，形成拖尾。实现方式不是给每个元素都监听 mousemove——那样会掉帧。正确做法是监听一次，缓存坐标，用 requestAnimationFrame 让每个元素按比例追赶当前位置。</p><div class="mo-code"><button class="mo-copy">复制</button><code>const dots = [...document.querySelectorAll(&#x27;.dot&#x27;)];
+let x = 0, y = 0;
+dots.forEach((d, i) =&gt; d._t = i * 0.06);
+function loop() {
+  x += (mx - x) * 0.2;
+  y += (my - y) * 0.2;
+  dots.forEach((d, i) =&gt; {
+    const k = 1 - d._t * 1.4;
+    d.style.transform = `translate(${x * k}px, ${y * k}px)`;
+  });
+  requestAnimationFrame(loop);
+}</code></div></div><div class="mo-card"><button class="mo-zoom" aria-label="全屏演示 故障转场">全屏</button><h4>故障转场</h4><div class="meta">RGB 错位 · 400ms</div><div class="mo-demo"><div class="mo-big-preview"><span>Glitch Transition</span><button class="mo-preview-play">▶ 播放</button></div></div><p style="font-size:13px;line-height:1.7;color:var(--ink-2);margin-bottom:12px">用三层彩色副本叠在原元素上，各层用不同 clip-path 位置并快速抖动，做出信号错位的感觉。做的时候要用 steps() 步进而不是平滑曲线——故障是离散跳变，不是渐变。位置抖动幅度控制在 2-4px 就够，大了会看不清内容。</p><div class="mo-code"><button class="mo-copy">复制</button><code>.glitch {
+  position: relative;
+  animation: jitter .4s steps(2) 3;
+}
+.glitch::before,
+.glitch::after {
+  content: attr(data-text);
+  position: absolute; inset: 0;
+  clip-path: inset(0 0 60% 0);
+}
+@keyframes jitter {
+  0% { transform: translate(0); }
+  25% { transform: translate(-3px, 1px); }
+  50% { transform: translate(2px, -2px); }
+  75% { transform: translate(-1px, 2px); }
+}</code></div></div><div class="mo-card"><button class="mo-zoom" aria-label="全屏演示 变形菜单">全屏</button><h4>变形菜单</h4><div class="meta">形状插值 · 500ms</div><div class="mo-demo"><div class="mo-big-preview"><span>Morphing Menu</span><button class="mo-preview-play">▶ 播放</button></div></div><p style="font-size:13px;line-height:1.7;color:var(--ink-2);margin-bottom:12px">按钮点击后变形展开成菜单面板。CSS 本身没法插值不同形状，得靠 clip-path 变形或者 SVG 的 path d 插值。clip-path 方案最简单：圆形裁切区域从按钮位置扩展到整个面板，配合 opacity 淡入内容。</p><div class="mo-code"><button class="mo-copy">复制</button><code>.menu {
+  clip-path: circle(24px at 50% 50%);
+  transition: clip-path .5s cubic-bezier(.16,1,.3,1);
+}
+.menu.open {
+  clip-path: circle(150% at 50% 50%);
+}</code></div></div><div class="mo-card"><button class="mo-zoom" aria-label="全屏演示 反向滚动列">全屏</button><h4>反向滚动列</h4><div class="meta">多列反向 · 各自独立</div><div class="mo-demo"><div class="mo-big-preview"><span>Counter Scroll Columns</span><button class="mo-preview-play">▶ 播放</button></div></div><p style="font-size:13px;line-height:1.7;color:var(--ink-2);margin-bottom:12px">多列内容以不同速度甚至相反方向滚动，制造出「洗衣机滚筒」的视觉趣味。反向的那列要用负的动画时长或把 keyframes 倒过来。列间距要够宽，不然内容会互相穿插。</p><div class="mo-code"><button class="mo-copy">复制</button><code>.col { animation: scrollUp 20s linear infinite; }
+.col:nth-child(even) { animation-direction: reverse; }
+@keyframes scrollUp {
+  from { transform: translateY(0); }
+  to { transform: translateY(-50%); }
+}</code></div></div><div class="mo-card"><button class="mo-zoom" aria-label="全屏演示 布局重排">全屏</button><h4>布局重排</h4><div class="meta">420ms · 每个元素独立插值</div><div class="mo-demo"><div class="mo-big-preview"><span>Layout FLIP</span><button class="mo-preview-play">▶ 播放</button></div></div><p style="font-size:13px;line-height:1.7;color:var(--ink-2);margin-bottom:12px">列表从网格切到列表视图，每个元素各自飞向新位置。用 FLIP 记录前后位置再补间，比重新渲染一遍高级得多。</p><div class="mo-code"><button class="mo-copy">复制</button><code>// First: 记录所有 item 的 rect
+// Last: 布局变后重新记录
+// Invert: 先用 transform 回到旧位
+// Play: 移除 transform，让它飞回去</code></div></div><div class="mo-card"><button class="mo-zoom" aria-label="全屏演示 拖拽排序">全屏</button><h4>拖拽排序</h4><div class="meta">跟手 + 200ms 归位</div><div class="mo-demo"><div class="mo-big-preview"><span>Drag Reorder</span><button class="mo-preview-play">▶ 播放</button></div></div><p style="font-size:13px;line-height:1.7;color:var(--ink-2);margin-bottom:12px">拖动时被拖项跟手且放大 1.04，其他项用 transform 让位（不要改 DOM 顺序，会掉帧）。松手后再提交顺序。</p><div class="mo-code"><button class="mo-copy">复制</button><code>// 拖动中只改 transform
+el.style.transform = `translateY(${dy}px)`;
+// 其他项自动上移/下移一格</code></div></div><div class="mo-card"><button class="mo-zoom" aria-label="全屏演示 滑动卡片">全屏</button><h4>滑动卡片</h4><div class="meta">跟手 + 320ms 甩出</div><div class="mo-demo"><div class="mo-big-preview"><span>Swipe Card</span><button class="mo-preview-play">▶ 播放</button></div></div><p style="font-size:13px;line-height:1.7;color:var(--ink-2);margin-bottom:12px">拖动判断方向和距离，超过阈值就朝该方向甩出去并淡出。阈值设成卡片宽度的 30% 最符合直觉。</p><div class="mo-code"><button class="mo-copy">复制</button><code>if (Math.abs(dx) &gt; width * 0.3) {
+  el.style.transform = `translateX(${dx * 2}px) rotate(${dx * 0.06}deg)`;
+}</code></div></div><div class="mo-card"><button class="mo-zoom" aria-label="全屏演示 下拉刷新">全屏</button><h4>下拉刷新</h4><div class="meta">跟手 · 阻尼 0.4</div><div class="mo-demo"><div class="mo-big-preview"><span>Pull to Refresh</span><button class="mo-preview-play">▶ 播放</button></div></div><p style="font-size:13px;line-height:1.7;color:var(--ink-2);margin-bottom:12px">下拉时内容跟手但速度减半（阻尼），超过 64px 松手才触发刷新。阻尼系数 0.4 最舒服，1.0 会显得太硬。</p><div class="mo-code"><button class="mo-copy">复制</button><code>const damped = Math.max(0, dy) * 0.4;
+list.style.transform = `translateY(${damped}px)`;</code></div></div><div class="mo-card"><button class="mo-zoom" aria-label="全屏演示 标签滑动指示器">全屏</button><h4>标签滑动指示器</h4><div class="meta">280ms · 位移 + 宽度同时变化</div><div class="mo-demo"><div class="mo-big-preview"><span>Tab Indicator</span><button class="mo-preview-play">▶ 播放</button></div></div><p style="font-size:13px;line-height:1.7;color:var(--ink-2);margin-bottom:12px">下划线跟着当前标签滑动，宽度也跟着变。别用 left 动画，用 transform: translateX 才不会触发重排。</p><div class="mo-code"><button class="mo-copy">复制</button><code>bar.style.width = tab.offsetWidth + &#x27;px&#x27;;
+bar.style.transform = `translateX(${tab.offsetLeft}px)`;</code></div></div><div class="mo-card"><button class="mo-zoom" aria-label="全屏演示 手风琴组">全屏</button><h4>手风琴组</h4><div class="meta">340ms · 同时开只留一个</div><div class="mo-demo"><div class="mo-big-preview"><span>Accordion Group</span><button class="mo-preview-play">▶ 播放</button></div></div><p style="font-size:13px;line-height:1.7;color:var(--ink-2);margin-bottom:12px">点开一个，其他自动收起。同一时间只允许一个展开，否则页面会被撑得很长、用户找不到位置。</p><div class="mo-code"><button class="mo-copy">复制</button><code>items.forEach(i =&gt; i !== current &amp;&amp; i.close());
+current.toggle();</code></div></div><div class="mo-card"><button class="mo-zoom" aria-label="全屏演示 筛选过渡">全屏</button><h4>筛选过渡</h4><div class="meta">380ms · FLIP</div><div class="mo-demo"><div class="mo-big-preview"><span>Filter Transition</span><button class="mo-preview-play">▶ 播放</button></div></div><p style="font-size:13px;line-height:1.7;color:var(--ink-2);margin-bottom:12px">切换筛选条件时，保留下来的卡片飞到新位置，被筛掉的淡出。直接重渲染会「闪一下」，必须用 FLIP 补间。</p><div class="mo-code"><button class="mo-copy">复制</button><code>// 记录旧位置 → 改 DOM → 记录新位置
+// 用 transform 从旧位置倒推，再播放归零</code></div></div><div class="mo-card"><button class="mo-zoom" aria-label="全屏演示 表格行展开">全屏</button><h4>表格行展开</h4><div class="meta">320ms</div><div class="mo-demo"><div class="mo-big-preview"><span>Row Expand</span><button class="mo-preview-play">▶ 播放</button></div></div><p style="font-size:13px;line-height:1.7;color:var(--ink-2);margin-bottom:12px">点一行，下方展开详情区。展开时该行要高亮，且不能把相邻行挤得跳——用独立的详情行而不是往单元格里塞。</p><div class="mo-code"><button class="mo-copy">复制</button><code>tr.classList.add(&#x27;open&#x27;);
+tr.after(detailRow); // 独立的详情行
+detailRow.style.height = h + &#x27;px&#x27;;</code></div></div><div class="mo-card"><button class="mo-zoom" aria-label="全屏演示 无限加载">全屏</button><h4>无限加载</h4><div class="meta">触底 200px 预加载</div><div class="mo-demo"><div class="mo-big-preview"><span>Infinite Scroll</span><button class="mo-preview-play">▶ 播放</button></div></div><p style="font-size:13px;line-height:1.7;color:var(--ink-2);margin-bottom:12px">滚到底部前 200px 就开始加载，不要等真到底——等到底再加载用户会看到一瞬空白。加载中用骨架占位。</p><div class="mo-code"><button class="mo-copy">复制</button><code>if (scrollTop + clientH &gt; scrollH - 200) load();</code></div></div><div class="mo-card"><button class="mo-zoom" aria-label="全屏演示 通知堆叠">全屏</button><h4>通知堆叠</h4><div class="meta">320ms · 新通知从下方推入</div><div class="mo-demo"><div class="mo-big-preview"><span>Toast Stack</span><button class="mo-preview-play">▶ 播放</button></div></div><p style="font-size:13px;line-height:1.7;color:var(--ink-2);margin-bottom:12px">多条通知从下往上堆，旧的往上移并缩小。最多同时显示 3 条，超出的排队，否则会盖满屏幕。</p><div class="mo-code"><button class="mo-copy">复制</button><code>toasts.map((t, i) =&gt; ({
+  transform: `translateY(${-i * 64}px) scale(${1 - i * 0.04})`
+}));</code></div></div><div class="mo-card"><h4>悬停抬升</h4><div class="meta">200ms · cubic-bezier(.16,1,.3,1)</div><div class="mo-demo"><button class="mo-btn mo-hover-lift">悬停我</button></div><p style="font-size:13px;line-height:1.7;color:var(--ink-2);margin-bottom:12px">最通用的一种，按钮和卡片都能用。关键是要同时改位移和阴影，只改其中一个会显得飘。</p><div class="mo-code"><button class="mo-copy">复制</button><code>.btn:hover {
+  transform: translateY(-8px);
+  box-shadow: 10px 10px 22px #b3b3b3,
+             -10px -10px 22px #fff;
+}</code></div></div><div class="mo-card"><h4>按压回弹</h4><div class="meta">100ms · ease-out</div><div class="mo-demo"><button class="mo-btn mo-press">按住我</button></div><p style="font-size:13px;line-height:1.7;color:var(--ink-2);margin-bottom:12px">触屏时代最重要的反馈。鼠标点击和手指点击都需要它，否则用户不确定自己点到了没有。</p><div class="mo-code"><button class="mo-copy">复制</button><code>.btn:active {
+  transform: scale(0.93);
+}
+/* 回弹靠 100ms 的短过渡 */</code></div></div><div class="mo-card"><h4>下划线滑入</h4><div class="meta">280ms · 从中心展开</div><div class="mo-demo"><button class="mo-btn mo-underline">文字链接</button></div><p style="font-size:13px;line-height:1.7;color:var(--ink-2);margin-bottom:12px">链接的经典写法。从中心向两侧展开比从左往右更有张力，也比整条直接出现更细腻。</p><div class="mo-code"><button class="mo-copy">复制</button><code>.link::after {
+  width: 0; left: 50%;
+  transform: translateX(-50%);
+  transition: width .28s;
+}
+.link:hover::after { width: 100%; }</code></div></div><div class="mo-card"><h4>描边浮现</h4><div class="meta">300ms · 由内向外</div><div class="mo-demo"><button class="mo-btn mo-border">悬停描边</button></div><p style="font-size:13px;line-height:1.7;color:var(--ink-2);margin-bottom:12px">透明的边框从 0.86 倍放大到原尺寸，同时淡入。适合给“无边界”的按钮加确认感。</p><div class="mo-code"><button class="mo-copy">复制</button><code>.btn::before {
+  border: 2px solid #111;
+  opacity: 0;
+  transform: scale(.86);
+}
+.btn:hover::before {
+  opacity: 1; transform: scale(1);
+}</code></div></div><div class="mo-card"><h4>涟漪扩散</h4><div class="meta">600ms · 从点击坐标计算</div><div class="mo-demo"><button class="mo-btn mo-ripple">点我</button></div><p style="font-size:13px;line-height:1.7;color:var(--ink-2);margin-bottom:12px">Material Design 的招牌。必须按真实点击位置生成圆，居中扩散会显得假。</p><div class="mo-code"><button class="mo-copy">复制</button><code>rp.style.left = (e.clientX - r.left) + &#x27;px&#x27;;
+rp.style.top  = (e.clientY - r.top) + &#x27;px&#x27;;
+rp.style.animation = &#x27;rip .6s ease-out&#x27;;</code></div></div><div class="mo-card"><h4>图标形变</h4><div class="meta">300ms · 汉堡转叉</div><div class="mo-demo"><button class="mo-burger" aria-label="菜单"><i></i><i></i><i></i></button></div><p style="font-size:13px;line-height:1.7;color:var(--ink-2);margin-bottom:12px">三条线里让第二条消失、上下两条旋转并平移。位移量必须精确等于线距的一半。</p><div class="mo-code"><button class="mo-copy">复制</button><code>.bars i:nth-child(1) {
+  transform: translateY(7.5px) rotate(45deg);
+}
+.bars i:nth-child(2) { opacity: 0; }
+.bars i:nth-child(3) {
+  transform: translateY(-7.5px) rotate(-45deg);
+}</code></div></div><div class="mo-card"><h4>磁吸跟随</h4><div class="meta">250ms · 跟随鼠标</div><div class="mo-demo"><button class="mo-btn mo-magnetic">靠近我</button></div><p style="font-size:13px;line-height:1.7;color:var(--ink-2);margin-bottom:12px">按钮朝鼠标方向偏移一小段距离（约 0.25 倍），松手回中。大厂官网爱用，但移动端不要用。</p><div class="mo-code"><button class="mo-copy">复制</button><code>const dx = (e.clientX - cx) * 0.25;
+const dy = (e.clientY - cy) * 0.25;
+el.style.transform =
+  `translate(${dx}px, ${dy}px)`;</code></div></div><div class="mo-card"><h4>聚焦光晕</h4><div class="meta">250ms</div><div class="mo-demo"><button class="mo-btn mo-glow">聚焦我</button></div><p style="font-size:13px;line-height:1.7;color:var(--ink-2);margin-bottom:12px">用 box-shadow 做一圈外发光。键盘可达性必备——键盘用户看不到鼠标位置，只能靠它。</p><div class="mo-code"><button class="mo-copy">复制</button><code>.btn:hover,
+.btn:focus-visible {
+  box-shadow: 0 0 0 4px rgba(43,43,43,.12),
+              var(--up-sm);
+}</code></div></div><div class="mo-card"><h4>原生滚动进度条</h4><div class="meta">跟随滚动 · 零 JS</div><div class="mo-demo"><div class="sc-native-bar"><div class="track"><i></i></div></div></div><p style="font-size:13px;line-height:1.7;color:var(--ink-2);margin-bottom:12px">最该用原生实现的经典效果。用 animation-timeline: scroll() 绑到根滚动容器，进度条随滚动自动生长，完全不用 scroll 事件监听。性能比 JS 版本好一截，因为跑在合成线程上。这是 2026 年最值得切换过去的一个小改动。</p><div class="mo-code"><button class="mo-copy">复制</button><code>@supports (animation-timeline: scroll()) {
+  .bar {
+    position: fixed; top: 0; left: 0;
+    height: 3px; width: 100%;
+    background: #111;
+    transform-origin: 0 50%;
+    animation: grow linear;
+    animation-timeline: scroll();
+  }
+}
+@keyframes grow { to { transform: scaleX(1); } }</code></div></div><div class="mo-card"><h4>原生视口错开</h4><div class="meta">按行错开 · 纯 CSS</div><div class="mo-demo"><div class="sc-vt-stagger"><div class="c">1</div><div class="c">2</div><div class="c">3</div></div></div><p style="font-size:13px;line-height:1.7;color:var(--ink-2);margin-bottom:12px">卡片列表的错开淡入，用 view() + animation-range 就能做，连 IntersectionObserver 都省了。错开的关键是给每张卡不同的 animation-range 起点——用 calc 和 sibling-index() 可以不写 nth-child。这是原生滚动驱动最实用的一个变体。</p><div class="mo-code"><button class="mo-copy">复制</button><code>.card {
+  animation: fade-up linear both;
+  animation-timeline: view();
+  animation-range: entry 0% entry 35%;
+}
+.card:nth-child(3n+2) {
+  animation-range: entry 5% entry 40%;
+}
+.card:nth-child(3n+3) {
+  animation-range: entry 10% entry 45%;
+}</code></div></div><div class="mo-card"><h4>横向吸附画廊</h4><div class="meta">吸附对齐 · 纯 CSS</div><div class="mo-demo"><div class="sc-rail"><div class="c">01</div><div class="c">02</div><div class="c">03</div><div class="c">04</div><div class="c">05</div></div></div><p style="font-size:13px;line-height:1.7;color:var(--ink-2);margin-bottom:12px">横滑卡片列表的标准做法：scroll-snap-type: x mandatory + 每张卡 scroll-snap-align: start。用 CSS 实现比 JS 滚动监听可靠得多，触控板双指滚动时不会打架。注意一定要设 scroll-snap-stop: always，否则快速滑动会连跳好几张。</p><div class="mo-code"><button class="mo-copy">复制</button><code>.rail {
+  display: flex; overflow-x: auto;
+  scroll-snap-type: x mandatory;
+  scroll-snap-stop: always;
+}
+.card {
+  flex: 0 0 280px;
+  scroll-snap-align: start;
+}</code></div></div><div class="mo-card"><h4>粘性进度导航</h4><div class="meta">吸顶 · 随滚动变色</div><div class="mo-demo"><div class="sc-sticky-nav"><div class="nav"><span>导航</span><div class="p"><i></i></div></div><div class="body">吸顶导航的底边会随滚动显出一条进度线，指示当前阅读位置。</div></div></div><p style="font-size:13px;line-height:1.7;color:var(--ink-2);margin-bottom:12px">导航吸顶后，底边出现一条进度线，指示当前读到哪。这个组合的关键是 position: sticky 而不是 fixed——sticky 保留了文档流，不会遮挡内容。进度线可以用 scaleX 过渡，比改 width 便宜得多。</p><div class="mo-code"><button class="mo-copy">复制</button><code>.nav {
+  position: sticky; top: 0;
+}
+.progress {
+  transform-origin: 0 50%;
+  transition: transform .12s linear;
+  /* JS 里更新 scaleX(scrollRatio) */
+}</code></div></div><div class="mo-card"><h4>进视口淡入</h4><div class="meta">620ms · 位移 28px</div><div class="mo-demo"><div class="mo-box mo-reveal">↧</div></div><p style="font-size:13px;line-height:1.7;color:var(--ink-2);margin-bottom:12px">最基础的滚动动效。用 IntersectionObserver 判断，不要监听 scroll 事件（性能差十倍）。</p><div class="mo-code"><button class="mo-copy">复制</button><code>new IntersectionObserver(([en]) =&gt; {
+  if (en.isIntersecting)
+    el.classList.add(&#x27;in&#x27;);
+}, { threshold: 0.2 }).observe(el);</code></div></div><div class="mo-card"><h4>视差</h4><div class="meta">跟随滚动 · 位移 ±12px</div><div class="mo-demo"><div class="mo-box mo-parallax">◐</div></div><p style="font-size:13px;line-height:1.7;color:var(--ink-2);margin-bottom:12px">背景层比前景层慢。幅度一大就晕，安全区间是可见位移不超过 20px。</p><div class="mo-code"><button class="mo-copy">复制</button><code>.bg-layer {
+  transform: translateY(
+    calc(var(--scroll) * 0.15));
+}</code></div></div><div class="mo-card"><h4>粘性叠层</h4><div class="meta">跟随滚动</div><div class="mo-demo"><div class="mo-sticky"><i></i><i></i><i></i></div></div><p style="font-size:13px;line-height:1.7;color:var(--ink-2);margin-bottom:12px">position: sticky + 逐层上浮，做出卡片堆叠的感觉。每层缩 4%、错开 280ms 最舒服。</p><div class="mo-code"><button class="mo-copy">复制</button><code>.panel {
+  position: sticky; top: 80px;
+}
+.panel:nth-child(2) { top: 96px; }</code></div></div><div class="mo-card"><h4>滚动进度条</h4><div class="meta">实时</div><div class="mo-demo"><span class="mo-progress"><i></i></span></div><p style="font-size:13px;line-height:1.7;color:var(--ink-2);margin-bottom:12px">顶部一条 3px 的线，宽度等于阅读进度。长文页面必备，成本极低。</p><div class="mo-code"><button class="mo-copy">复制</button><code>const p = scrollY /
+  (document.body.scrollHeight - innerHeight);
+bar.style.transform = `scaleX(${p})`;</code></div></div><div class="mo-card"><h4>数字滚动</h4><div class="meta">900ms · ease-out</div><div class="mo-demo"><span class="mo-count">12,480</span></div><p style="font-size:13px;line-height:1.7;color:var(--ink-2);margin-bottom:12px">统计数字从 0 滚到目标值。必须用 tabular-nums，否则数字宽度变化会让整行抖动。</p><div class="mo-code"><button class="mo-copy">复制</button><code>.num {
+  font-variant-numeric: tabular-nums;
+}
+// requestAnimationFrame 逐帧插值</code></div></div><div class="mo-card"><h4>无限滚动条</h4><div class="meta">9s · linear 循环</div><div class="mo-demo"><div class="mo-marquee-row"><div class="track"><span class="cell"></span><span class="cell"></span><span class="cell"></span><span class="cell"></span></div><div class="track" aria-hidden="true"><span class="cell"></span><span class="cell"></span><span class="cell"></span><span class="cell"></span></div></div></div><p style="font-size:13px;line-height:1.7;color:var(--ink-2);margin-bottom:12px">内容复制一份，轨道整体左移自身宽度后瞬间回到原位。用 CSS 就够，别用 JS。</p><div class="mo-code"><button class="mo-copy">复制</button><code>.track {
+  animation: track 9s linear infinite;
+}
+@keyframes track {
+  to { transform: translateX(-100%); }
+}</code></div></div><div class="mo-card"><h4>编辑式下划线</h4><div class="meta">从右向左 · 400ms</div><div class="mo-demo"><span class="tx-edit">编辑设计</span></div><p style="font-size:13px;line-height:1.7;color:var(--ink-2);margin-bottom:12px">杂志排版的经典手法：下划线从右端往左画出，最后停稳在词尾。要点是 transform-origin 设成右边，scaleX 从 0 长到 1。用 cubic-bezier 加一点回弹，比线性更有手感。</p><div class="mo-code"><button class="mo-copy">复制</button><code>.title {
+  position: relative;
+}
+.title::after {
+  content: &#x27;&#x27;;
+  position: absolute;
+  left: 0; right: 0; bottom: -4px;
+  height: 3px;
+  background: currentColor;
+  transform: scaleX(0);
+  transform-origin: right center;
+  transition: transform .4s cubic-bezier(.16,1,.3,1);
+}
+.title:hover::after { transform: scaleX(1); }</code></div></div><div class="mo-card"><h4>等宽数字滚动</h4><div class="meta">数字切换 · 200ms</div><div class="mo-demo"><span class="tx-tnum" style="cursor:pointer">¥ 1,280.00</span></div><p style="font-size:13px;line-height:1.7;color:var(--ink-2);margin-bottom:12px">价格、计数器这类会频繁变化的数字，必须用 font-variant-numeric: tabular-nums，否则每次变化字宽都会跳，整行跟着左右晃。等宽数字是表格和仪表盘的基本功，忘了它整页都显得业余。</p><div class="mo-code"><button class="mo-copy">复制</button><code>.price {
+  font-variant-numeric: tabular-nums;
+  font-feature-settings: &#x27;tnum&#x27; 1;
+  transition: opacity .2s;
+}
+.price.updating { opacity: .4; }</code></div></div><div class="mo-card"><h4>逐词浮现</h4><div class="meta">按词 · 40ms 间隔</div><div class="mo-demo"><div class="tx-words" id="txWords"><span>逐</span><span>词</span><span>浮</span><span>现</span><span>更</span><span>节</span><span>奏</span></div></div><p style="font-size:13px;line-height:1.7;color:var(--ink-2);margin-bottom:12px">比逐字更克制，适合正文段落。实现上按空格切分成 span，每个 span 加递增延迟。比逐字的好处是阅读节奏更自然，不会让长段落显得拖沓。</p><div class="mo-code"><button class="mo-copy">复制</button><code>words.forEach((w, i) =&gt; w.style.animationDelay = i * 40 + &#x27;ms&#x27;);
+.word { opacity: 0; animation: rise .5s forwards; }</code></div></div><div class="mo-card"><h4>打字机</h4><div class="meta">4s · steps(18)</div><div class="mo-demo"><span class="mo-type">BUILD WITH MOTION</span></div><p style="font-size:13px;line-height:1.7;color:var(--ink-2);margin-bottom:12px">用 steps() 而不是 linear，才有逐字的机械感。光标用 border-right 闪烁。</p><div class="mo-code"><button class="mo-copy">复制</button><code>.type {
+  width: 0; overflow: hidden;
+  border-right: 2px solid #2b2b2b;
+  animation: type 4s steps(18) infinite;
+}</code></div></div><div class="mo-card"><h4>逐字浮现</h4><div class="meta">70ms 间隔</div><div class="mo-demo"><span class="mo-txt mo-chars"><span>动</span><span>效</span><span>即</span><span>语</span><span>言</span></span></div><p style="font-size:13px;line-height:1.7;color:var(--ink-2);margin-bottom:12px">每个字符单独延迟。间隔超过 100ms 会显得拖沓，低于 50ms 看不出层次。</p><div class="mo-code"><button class="mo-copy">复制</button><code>span:nth-child(n) {
+  animation-delay: calc(n * 70ms);
+}</code></div></div><div class="mo-card"><h4>文字扫光</h4><div class="meta">2.6s · linear</div><div class="mo-demo"><span class="mo-txt mo-shine">扫过的光</span></div><p style="font-size:13px;line-height:1.7;color:var(--ink-2);margin-bottom:12px">渐变裁切到文字上，再让渐变背景横向移动。别用 color 变化，那样不亮。</p><div class="mo-code"><button class="mo-copy">复制</button><code>.shine {
+  background: linear-gradient(100deg,
+    #2b2b2b 30%, #a8a8a8 48%, #2b2b2b 66%);
+  background-clip: text;
+  color: transparent;
+}</code></div></div><div class="mo-card"><h4>渐变文字流动</h4><div class="meta">5s · linear 循环</div><div class="mo-demo"><span class="mo-txt mo-flow">流动渐变</span></div><p style="font-size:13px;line-height:1.7;color:var(--ink-2);margin-bottom:12px">多彩渐变在文字上缓慢流淌。背景尺寸放到 300%，速度才够慢、不抢注意力。</p><div class="mo-code"><button class="mo-copy">复制</button><code>.flow {
+  background-size: 300% 100%;
+  background-clip: text;
+  animation: flow 5s linear infinite;
+}</code></div></div><div class="mo-card"><h4>遮罩揭示</h4><div class="meta">3.6s · 循环演示</div><div class="mo-demo"><span class="mo-txt mo-mask"><span>揭示</span></span></div><p style="font-size:13px;line-height:1.7;color:var(--ink-2);margin-bottom:12px">一块和背景同色的遮罩从右往左裁掉，文字就“长”出来了。比淡入更有仪式感。</p><div class="mo-code"><button class="mo-copy">复制</button><code>.mask::after {
+  transform-origin: right center;
+  animation: mask 3.6s infinite;
+}
+/* scaleX(1) → scaleX(0) */</code></div></div><div class="mo-card"><h4>荧光笔标记</h4><div class="meta">3.4s · 循环演示</div><div class="mo-demo"><span class="mo-txt"><span class="mo-mark">重点标出</span></span></div><p style="font-size:13px;line-height:1.7;color:var(--ink-2);margin-bottom:12px">一条半透明色块从左往右刷过文字下半部。z-index 要压到文字下面，不能盖住字。</p><div class="mo-code"><button class="mo-copy">复制</button><code>.mark::before {
+  height: 42%; bottom: 2px;
+  background: #ffe066;
+  z-index: -1;
+  transform: scaleX(0);
+}</code></div></div><div class="mo-card"><h4>数字翻转</h4><div class="meta">3s · 循环演示</div><div class="mo-demo"><div class="mo-odo"><i>1</i><i>2</i></div></div><p style="font-size:13px;line-height:1.7;color:var(--ink-2);margin-bottom:12px">上下两个数字叠在一起滚动，像里程表。金融和统计页面用它比淡入更有“变化感”。</p><div class="mo-code"><button class="mo-copy">复制</button><code>.odo { height: 46px; overflow: hidden; }
+.odo i {
+  animation: odo 3s infinite;
+}
+/* translateY 0 → -46px */</code></div></div><div class="mo-card"><h4>品牌加载器</h4><div class="meta">计数到 100 · 1.6s</div><div class="mo-demo"><div class="br-loader"><span class="num">100</span><div class="bar"><i></i></div><span class="cap">LOADING</span></div></div><p style="font-size:13px;line-height:1.7;color:var(--ink-2);margin-bottom:12px">游戏和创意工作室爱用的开场：数字从 0 跳到 100，跳到 100 时主视觉就位。计数器的跳跃应该不均匀——大部分时间停在 90 附近，最后一下突然跳满，才有临门一脚的感觉。这个动效同时完成了加载和品牌露出两件事。</p><div class="mo-code"><button class="mo-copy">复制</button><code>let v = 0;
+const tick = setInterval(() =&gt; {
+  v += Math.random() * 12;
+  if (v &gt;= 100) { v = 100; clearInterval(tick); reveal(); }
+  num.textContent = Math.floor(v);
+}, 60);</code></div></div><div class="mo-card"><h4>乐观更新</h4><div class="meta">即时反馈 · 后台回滚</div><div class="mo-demo"><div class="op-stage"><button class="op-btn"><span class="mark"></span><span>保存</span></button><span class="op-tip">点击试试，会随机成功或失败</span></div></div><p style="font-size:13px;line-height:1.7;color:var(--ink-2);margin-bottom:12px">点击后 UI 立刻变成成功状态，同时后台请求在跑；失败了再回滚并提示。这不是「动效」而是「状态设计」，但它决定用户觉得系统快不快。关键是给回滚留一个明显的视觉信号，否则用户会以为真的成功了。</p><div class="mo-code"><button class="mo-copy">复制</button><code>btn.classList.add(&#x27;is-done&#x27;);   // 立即反馈
+fetch(url).catch(() =&gt; {
+  btn.classList.remove(&#x27;is-done&#x27;);  // 失败回滚
+  toast(&#x27;操作失败，已撤销&#x27;);
+});</code></div></div><div class="mo-card"><h4>流式文本输出</h4><div class="meta">逐段追加 · 光标闪烁</div><div class="mo-demo"><div class="st-stream" id="stStream"><span id="stText"></span><span class="cursor"></span></div></div><p style="font-size:13px;line-height:1.7;color:var(--ink-2);margin-bottom:12px">AI 对话界面的标配：文字像被打印出来一样逐段出现，末尾一个闪烁光标。要点是这个「像打字」但其实不是逐字——是按 token 分块追加，每块间隔 30-50ms。末尾光标用 1s 周期的 opacity 闪烁就行。</p><div class="mo-code"><button class="mo-copy">复制</button><code>for await (const chunk of stream) {
+  text += chunk;
+  el.textContent = text;
+}
+.cursor { animation: blink 1s steps(2) infinite; }</code></div></div><div class="mo-card"><h4>骨架屏扫光</h4><div class="meta">1.6s · 循环</div><div class="mo-demo"><span class="mo-skeleton"></span></div><p style="font-size:13px;line-height:1.7;color:var(--ink-2);margin-bottom:12px">加载占位最通用的做法。光带用半透明白渐变，扫过的速度控制在 1.5–2 秒。</p><div class="mo-code"><button class="mo-copy">复制</button><code>::after {
+  background: linear-gradient(90deg,
+    transparent, #fff, transparent);
+  animation: shim 1.6s infinite;
+}</code></div></div><div class="mo-card"><h4>呼吸脉冲</h4><div class="meta">1.6s · ease-in-out</div><div class="mo-demo"><span class="mo-pulse"></span></div><p style="font-size:13px;line-height:1.7;color:var(--ink-2);margin-bottom:12px">透明度从 0.22 到 1 来回呼吸。常用于“正在录音”“实时在线”这类状态指示。</p><div class="mo-code"><button class="mo-copy">复制</button><code>@keyframes pulse {
+  0%,100% { opacity:.22; transform:scale(.82); }
+  50%     { opacity:1;   transform:scale(1); }
+}</code></div></div><div class="mo-card"><h4>旋转加载</h4><div class="meta">0.9s · linear</div><div class="mo-demo"><span class="mo-spinner"></span></div><p style="font-size:13px;line-height:1.7;color:var(--ink-2);margin-bottom:12px">三段灰一段黑的圆环旋转。0.9 秒一圈是体感最舒服的速度，太慢显得卡、太快显得急。</p><div class="mo-code"><button class="mo-copy">复制</button><code>.spin {
+  border: 3px solid #d4d4d4;
+  border-top-color: #2b2b2b;
+  border-radius: 50%;
+  animation: spin .9s linear infinite;
+}</code></div></div><div class="mo-card"><h4>环形进度</h4><div class="meta">3.4s · 循环演示</div><div class="mo-demo"><span class="mo-ring"></span></div><p style="font-size:13px;line-height:1.7;color:var(--ink-2);margin-bottom:12px">conic-gradient 做进度，中间挖一个圆形盖住。比 SVG stroke-dasharray 更好写。</p><div class="mo-code"><button class="mo-copy">复制</button><code>.ring {
+  background: conic-gradient(
+    #2b2b2b 0 72%, #d6d6d6 72% 100%);
+  border-radius: 50%;
+}
+.ring::after { /* 挖空中心 */ }</code></div></div><div class="mo-card"><h4>三点跳动</h4><div class="meta">1.3s · 160ms 间隔</div><div class="mo-demo"><span class="mo-dots"><i></i><i></i><i></i></span></div><p style="font-size:13px;line-height:1.7;color:var(--ink-2);margin-bottom:12px">聊天输入指示器。三个点依次上跳，延迟必须递增（0 / 160 / 320ms）。</p><div class="mo-code"><button class="mo-copy">复制</button><code>i:nth-child(n) {
+  animation-delay: calc((n - 1) * 160ms);
+}</code></div></div><div class="mo-card"><h4>点赞爆开</h4><div class="meta">2.6s · 循环演示</div><div class="mo-demo"><span class="mo-like"><span class="heart">♥</span><span class="burst"></span></span></div><p style="font-size:13px;line-height:1.7;color:var(--ink-2);margin-bottom:12px">心形先放大再回弹，同时外圈扩散一圈波纹。关键在“过冲”——放大到 1.35 再落回。</p><div class="mo-code"><button class="mo-copy">复制</button><code>0%   { transform: scale(1); }
+18%  { transform: scale(1.35); }
+32%  { transform: scale(.92); }
+46%  { transform: scale(1.08); }</code></div></div><div class="mo-card"><h4>卡片翻转</h4><div class="meta">550ms</div><div class="mo-demo"><div class="mo-flip"><div class="inner"><div class="face">正面</div><div class="face back">背面</div></div></div></div><p style="font-size:13px;line-height:1.7;color:var(--ink-2);margin-bottom:12px">父级加 perspective，内层 preserve-3d，背面先预旋转 180 度。少了任何一层都不成立。</p><div class="mo-code"><button class="mo-copy">复制</button><code>.wrap { perspective: 700px; }
+.inner {
+  transform-style: preserve-3d;
+  transition: transform .55s;
+}
+:hover .inner { transform: rotateY(180deg); }</code></div></div><div class="mo-card"><h4>展开折叠</h4><div class="meta">340ms</div><div class="mo-demo"><div class="mo-acc"><div class="hd"><span>点开看看</span><svg width="12" height="8" viewBox="0 0 12 8" fill="none"><path d="M1 1.5L6 6.5L11 1.5" stroke="currentColor" stroke-width="2" stroke-linecap="round"></path></svg></div><div class="bd"><div><p>高度用 grid-template-rows 过渡，不会跳。</p></div></div></div></div><p style="font-size:13px;line-height:1.7;color:var(--ink-2);margin-bottom:12px">用 grid-template-rows 从 0fr 到 1fr，比 max-height 更准——max-height 要么卡顿要么跳。</p><div class="mo-code"><button class="mo-copy">复制</button><code>.body {
+  display: grid;
+  grid-template-rows: 0fr;
+  transition: grid-template-rows .34s;
+}
+:hover .body { grid-template-rows: 1fr; }</code></div></div><div class="mo-card"><h4>弹窗缩放</h4><div class="meta">缩放 0.86 → 1 + 淡入</div><div class="mo-demo"><div class="mo-modal-stage"><div class="mo-modal">确认删除？</div></div></div><p style="font-size:13px;line-height:1.7;color:var(--ink-2);margin-bottom:12px">弹窗从 86% 放大到 100%，同时遮罩淡入。关掉时缩放不要到 0，留 0.94 更自然。</p><div class="mo-code"><button class="mo-copy">复制</button><code>0%  { opacity:0; transform: scale(.86) translateY(10px); }
+18% { opacity:1; transform: scale(1) translateY(0); }</code></div></div><div class="mo-card"><h4>抽屉滑入</h4><div class="meta">380ms</div><div class="mo-demo"><div class="mo-drawer-stage"><div class="mo-drawer">筛选</div></div></div><p style="font-size:13px;line-height:1.7;color:var(--ink-2);margin-bottom:12px">从右侧 112% 滑入（超过 100% 是为了完全藏住阴影）。关闭时必须滑回原处。</p><div class="mo-code"><button class="mo-copy">复制</button><code>0%, 8%   { transform: translateX(112%); }
+28%, 78% { transform: translateX(0); }</code></div></div><div class="mo-card"><h4>页面淡入</h4><div class="meta">320ms</div><div class="mo-demo"><div class="mo-page">新页面</div></div><p style="font-size:13px;line-height:1.7;color:var(--ink-2);margin-bottom:12px">新页面淡入 + 轻微上移 10px。位移不要超过 16px，否则像在滑动而不像切换。</p><div class="mo-code"><button class="mo-copy">复制</button><code>@keyframes page {
+  from { opacity:0; transform:translateY(10px); }
+  to   { opacity:1; transform:translateY(0); }
+}</code></div></div><div class="mo-card"><h4>列表级联</h4><div class="meta">100ms 间隔</div><div class="mo-demo"><div class="mo-stagger"><i></i><i></i><i></i><i></i></div></div><p style="font-size:13px;line-height:1.7;color:var(--ink-2);margin-bottom:12px">列表项依次从左滑入。每项延迟 100ms 是上限，十项就是 1 秒，再多就该分组了。</p><div class="mo-code"><button class="mo-copy">复制</button><code>i:nth-child(n) {
+  animation-delay: calc((n - 1) * 100ms);
+}</code></div></div><div class="mo-card"><h4>漂浮</h4><div class="meta">3.4s · ease-in-out</div><div class="mo-demo"><div class="mo-box mo-float">✦</div></div><p style="font-size:13px;line-height:1.7;color:var(--ink-2);margin-bottom:12px">上下浮动 11px 的常驻动画。用于装饰元素，别用在正文上——长时间看会分心。</p><div class="mo-code"><button class="mo-copy">复制</button><code>@keyframes float {
+  0%,100% { transform: translateY(0); }
+  50%     { transform: translateY(-11px); }
+}</code></div></div><div class="mo-card"><h4>光斑漂移</h4><div class="meta">7s / 9s · 双色异步</div><div class="mo-demo"><div class="mo-blob"></div></div><p style="font-size:13px;line-height:1.7;color:var(--ink-2);margin-bottom:12px">两个模糊圆形各自漂移，速度要不同（7s 和 9s），同步的话会看出明显的机械感。</p><div class="mo-code"><button class="mo-copy">复制</button><code>.blob::before { animation: a 7s infinite; }
+.blob::after  { animation: b 9s infinite; }
+/* 两者 transform 方向相反 */</code></div></div><div class="mo-card"><h4>噪点浮动</h4><div class="meta">1.1s · steps(3)</div><div class="mo-demo"><div class="mo-grain"></div></div><p style="font-size:13px;line-height:1.7;color:var(--ink-2);margin-bottom:12px">feTurbulence 生成噪点，用 steps 跳帧而不是平滑移动，才有胶片颗粒的断续感。</p><div class="mo-code"><button class="mo-copy">复制</button><code>background-image: url(
+  &quot;data:image/svg+xml,...feTurbulence...&quot;);
+opacity: .22;
+animation: grain 1.1s steps(3) infinite;</code></div></div><div class="mo-card"><h4>光标跟随光</h4><div class="meta">跟随鼠标</div><div class="mo-demo"><div class="mo-cursor-stage"><span class="mo-cursor-light"></span><button class="mo-btn">移动鼠标</button></div></div><p style="font-size:13px;line-height:1.7;color:var(--ink-2);margin-bottom:12px">一团径向光跟着鼠标在区域内移动。必须 pointer-events: none，否则会挡住点击。</p><div class="mo-code"><button class="mo-copy">复制</button><code>light.style.left = e.clientX - r.left + &#x27;px&#x27;;
+light.style.top  = e.clientY - r.top  + &#x27;px&#x27;;</code></div></div><div class="mo-card"><h4>条纹流动</h4><div class="meta">1.6s · linear</div><div class="mo-demo"><div class="mo-stripe"></div></div><p style="font-size:13px;line-height:1.7;color:var(--ink-2);margin-bottom:12px">斜条纹背景缓慢平移。进度条、占位块、警示条都能用，比单色更有“进行中”的感觉。</p><div class="mo-code"><button class="mo-copy">复制</button><code>background: repeating-linear-gradient(
+  115deg, #d8d8d8 0 14px, #e8e8e8 14px 28px);
+animation: stripe 1.6s linear infinite;</code></div></div><div class="mo-card"><h4>极光流动</h4><div class="meta">9s · linear 旋转</div><div class="mo-demo"><div class="mo-aurora"></div></div><p style="font-size:13px;line-height:1.7;color:var(--ink-2);margin-bottom:12px">conic-gradient 旋转 + 大半径模糊。放在深色背景上，比静态渐变活一倍。</p><div class="mo-code"><button class="mo-copy">复制</button><code>.aurora::before {
+  background: conic-gradient(...);
+  filter: blur(34px);
+  animation: spin 9s linear infinite;
+}</code></div></div><div class="mo-card"><h4>呼吸缩放</h4><div class="meta">3.2s · ease-in-out</div><div class="mo-demo"><div class="mo-box mo-breathe">◎</div></div><p style="font-size:13px;line-height:1.7;color:var(--ink-2);margin-bottom:12px">元素整体放大到 1.06 再回弹，阴影同步加深。适合强调“当前选中”的卡片。</p><div class="mo-code"><button class="mo-copy">复制</button><code>@keyframes breathe {
+  0%,100% { transform: scale(1); }
+  50%     { transform: scale(1.06); }
+}</code></div></div><div class="mo-card"><h4>原生滚动驱动 · 入场</h4><div class="meta">跟随滚动 · 零 JS</div><div class="mo-demo"><div class="nc-view"><div class="inner">滚动进入视口时淡入</div></div></div><p style="font-size:13px;line-height:1.7;color:var(--ink-2);margin-bottom:12px">2026 年最该掌握的 CSS 新能力。用 animation-timeline: view() 把动画绑到元素进入视口的进度上，完全不写一行 JavaScript，浏览器在合成线程跑，不占主线程。关键前提：必须用 @supports 包起来，否则 Safari 17 和旧版 Firefox 上内容会永远不可见。</p><div class="mo-code"><button class="mo-copy">复制</button><code>.card {
+  opacity: 1;              /* 先保证默认可见 */
+}
+@supports (animation-timeline: view()) {
+  .card {
+    animation: fade-up linear both;
+    animation-timeline: view();
+    animation-range: entry 0% entry 40%;
+  }
+}
+@keyframes fade-up {
+  from { opacity: 0; transform: translateY(40px); }
+}</code></div></div><div class="mo-card"><h4>命名滚动时间轴</h4><div class="meta">跟随滚动 · 可共享</div><div class="mo-demo"><div class="nc-named"><div class="scroller"><div class="panel">第一屏</div><div class="panel">第二屏</div><div class="panel">第三屏</div></div><div class="track"><i></i></div></div></div><p style="font-size:13px;line-height:1.7;color:var(--ink-2);margin-bottom:12px">scroll-timeline-name 给一个滚动容器命名，别的元素用 scroll-timeline: --名字 就能挂上去。一条时间轴可以驱动多个元素，做出「一滚俱动」的联动效果，不需要 JS 事件。这是 scroll() 和 view() 之外的第三种用法，专治多元素同步。</p><div class="mo-code"><button class="mo-copy">复制</button><code>.scroller {
+  scroll-timeline-name: --page;
+  overflow-y: scroll;
+}
+.progress {
+  animation: grow linear;
+  animation-timeline: --page;
+}
+.bar {
+  animation: slide linear;
+  animation-timeline: --page;
+}
+@keyframes grow { to { transform: scaleY(1); } }
+@keyframes slide { to { translate: 0 -100px; } }</code></div></div><div class="mo-card"><h4>视图过渡</h4><div class="meta">由浏览器接管 · 自动分配</div><div class="mo-demo"><div class="nc-vt"><div class="thumb"></div></div></div><p style="font-size:13px;line-height:1.7;color:var(--ink-2);margin-bottom:12px">同源页面导航时，浏览器自动为新旧页面生成过渡动画，DOM 相同位置会自动配对做形变。比手写共享元素过渡简单得多——给元素加 view-transition-name 即可。Chrome/Edge 支持完整，Safari 部分支持。</p><div class="mo-code"><button class="mo-copy">复制</button><code>@view-transition {
+  navigation: auto;
+}
+.card {
+  view-transition-name: card-1;  /* 相同名字自动配对 */
+}
+::view-transition-old(card-1) { animation: fade-out .2s; }
+::view-transition-new(card-1) { animation: fade-in .3s; }</code></div></div><div class="mo-card"><h4>可插值自定义属性</h4><div class="meta">由 CSS 变量驱动</div><div class="mo-demo"><div class="nc-prop"></div></div><p style="font-size:13px;line-height:1.7;color:var(--ink-2);margin-bottom:12px">CSS 变量以前不能做动画，因为浏览器不知道它是数字还是颜色。用 @property 注册后，它就变成了真正的可动画类型。注册 --angle 为 &lt;angle&gt; 就能做旋转，比 transform 多一层控制。这是 2023 年就落地但仍然少人用的能力。</p><div class="mo-code"><button class="mo-copy">复制</button><code>@property --angle {
+  syntax: &#x27;&lt;angle&gt;&#x27;;
+  initial-value: 0deg;
+  inherits: false;
+}
+.ring {
+  --angle: 0deg;
+  transition: --angle .4s;
+}
+.ring:hover { --angle: 360deg; }</code></div></div><div class="mo-card"><h4>容器查询驱动</h4><div class="meta">跟随容器宽度 · 非视口</div><div class="mo-demo"><div class="nc-cq"><div class="box"><div class="cell">A</div><div class="cell">B</div></div></div></div><p style="font-size:13px;line-height:1.7;color:var(--ink-2);margin-bottom:12px">动画的触发条件不是视口宽度，而是组件自己所在容器的宽度。这解决了「同一组件在侧栏和主区要表现不同」的长期难题。用 @container 配合 transition，组件真正做到自适应。</p><div class="mo-code"><button class="mo-copy">复制</button><code>.wrap { container-type: inline-size; }
+.card {
+  transition: grid-template-columns .3s;
+}
+@container (min-width: 480px) {
+  .card { grid-template-columns: 1fr 1fr; }
+}</code></div></div><div class="mo-card"><h4>可逆过渡</h4><div class="meta">允许反向回放</div><div class="mo-demo"><div class="nc-disc"><div class="panel">点击消失</div></div></div><p style="font-size:13px;line-height:1.7;color:var(--ink-2);margin-bottom:12px">默认的过渡在被打断时会直接跳到终点，视觉上像卡了一下。allow-discrete 配合 transition-behavior: allow-discrete，可以让 display 和 overlay 这类离散属性也能过渡，还能在移除元素时播完离场动画再真正移除。</p><div class="mo-code"><button class="mo-copy">复制</button><code>.panel {
+  transition: opacity .3s, transform .3s,
+              display .3s allow-discrete;
+}
+.panel[hidden] {
+  opacity: 0; transform: scale(.9);
+  display: none;
+}</code></div></div><div class="mo-card"><h4>锚点定位</h4><div class="meta">跟随触发元素</div><div class="mo-demo"><div class="nc-anchor"><span class="tip">锚定的提示</span><button class="trigger">锚点</button></div></div><p style="font-size:13px;line-height:1.7;color:var(--ink-2);margin-bottom:12px">以前 tooltip 要用 JS 算坐标，现在一行 CSS 就能自动跟随锚���。position-anchor 声明锚点，position-area 指定相对锚点的哪个方位。这是 2024 年底才广泛落地的能力，目前用的人还很少。</p><div class="mo-code"><button class="mo-copy">复制</button><code>.trigger { anchor-name: --btn; }
+.tooltip {
+  position-anchor: --btn;
+  position-area: top center;
+  position-try-fallbacks: flip-block;
+}</code></div></div><div class="mo-card"><h4>色彩混合过渡</h4><div class="meta">浏览器实时计算</div><div class="mo-demo"><div class="nc-mix"></div></div><p style="font-size:13px;line-height:1.7;color:var(--ink-2);margin-bottom:12px">color-mix() 让两个颜色按比例混合，百分比可以参与过渡动画。做「主题色随状态渐变」这类效果时，不需要准备中间色值，浏览器自己算。配合相对颜色语法还能直接基于当前色做明暗调整。</p><div class="mo-code"><button class="mo-copy">复制</button><code>.btn {
+  background: color-mix(in oklab, var(--brand) 100%, transparent);
+  transition: background .3s;
+}
+.btn:hover {
+  background: color-mix(in oklab, var(--brand) 70%, white);
+}</code></div></div><div class="mo-card"><h4>CSS 三维卡片</h4><div class="meta">跟随鼠标 · 需 perspective</div><div class="mo-demo"><div class="td-card-stage"><div class="td-card"><div class="face">3D</div><div class="face back">翻转</div></div></div></div><p style="font-size:13px;line-height:1.7;color:var(--ink-2);margin-bottom:12px">给父容器加 perspective，内部的 transform 才有纵深。卡片随鼠标位置做 rotateX / rotateY，倾斜角度必须克制——超过 12 度就会晕。文字层要单独加 translateZ，否则文字不会跟着浮起来，看起来像贴图。</p><div class="mo-code"><button class="mo-copy">复制</button><code>.scene { perspective: 900px; }
+.card {
+  transform: rotateX(var(--ry)) rotateY(var(--rx));
+  transform-style: preserve-3d;
+  transition: transform .3s ease-out;
+}
+.card__title { transform: translateZ(40px); }</code></div></div><div class="mo-card"><h4>立方体旋转</h4><div class="meta">自动旋转 · 360°</div><div class="mo-demo"><div class="td-cube-stage"><div class="td-cube"><span></span><span></span><span></span><span></span><span></span><span></span></div></div></div><p style="font-size:13px;line-height:1.7;color:var(--ink-2);margin-bottom:12px">六个面拼成立方体，靠 transform-style: preserve-3d 保持 3D 上下文。注意顺序：先 rotateX 再 rotateY，外层先转。每个面位移用 translateZ(50px)，因为立方体边长是 100px，半边就是 50px。</p><div class="mo-code"><button class="mo-copy">复制</button><code>.cube {
+  transform-style: preserve-3d;
+  animation: spin 12s linear infinite;
+}
+.cube span {
+  position: absolute;
+  transform: translateZ(50px);
+}
+@keyframes spin {
+  from { transform: rotateX(0) rotateY(0); }
+  to   { transform: rotateX(360deg) rotateY(360deg); }
+}</code></div></div><div class="mo-card"><h4>翻转卡片</h4><div class="meta">600ms · 绕 Y 轴</div><div class="mo-demo"><div class="td-card-stage"><div class="td-card"><div class="face">正面</div><div class="face back">背面</div></div></div></div><p style="font-size:13px;line-height:1.7;color:var(--ink-2);margin-bottom:12px">正面背面用 backface-visibility: hidden 各自隔开，背面要额外 rotateY(180deg) 才能正对读者。经典坑：不给 backface-visibility 时，两面会同时显示变成重影。</p><div class="mo-code"><button class="mo-copy">复制</button><code>.card { transform-style: preserve-3d; transition: transform .6s; }
+.card.is-flipped { transform: rotateY(180deg); }
+.face { backface-visibility: hidden; }
+.face--back { transform: rotateY(180deg); }</code></div></div><div class="mo-card"><h4>景深层次</h4><div class="meta">跟随滚动 · 分层位移</div><div class="mo-demo"><div class="td-depth-stage"><div class="layer"><i></i></div><div class="layer"><i></i></div><div class="layer"><i></i></div></div></div><p style="font-size:13px;line-height:1.7;color:var(--ink-2);margin-bottom:12px">给每一层不同的 translateZ，滚动时按深度差移动速度不同，就有了空间感。关键：perspective 要设在滚动容器的父级上，且 perspective-origin 可以调成鼠标位置，让「视点」跟着用户走。</p><div class="mo-code"><button class="mo-copy">复制</button><code>.stage { perspective: 1200px; perspective-origin: var(--px) var(--py); }
+.layer { transform: translateZ(calc(var(--i) * 60px)); }
+// 滚动时 .layer 的 translateY 按 --i 分倍率</code></div></div><div class="mo-card"><h4>3D 倾斜卡片</h4><div class="meta">跟随鼠标 · 阻尼跟随</div><div class="mo-demo"><div class="td-tilt-stage"><div class="td-tilt"><span class="bar"></span></div></div></div><p style="font-size:13px;line-height:1.7;color:var(--ink-2);margin-bottom:12px">比完全跟随多一层阻尼：目标角度和实际角度之间用 lerp 插值。直接跟手会显得机械，加 0.08 的系数后有惯性质感。移动端没有鼠标，就退回触摸事件或直接不启用。</p><div class="mo-code"><button class="mo-copy">复制</button><code>const target = { x: 0, y: 0 };
+const current = { x: 0, y: 0 };
+function loop() {
+  current.x += (target.x - current.x) * 0.08;
+  current.y += (target.y - current.y) * 0.08;
+  card.style.transform = `rotateY(${current.x}deg) rotateX(${current.y}deg)`;
+  requestAnimationFrame(loop);
+}</code></div></div><div class="mo-card"><h4>等距立方</h4><div class="meta">静态 · 伪 3D</div><div class="mo-demo"><div class="td-iso"><div class="grid"><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i></div></div></div><p style="font-size:13px;line-height:1.7;color:var(--ink-2);margin-bottom:12px">不用真 3D，只用 transform: rotateX(60deg) rotateZ(45deg) 做一个等距网格，再给每个方块加 rotateZ(-45deg) 转正。纯 CSS 的伪 3D，比真 WebGL 便宜得多，适合做抽象背景。</p><div class="mo-code"><button class="mo-copy">复制</button><code>.iso {
+  transform: rotateX(60deg) rotateZ(45deg);
+  transform-style: preserve-3d;
+}
+.cell {
+  transform: translateZ(20px);
+  animation: rise .6s backwards;
+}
+@keyframes rise { from { transform: translateZ(0); } }</code></div></div><div class="mo-card"><h4>玻璃折射</h4><div class="meta">跟随光�� · 边缘高光</div><div class="mo-demo"><div class="td-glass-stage"><div class="td-glass">玻璃</div></div></div><p style="font-size:13px;line-height:1.7;color:var(--ink-2);margin-bottom:12px">玻璃拟态的高级版：在元素边缘放一圈高光，位置随鼠标偏移。靠两个伪元素做边缘亮带和暗带，比单纯 blur 真实得多。代价是性能——模糊层太多会掉帧，移动端要减层。</p><div class="mo-code"><button class="mo-copy">复制</button><code>.glass {
+  backdrop-filter: blur(20px) saturate(180%);
+  position: relative;
+}
+.glass::before {
+  content: &#x27;&#x27;;
+  position: absolute; inset: 1px;
+  border-radius: inherit;
+  background: linear-gradient(var(--angle),
+    rgba(255,255,255,.6), transparent 40%);
+  mask: linear-gradient(#000 0 0) content-box, linear-gradient(#000 0 0);
+  mask-composite: exclude;
+  padding: 1px;
+}</code></div></div><div class="mo-card"><h4>透视位移</h4><div class="meta">元素穿过视平��</div><div class="mo-demo"><div class="td-fly-stage"><div class="td-fly">飞近</div></div></div><p style="font-size:13px;line-height:1.7;color:var(--ink-2);margin-bottom:12px">让元素从远处飞向观众再飞走，是「空间感」最省力的一种。用 translateZ 从 -800px 到 0 再到 200px，配合 opacity 制造穿过的感觉。translateZ 的值直接决定透视强度，比用 scale 更有空间感。</p><div class="mo-code"><button class="mo-copy">复制</button><code>.flyer {
+  animation: fly 2.4s ease-in-out infinite;
+}
+@keyframes fly {
+  0%   { transform: translateZ(-800px); opacity: 0; }
+  40%  { transform: translateZ(0); opacity: 1; }
+  100% { transform: translateZ(200px); opacity: 0; }
+}</code></div></div><div class="mo-card"><h4>路径描边生长</h4><div class="meta">stroke-dashoffset · 1.2s</div><div class="mo-demo"><div class="sv-stage"><svg width="96" height="96" viewBox="0 0 96 96" class="sv-draw"><path d="M14 74 L34 30 L48 56 L64 22 L84 74"></path></svg></div></div><p style="font-size:13px;line-height:1.7;color:var(--ink-2);margin-bottom:12px">SVG 最经典的动画。stroke-dasharray 设成路径长度，dashoffset 从长度移到 0，线条就「画」出来了。关键技巧：pathLength=&quot;1&quot; 可以把归一化，dasharray 写成 1，不用测真实路径长度，字形图标也能通用。</p><div class="mo-code"><button class="mo-copy">复制</button><code>.icon path {
+  pathLength: 1;
+  stroke-dasharray: 1;
+  stroke-dashoffset: 1;
+  animation: draw 1.2s ease forwards;
+}
+@keyframes draw { to { stroke-dashoffset: 0; } }</code></div></div><div class="mo-card"><h4>手写签名</h4><div class="meta">逐段描出 · 2s</div><div class="mo-demo"><div class="sv-stage"><svg width="130" height="64" viewBox="0 0 130 64" class="sv-sig"><path d="M8 46 C 22 14, 34 14, 30 42 C 28 56, 44 54, 52 36"></path><path d="M58 40 C 68 20, 80 20, 76 40 C 74 50, 88 48, 96 32"></path><path d="M14 54 C 40 60, 90 58, 118 50"></path></svg></div></div><p style="font-size:13px;line-height:1.7;color:var(--ink-2);margin-bottom:12px">手写体签名是最能体现「画出来」这四个字的应用。做法是把签名拆成多条 path，按顺序延迟启动，每条线用 dashoffset 画出。要给每条 path 加 animation-delay，间隔大约 180ms，手写才有节奏。</p><div class="mo-code"><button class="mo-copy">复制</button><code>.sig path {
+  stroke-dasharray: 1;
+  stroke-dashoffset: 1;
+  animation: draw .8s ease forwards;
+}
+.sig path:nth-child(2) { animation-delay: .18s; }
+.sig path:nth-child(3) { animation-delay: .36s; }</code></div></div><div class="mo-card"><h4>路径形变</h4><div class="meta">d 属性插值 · 600ms</div><div class="mo-demo"><div class="sv-stage sv-morph"><svg width="90" height="90" viewBox="0 0 100 100"><path d="M0 0 L100 0 L100 100 L0 100 Z"></path></svg></div></div><p style="font-size:13px;line-height:1.7;color:var(--ink-2);margin-bottom:12px">两个 path 之间做形变，前提是两者命令数量和类型完全一致——M 对 M、L 对 L。多一个点就形变失败。点数不同时要先在设计工具里补齐控制点。Easing 用 ease-in-out 双向最自然。</p><div class="mo-code"><button class="mo-copy">复制</button><code>.shape path {
+  d: path(&#x27;M0 0 L100 0 L100 100 L0 100 Z&#x27;);
+  transition: d .6s ease-in-out;
+}
+.shape:hover path {
+  d: path(&#x27;M50 0 L100 50 L50 100 L0 50 Z&#x27;);
+}</code></div></div><div class="mo-card"><h4>SVG 逐字浮现</h4><div class="meta">逐字 · 60ms 间隔</div><div class="mo-demo"><div class="sv-stage"><svg width="180" height="44" viewBox="0 0 180 44" class="sv-glyphs"><text x="6" y="32">动</text><text x="52" y="32">效</text><text x="98" y="32">绘</text><text x="144" y="32">制</text></svg></div></div><p style="font-size:13px;line-height:1.7;color:var(--ink-2);margin-bottom:12px">比 HTML 逐字效果好在两点：可以做任意路径排版（沿弧线、沿波浪），并且每个字是独立矢量可以单独变形。实现方式是把文字转成 path，再给每个 path 加延迟动画。</p><div class="mo-code"><button class="mo-copy">复制</button><code>.glyph {
+  opacity: 0;
+  animation: rise .5s ease forwards;
+}
+.glyph:nth-child(1) { animation-delay: 0s; }
+.glyph:nth-child(2) { animation-delay: .06s; }
+@keyframes rise {
+  from { opacity: 0; transform: translateY(20px); }
+}</code></div></div><div class="mo-card"><h4>裁切揭示</h4><div class="meta">clip-path · 700ms</div><div class="mo-demo"><div class="sv-clip-stage"><div class="sv-clip">揭示</div></div></div><p style="font-size:13px;line-height:1.7;color:var(--ink-2);margin-bottom:12px">用 clip-path 的 inset 值做揭示，比 width/height 动画性能好得多——它不触发布局。对比：用 width 动画会每帧重新布局，用 clip-path 只在合成层跑。数值上写成百分比最稳。</p><div class="mo-code"><button class="mo-copy">复制</button><code>.reveal {
+  clip-path: inset(0 100% 0 0);
+  transition: clip-path .7s cubic-bezier(.16,1,.3,1);
+}
+.reveal.in { clip-path: inset(0 0 0 0); }</code></div></div><div class="mo-card"><h4>渐变描边流动</h4><div class="meta">1.8s 循环</div><div class="mo-demo"><div class="sv-stage"><svg width="130" height="80" viewBox="0 0 130 80" class="sv-grad"><defs><linearGradient id="svFlowGrad" x1="0" y1="0" x2="1" y2="0"><stop offset="0%" stop-color="#6b7bff"></stop><stop offset="100%" stop-color="#16d9c4"></stop></linearGradient></defs><path d="M8 62 C 30 10, 52 74, 72 34 C 88 8, 108 60, 122 20"></path></svg></div></div><p style="font-size:13px;line-height:1.7;color:var(--ink-2);margin-bottom:12px">给 stroke 挂一个 linearGradient，然后动 gradientTransform 或者用 animate 改 stop 的 offset。渐变本身不动、只有描边在动会显得假——要么让渐变跟着线条走，要么两者都动。</p><div class="mo-code"><button class="mo-copy">复制</button><code>.stroke {
+  stroke: url(#flow);
+  stroke-width: 3;
+}
+#flow stop {
+  animation: shift 1.8s linear infinite;
+}
+@keyframes shift {
+  0% { stop-color: #6b7bff; }
+  50% { stop-color: #16d9c4; }
+  100% { stop-color: #6b7bff; }
+}</code></div></div><div class="mo-card"><h4>加载中的图标绘制</h4><div class="meta">循环 · 描边生长</div><div class="mo-demo"><div class="sv-stage"><svg width="72" height="72" viewBox="0 0 72 72" class="sv-loader"><path d="M36 8 L60 22 L60 50 L36 64 L12 50 L12 22 Z"></path></svg></div></div><p style="font-size:13px;line-height:1.7;color:var(--ink-2);margin-bottom:12px">加载态最有说服力的做法不是转圈，而是一个图标在反复「画自己」——用户知道内容正在成形。实现是 dashoffset 循环，配合 pathLength 归一化，任何图标都能用。</p><div class="mo-code"><button class="mo-copy">复制</button><code>.loader path {
+  pathLength: 1;
+  stroke-dasharray: 1;
+  stroke-dashoffset: 1;
+  animation: draw 1.5s ease-in-out infinite;
+}
+@keyframes draw {
+  0% { stroke-dashoffset: 1; }
+  50% { stroke-dashoffset: 0; }
+  100% { stroke-dashoffset: -1; }
+}</code></div></div><div class="mo-card"><h4>SVG 液态变形</h4><div class="meta">多边形变形 · 8s 循环</div><div class="mo-demo"><div class="sv-stage"><svg width="110" height="110" viewBox="0 0 110 110" class="sv-blob"><path><animate attributeName="d" dur="7s" repeatCount="indefinite" values="M55,10 L95,32 L88,75 L45,98 L14,62 L22,26 Z;   M55,18 L92,52 L72,95 L30,90 L12,45 L40,12 Z"></animate></path></svg></div></div><p style="font-size:13px;line-height:1.7;color:var(--ink-2);margin-bottom:12px">用 SMIL 的 animate 元素做多边形变形，浏览器原生支持，不用 JS。关键是对应点数量一致，且围绕中心分布。SVG 路径的平滑是自动的，节点少一点反而更流畅。</p><div class="mo-code"><button class="mo-copy">复制</button><code>&lt;path&gt;
+  &lt;animate attributeName=&quot;d&quot;
+    dur=&quot;8s&quot; repeatCount=&quot;indefinite&quot;
+    values=&quot;M0,0 L10,0 L10,10 L0,10 Z;
+            M5,0 L15,5 L5,15 L-5,5 Z&quot; /&gt;
+&lt;/path&gt;</code></div></div><div class="mo-card"><h4>图表生长</h4><div class="meta">柱状依次升起 · 800ms</div><div class="mo-demo"><div class="dv-stage"><div class="dv-bar"></div><div class="dv-bar"></div><div class="dv-bar"></div><div class="dv-bar"></div><div class="dv-bar"></div></div></div><p style="font-size:13px;line-height:1.7;color:var(--ink-2);margin-bottom:12px">图表入场最忌讳所有柱子同时长出来，观众来不及看清每根柱子的高度。用 animation-delay 按索引递增错开，间隔 60-80ms，十几根柱子也就一秒出头。注意 transform-origin 必须在底部。</p><div class="mo-code"><button class="mo-copy">复制</button><code>.bar {
+  transform-origin: bottom;
+  animation: grow .8s cubic-bezier(.16,1,.3,1) backwards;
+}
+.bar:nth-child(2) { animation-delay: .07s; }
+.bar:nth-child(3) { animation-delay: .14s; }
+@keyframes grow { from { transform: scaleY(0); } }</code></div></div><div class="mo-card"><h4>折线绘制</h4><div class="meta">1.6s · 逐点展开</div><div class="mo-demo"><div class="dv-line-stage"><svg width="150" height="90" viewBox="0 0 150 90" class="dv-line"><path d="M8 74 L36 50 L62 60 L88 26 L116 38 L142 12"></path><circle cx="142" cy="12" r="5"></circle></svg></div></div><p style="font-size:13px;line-height:1.7;color:var(--ink-2);margin-bottom:12px">折线图最有仪式感的入场：一笔画出来。用 stroke-dashoffset 配合 pathLength=&quot;1&quot;，再在末端放一个圆点跟着线头移动。线画完后圆点弹一下，数据点就自然出现了。</p><div class="mo-code"><button class="mo-copy">复制</button><code>.line {
+  pathLength: 1;
+  stroke-dasharray: 1;
+  stroke-dashoffset: 1;
+  animation: draw 1.6s ease-out forwards;
+}
+@keyframes draw { to { stroke-dashoffset: 0; } }</code></div></div><div class="mo-card"><h4>数字缓动</h4><div class="meta">1.2s · easeOutExpo</div><div class="mo-demo"><span class="dv-num">12,480</span></div><p style="font-size:13px;line-height:1.7;color:var(--ink-2);margin-bottom:12px">数字滚动别用线性插值——线性到一半速度不变，感觉像在跳表。要用 easeOutExpo 这类指数缓动，开头快、末尾慢，才有「停下来」的重量感。同时记得用 toLocaleString 加千分位。</p><div class="mo-code"><button class="mo-copy">复制</button><code>const ease = t =&gt; t === 1 ? 1 : 1 - Math.pow(2, -10 * t);
+let v = 0;
+const step = () =&gt; {
+  v = Math.round(target * ease(v / target));
+  el.textContent = v.toLocaleString();
+  if (v &lt; target) requestAnimationFrame(step);
+};</code></div></div><div class="mo-card"><h4>环形进度填充</h4><div class="meta">跟随滚动 · stroke-dashoffset</div><div class="mo-demo"><div class="dv-ring-stage"><svg width="74" height="74" viewBox="0 0 74 74" class="dv-ring"><circle class="bg" cx="37" cy="37" r="32"></circle><circle class="fg" cx="37" cy="37" r="32"></circle></svg></div></div><p style="font-size:13px;line-height:1.7;color:var(--ink-2);margin-bottom:12px">环形进度用 stroke-dasharray 的「剩余段」控制，dashoffset=0 是满圈。把 dasharray 写成 circumference，offset 从 circumference 减到 0 就画满了。做成跟随滚动的版本体验更好——用户滚到哪，进度走到哪。</p><div class="mo-code"><button class="mo-copy">复制</button><code>.ring {
+  stroke-dasharray: 301.6;
+  stroke-dashoffset: 301.6;
+  transition: stroke-dashoffset 1.2s ease-out;
+}
+.ring.in { stroke-dashoffset: 75; } /* 25% */</code></div></div><div class="mo-card"><h4>里程表滚动</h4><div class="meta">每位数字独立滚动</div><div class="mo-demo"><div class="dv-odo"><div class="d"><span><i>0</i><i>1</i><i>2</i><i>3</i><i>4</i><i>5</i><i>6</i><i>7</i><i>8</i><i>9</i></span></div><div class="d"><span><i>0</i><i>1</i><i>2</i><i>3</i><i>4</i><i>5</i><i>6</i><i>7</i><i>8</i><i>9</i></span></div><div class="d"><span><i>0</i><i>1</i><i>2</i><i>3</i><i>4</i><i>5</i><i>6</i><i>7</i><i>8</i><i>9</i></span></div><div class="d"><span><i>0</i><i>1</i><i>2</i><i>3</i><i>4</i><i>5</i><i>6</i><i>7</i><i>8</i><i>9</i></span></div></div></div><p style="font-size:13px;line-height:1.7;color:var(--ink-2);margin-bottom:12px">财务、仪表盘这类场景常用。每个数位是一列竖排的数字，转成 translateY(-N × 位高) 落到目标值。比整体数字 tween 更像真实仪表，而且每一位可以不同速度、错开启动。</p><div class="mo-code"><button class="mo-copy">复制</button><code>.digit {
+  display: inline-block;
+  overflow: hidden;
+  height: 1em;
+}
+.digit span {
+  display: block;
+  transition: transform .9s cubic-bezier(.16,1,.3,1);
+}</code></div></div><div class="mo-card"><h4>数据条竞速</h4><div class="meta">宽度过渡 · 依次增长</div><div class="mo-demo"><div class="dv-race"><div class="r"><span>A</span><div class="bar"><i></i></div></div><div class="r"><span>B</span><div class="bar"><i></i></div></div><div class="r"><span>C</span><div class="bar"><i></i></div></div></div></div><p style="font-size:13px;line-height:1.7;color:var(--ink-2);margin-bottom:12px">横向条形图的动态版本，宽度过渡用 transition 而不是 keyframes，这样数据更新时会平滑过渡而不是重新播放动画。做排行榜实时刷新时这一点很关键——否则每次刷新整张图都在闪。</p><div class="mo-code"><button class="mo-copy">复制</button><code>.row {
+  transition: width 1s cubic-bezier(.16,1,.3,1);
+}
+/* 数据更新时只改 width，不重播 keyframes */</code></div></div><div class="mo-card"><h4>迷你趋势线</h4><div class="meta">入场绘制 · 900ms</div><div class="mo-demo"><div class="dv-spark-stage"><svg width="120" height="52" viewBox="0 0 120 52" class="dv-spark"><path d="M4 40 L22 26 L38 32 L56 14 L74 22 L92 10 L116 18"></path><circle cx="116" cy="18" r="4"></circle></svg></div></div><p style="font-size:13px;line-height:1.7;color:var(--ink-2);margin-bottom:12px">表格里的迷你趋势图，宽度只有 80px 左右，不能加复杂动效。路径绘制 + 末尾圆点就够。数据点超过 20 个时直接用 polyline 而不是平滑曲线，否则会失真。</p><div class="mo-code"><button class="mo-copy">复制</button><code>.spark {
+  pathLength: 1;
+  stroke-dasharray: 1;
+  animation: draw .9s ease-out;
+}
+.spark circle { animation: pop .3s ease .9s backwards; }</code></div></div><div class="mo-card"><h4>热力格点亮</h4><div class="meta">按数值排序错开</div><div class="mo-demo"><div class="dv-heat" id="dvHeat"><i style="background:rgba(107,123,255,0.12);animation-delay:0.35000000000000003s"></i><i style="background:rgba(107,123,255,0.68);animation-delay:0.30000000000000004s"></i><i style="background:rgba(107,123,255,0.44);animation-delay:0.25s"></i><i style="background:rgba(107,123,255,0.2);animation-delay:0.2s"></i><i style="background:rgba(107,123,255,0.76);animation-delay:0.15000000000000002s"></i><i style="background:rgba(107,123,255,0.52);animation-delay:0.1s"></i><i style="background:rgba(107,123,255,0.28);animation-delay:0.05s"></i><i style="background:rgba(107,123,255,0.84);animation-delay:0s"></i><i style="background:rgba(107,123,255,0.6);animation-delay:0.37000000000000005s"></i><i style="background:rgba(107,123,255,0.36);animation-delay:0.32000000000000006s"></i><i style="background:rgba(107,123,255,0.12);animation-delay:0.27s"></i><i style="background:rgba(107,123,255,0.68);animation-delay:0.22s"></i><i style="background:rgba(107,123,255,0.44);animation-delay:0.17s"></i><i style="background:rgba(107,123,255,0.2);animation-delay:0.12000000000000001s"></i><i style="background:rgba(107,123,255,0.76);animation-delay:0.07s"></i><i style="background:rgba(107,123,255,0.52);animation-delay:0.02s"></i><i style="background:rgba(107,123,255,0.28);animation-delay:0.39s"></i><i style="background:rgba(107,123,255,0.84);animation-delay:0.34s"></i><i style="background:rgba(107,123,255,0.6);animation-delay:0.29s"></i><i style="background:rgba(107,123,255,0.36);animation-delay:0.24000000000000002s"></i><i style="background:rgba(107,123,255,0.12);animation-delay:0.19000000000000003s"></i><i style="background:rgba(107,123,255,0.68);animation-delay:0.14s"></i><i style="background:rgba(107,123,255,0.44);animation-delay:0.09s"></i><i style="background:rgba(107,123,255,0.2);animation-delay:0.04s"></i><i style="background:rgba(107,123,255,0.76);animation-delay:0.41000000000000003s"></i><i style="background:rgba(107,123,255,0.52);animation-delay:0.36000000000000004s"></i><i style="background:rgba(107,123,255,0.28);animation-delay:0.31s"></i><i style="background:rgba(107,123,255,0.84);animation-delay:0.26s"></i><i style="background:rgba(107,123,255,0.6);animation-delay:0.21000000000000002s"></i><i style="background:rgba(107,123,255,0.36);animation-delay:0.16s"></i><i style="background:rgba(107,123,255,0.12);animation-delay:0.11s"></i><i style="background:rgba(107,123,255,0.68);animation-delay:0.06s"></i><i style="background:rgba(107,123,255,0.44);animation-delay:0.43000000000000005s"></i><i style="background:rgba(107,123,255,0.2);animation-delay:0.38000000000000006s"></i><i style="background:rgba(107,123,255,0.76);animation-delay:0.33s"></i><i style="background:rgba(107,123,255,0.52);animation-delay:0.28s"></i><i style="background:rgba(107,123,255,0.28);animation-delay:0.23000000000000004s"></i><i style="background:rgba(107,123,255,0.84);animation-delay:0.18s"></i><i style="background:rgba(107,123,255,0.6);animation-delay:0.13s"></i><i style="background:rgba(107,123,255,0.36);animation-delay:0.08s"></i></div></div><p style="font-size:13px;line-height:1.7;color:var(--ink-2);margin-bottom:12px">热力图要按数值从大到小依次点亮，而不是按坐标顺序——先亮最热的格子，观众第一眼就知道峰值在哪。实现方式是给格子排序后设置 delay，而不是靠 CSS 的 nth-child。</p><div class="mo-code"><button class="mo-copy">复制</button><code>cells.sort((a, b) =&gt; b.value - a.value)
+  .forEach((c, i) =&gt; c.style.animationDelay = i * 25 + &#x27;ms&#x27;);</code></div></div></div><div class="toast "></div><div style="height:70px"></div></div></main><script src="/fronted-helper/_next/static/chunks/webpack-de33868166cd9f08.js" async=""></script><script>(self.__next_f=self.__next_f||[]).push([0])</script><script>self.__next_f.push([1,"1:\"$Sreact.fragment\"\n2:I[3632,[],\"\"]\n3:I[4998,[],\"\"]\n4:I[8001,[\"1\",\"static/chunks/1-be206cdc888b8c38.js\",\"597\",\"static/chunks/app/motion/page-9d15f4352704c6c9.js\"],\"\"]\n5:I[9587,[\"1\",\"static/chunks/1-be206cdc888b8c38.js\",\"597\",\"static/chunks/app/motion/page-9d15f4352704c6c9.js\"],\"MotionGrid\"]\n6:I[3089,[],\"OutletBoundary\"]\n8:I[3089,[],\"MetadataBoundary\"]\na:I[3089,[],\"ViewportBoundary\"]\nc:I[1423,[],\"\"]\n:HL[\"/fronted-helper/_next/static/css/0477389160d690ce.css\",\"style\"]\n:HL[\"/fronted-helper/_next/static/css/5fe509b99d023ab6.css\",\"style\"]\n"])</script><script>self.__next_f.push([1,"0:{\"P\":null,\"b\":\"f97F2FcAOHYtZLyGsdDCC\",\"p\":\"/fronted-helper\",\"c\":[\"\",\"motion\",\"\"],\"i\":false,\"f\":[[[\"\",{\"children\":[\"motion\",{\"children\":[\"__PAGE__\",{}]}]},\"$undefined\",\"$undefined\",true],[\"\",[\"$\",\"$1\",\"c\",{\"children\":[[[\"$\",\"link\",\"0\",{\"rel\":\"stylesheet\",\"href\":\"/fronted-helper/_next/static/css/0477389160d690ce.css\",\"precedence\":\"next\",\"crossOrigin\":\"$undefined\",\"nonce\":\"$undefined\"}],[\"$\",\"link\",\"1\",{\"rel\":\"stylesheet\",\"href\":\"/fronted-helper/_next/static/css/5fe509b99d023ab6.css\",\"precedence\":\"next\",\"crossOrigin\":\"$undefined\",\"nonce\":\"$undefined\"}]],[\"$\",\"html\",null,{\"lang\":\"zh-CN\",\"children\":[\"$\",\"body\",null,{\"children\":[\"$\",\"$L2\",null,{\"parallelRouterKey\":\"children\",\"segmentPath\":[\"children\"],\"error\":\"$undefined\",\"errorStyles\":\"$undefined\",\"errorScripts\":\"$undefined\",\"template\":[\"$\",\"$L3\",null,{}],\"templateStyles\":\"$undefined\",\"templateScripts\":\"$undefined\",\"notFound\":[[],[[\"$\",\"title\",null,{\"children\":\"404: This page could not be found.\"}],[\"$\",\"div\",null,{\"style\":{\"fontFamily\":\"system-ui,\\\"Segoe UI\\\",Roboto,Helvetica,Arial,sans-serif,\\\"Apple Color Emoji\\\",\\\"Segoe UI Emoji\\\"\",\"height\":\"100vh\",\"textAlign\":\"center\",\"display\":\"flex\",\"flexDirection\":\"column\",\"alignItems\":\"center\",\"justifyContent\":\"center\"},\"children\":[\"$\",\"div\",null,{\"children\":[[\"$\",\"style\",null,{\"dangerouslySetInnerHTML\":{\"__html\":\"body{color:#000;background:#fff;margin:0}.next-error-h1{border-right:1px solid rgba(0,0,0,.3)}@media (prefers-color-scheme:dark){body{color:#fff;background:#000}.next-error-h1{border-right:1px solid rgba(255,255,255,.3)}}\"}}],[\"$\",\"h1\",null,{\"className\":\"next-error-h1\",\"style\":{\"display\":\"inline-block\",\"margin\":\"0 20px 0 0\",\"padding\":\"0 23px 0 0\",\"fontSize\":24,\"fontWeight\":500,\"verticalAlign\":\"top\",\"lineHeight\":\"49px\"},\"children\":404}],[\"$\",\"div\",null,{\"style\":{\"display\":\"inline-block\"},\"children\":[\"$\",\"h2\",null,{\"style\":{\"fontSize\":14,\"fontWeight\":400,\"lineHeight\":\"49px\",\"margin\":0},\"children\":\"This page could not be found.\"}]}]]}]}]]],\"forbidden\":\"$undefined\",\"unauthorized\":\"$undefined\"}]}]}]]}],{\"children\":[\"motion\",[\"$\",\"$1\",\"c\",{\"children\":[null,[\"$\",\"$L2\",null,{\"parallelRouterKey\":\"children\",\"segmentPath\":[\"children\",\"motion\",\"children\"],\"error\":\"$undefined\",\"errorStyles\":\"$undefined\",\"errorScripts\":\"$undefined\",\"template\":[\"$\",\"$L3\",null,{}],\"templateStyles\":\"$undefined\",\"templateScripts\":\"$undefined\",\"notFound\":\"$undefined\",\"forbidden\":\"$undefined\",\"unauthorized\":\"$undefined\"}]]}],{\"children\":[\"__PAGE__\",[\"$\",\"$1\",\"c\",{\"children\":[[\"$\",\"main\",null,{\"children\":[\"$\",\"div\",null,{\"className\":\"wrap\",\"children\":[[\"$\",\"div\",null,{\"className\":\"subhead\",\"children\":[[\"$\",\"$L4\",null,{\"href\":\"/\",\"className\":\"back-pill\",\"children\":\"← 返回\"}],[\"$\",\"h1\",null,{\"children\":\"动效工具\"}],[\"$\",\"p\",null,{\"className\":\"lead\",\"children\":[116,\" 个主流动效，分 12 类。鼠标移到演示区就能看到真实效果，下面的代码可以直接抄。 一条硬规矩：响应型动效不超过 300 毫秒——超过用户就开始觉得卡。\",[\"$\",\"br\",null,{}],\"2026 年该补的三块也补上了：\",[\"$\",\"b\",null,{\"children\":\"原生 CSS\"}],\"（scroll-driven 动画、View Transitions、@property）、\",[\"$\",\"b\",null,{\"children\":\"三维空间\"}],\"（CSS 3D、透视、景深）、\",[\"$\",\"b\",null,{\"children\":\"数据可视化\"}],\"（图表生长、数字缓动）—— 这三块是目前最常用、也最少人写进 prompt 的。\"]}]]}],[\"$\",\"$L5\",null,{}],[\"$\",\"div\",null,{\"style\":{\"height\":70}}]]}]}],null,[\"$\",\"$L6\",null,{\"children\":\"$L7\"}]]}],{},null,false]},null,false]},null,false],[\"$\",\"$1\",\"h\",{\"children\":[null,[\"$\",\"$1\",\"G96pNS_6V2aeWA0Q0TVOG\",{\"children\":[[\"$\",\"$L8\",null,{\"children\":\"$L9\"}],[\"$\",\"$La\",null,{\"children\":\"$Lb\"}],null]}]]}],false]],\"m\":\"$undefined\",\"G\":[\"$c\",\"$undefined\"],\"s\":false,\"S\":true}\n"])</script><script>self.__next_f.push([1,"b:[[\"$\",\"meta\",\"0\",{\"name\":\"viewport\",\"content\":\"width=device-width, initial-scale=1\"}]]\n9:[[\"$\",\"meta\",\"0\",{\"charSet\":\"utf-8\"}],[\"$\",\"title\",\"1\",{\"children\":\"动效工具 · 前端设计小助手\"}],[\"$\",\"meta\",\"2\",{\"name\":\"description\",\"content\":\"116 个主流动效，分 12 类：页面级、组件级、原生 CSS、三维空间、SVG 矢量、数据可视化等。每个都能当场看、当场抄 CSS。\"}],[\"$\",\"meta\",\"3\",{\"name\":\"keywords\",\"content\":\"前端设计,UI 风格,设计风格,CSS Token,AI Prompt,配色,动效\"}]]\n"])</script><script>self.__next_f.push([1,"7:null\n"])</script></body></html>
